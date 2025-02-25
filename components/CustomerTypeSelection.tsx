@@ -1,10 +1,11 @@
+import { CustomerType } from "@/types/CustomerType"
 import { Picker } from "@react-native-picker/picker"
 import { StyleSheet, Text, View } from "react-native"
 
 
 interface CustomerTypeSelectionProps {
-  setCustomerType: (customerType: string) => void
-  customerType: string
+  setCustomerType: (customerType: CustomerType) => void
+  customerType: CustomerType
 }
 
 export const CustomerTypeSelection = ({
@@ -23,8 +24,8 @@ export const CustomerTypeSelection = ({
           selectedValue={customerType}
           onValueChange={setCustomerType}
         >
-          <Picker.Item label="Cliente Nuevo" value="nuevo" />
-          <Picker.Item label="Cliente Registrado" value="cliente" />
+          <Picker.Item label="Cliente Nuevo" value={CustomerType.guess} />
+          <Picker.Item label="Cliente Registrado" value={CustomerType.registered} />
         </Picker>
       </View>
     </View>

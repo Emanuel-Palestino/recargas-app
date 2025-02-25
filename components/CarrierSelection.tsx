@@ -1,25 +1,26 @@
 import { StyleSheet, Text, View } from "react-native"
 import { CarrierButton } from "./CarrierButton"
+import { Carrier } from "@/types/Carriers"
 
 
-const carriers: { value: string, image: any }[] = [
+const carriers: { value: Carrier, image: any }[] = [
   {
-    value: 'telcel',
+    value: Carrier.telcel,
     image: require('../assets/images/carrier_logos/telcel.png')
   },
   {
-    value: 'movistar',
+    value: Carrier.movistar,
     image: require('../assets/images/carrier_logos/movistar.png')
   },
   {
-    value: 'att',
+    value: Carrier.att,
     image: require('../assets/images/carrier_logos/att.png')
   }
 ]
 
 interface CarrierSelectionProps {
-  setCarrier: (carrier: string) => void
-  carrier: string
+  setCarrier: (carrier: Carrier) => void
+  carrier: Carrier
 }
 
 export const CarrierSelection = ({

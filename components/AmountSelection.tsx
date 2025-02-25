@@ -28,10 +28,13 @@ export const AmountSelection = ({
             <Picker.Item label="$20" value="20" />
             <Picker.Item label="$30" value="30" />
             <Picker.Item label="$50" value="50" />
+            <Picker.Item label="$80" value="80" />
             <Picker.Item label="$100" value="100" />
             <Picker.Item label="$150" value="150" />
             <Picker.Item label="$200" value="200" />
+            <Picker.Item label="$270" value="270" />
             <Picker.Item label="$300" value="300" />
+            <Picker.Item label="$400" value="400" />
             <Picker.Item label="$500" value="500" />
           </Picker>
         </View>

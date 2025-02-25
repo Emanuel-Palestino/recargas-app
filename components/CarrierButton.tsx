@@ -1,10 +1,11 @@
+import { Carrier } from "@/types/Carriers"
 import { Image, Pressable, StyleSheet } from "react-native"
 
 
 interface CarrierButtonProps {
-  onSelect: (operadora: string) => void
+  onSelect: (carrier: Carrier) => void
   image: any
-  value: string
+  value: Carrier
   selected?: boolean
 }
 
@@ -36,7 +37,8 @@ export const CarrierButton = ({
 const styles = StyleSheet.create({
   button: {
     backgroundColor: 'white',
-    padding: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 0,
     flexGrow: 1,
     borderRadius: 10,
     borderWidth: 2,
