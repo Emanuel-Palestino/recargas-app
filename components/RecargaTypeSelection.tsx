@@ -1,15 +1,18 @@
+import { TelcelProductType } from "@/types/Carriers"
 import { Picker } from "@react-native-picker/picker"
 import { StyleSheet, Text, View } from "react-native"
 
 
 interface RecargaTypeSelectionProps {
-  setRecargaType: (recargaType: string) => void
-  recargaType: string
+  setRecargaType: (recargaType: TelcelProductType) => void
+  recargaType: TelcelProductType
+  disabled?: boolean
 }
 
 export const RecargaTypeSelection = ({
   setRecargaType,
   recargaType,
+  disabled = false
 }: RecargaTypeSelectionProps) => {
 
   return (
@@ -24,10 +27,11 @@ export const RecargaTypeSelection = ({
         <Picker
           selectedValue={recargaType}
           onValueChange={setRecargaType}
+          enabled={!disabled}
         >
-          <Picker.Item label="Normal" value="normal" />
-          <Picker.Item label="Plan Amigo" value="amigo" />
-          <Picker.Item label="Internet" value="internet" />
+          {Object.values(TelcelProductType).map((value) => (
+            <Picker.Item key={`telcel-type-${value}`} label={value} value={value} />
+          ))}
         </Picker>
       </View>
     </View >

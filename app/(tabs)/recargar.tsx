@@ -1,3 +1,4 @@
+import { ATT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from '@/assets/products';
 import { AmountSelection } from '@/components/AmountSelection';
 import { CarrierSelection } from '@/components/CarrierSelection';
 import { CustomerSelection } from '@/components/CustomerSelection';
@@ -5,23 +6,46 @@ import { CustomerTypeSelection } from '@/components/CustomerTypeSelection';
 import { PhoneNumberInputGroup } from '@/components/PhoneNumberInputGroup';
 import { RecargaCompletedModal } from '@/components/RecargaCompletedModal';
 import { RecargaTypeSelection } from '@/components/RecargaTypeSelection';
-import { Carrier } from '@/types/Carriers';
+import { Carrier, TelcelProductType } from '@/types/Carriers';
 import { CustomerType } from '@/types/CustomerType';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Alert, KeyboardAvoidingView, Platform, Pressable, Keyboard } from "react-native"
 
 
 export default function RecargarScreen() {
 
   const [carrier, setCarrier] = useState<Carrier>(Carrier.telcel)
-  const [recargaType, setRecargaType] = useState<string>('normal')
-  const [amount, setAmount] = useState<string>('10')
+  const [recargaType, setRecargaType] = useState<TelcelProductType>(TelcelProductType.paquete)
+  const [amount, setAmount] = useState<number>(10)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [phoneNumberConfirmation, setPhoneNumberConfirmation] = useState<string>('')
   const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.guess)
   const [customer, setCustomer] = useState<string>('1')
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (carrier !== Carrier.telcel) {
+      setRecargaType(TelcelProductType.saldo)
+    } else {
+      setRecargaType(TelcelProductType.paquete)
+    }
+
+    setAmount(10)
+  }, [carrier])
+
+  const getCarrierAmounts = (): Record<number, string> => {
+    switch (carrier) {
+      case Carrier.telcel:
+        return TELCEL_PRODUCTS[recargaType]
+      case Carrier.movistar:
+        return MOVISTAR_PRODUCTS
+      case Carrier.att:
+        return ATT_PRODUCTS
+      default:
+        return {}
+    }
+  }
 
   const recargar = () => {
     if (phoneNumber !== phoneNumberConfirmation) {
@@ -59,9 +83,17 @@ export default function RecargarScreen() {
       <View style={styles.container}>
         <CarrierSelection setCarrier={setCarrier} carrier={carrier} />
 
-        <RecargaTypeSelection setRecargaType={setRecargaType} recargaType={recargaType} />
+        <RecargaTypeSelection
+          setRecargaType={setRecargaType}
+          recargaType={recargaType}
+          disabled={carrier !== Carrier.telcel}
+        />
 
-        <AmountSelection setAmount={setAmount} amount={amount} />
+        <AmountSelection
+          amountsObj={getCarrierAmounts()}
+          setAmount={setAmount}
+          amount={amount}
+        />
 
         <CustomerTypeSelection setCustomerType={setCustomerType} customerType={customerType} />
 

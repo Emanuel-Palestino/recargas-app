@@ -3,11 +3,13 @@ import { Alert, Pressable, StyleSheet, Text, View } from "react-native"
 
 
 interface AmountSelectionProps {
-  setAmount: (amount: string) => void
-  amount: string
+  amountsObj: Record<number, string>
+  setAmount: (amount: number) => void
+  amount: number
 }
 
 export const AmountSelection = ({
+  amountsObj,
   setAmount,
   amount,
 }: AmountSelectionProps) => {
@@ -24,22 +26,13 @@ export const AmountSelection = ({
             selectedValue={amount}
             onValueChange={setAmount}
           >
-            <Picker.Item label="$10" value="10" />
-            <Picker.Item label="$20" value="20" />
-            <Picker.Item label="$30" value="30" />
-            <Picker.Item label="$50" value="50" />
-            <Picker.Item label="$80" value="80" />
-            <Picker.Item label="$100" value="100" />
-            <Picker.Item label="$150" value="150" />
-            <Picker.Item label="$200" value="200" />
-            <Picker.Item label="$270" value="270" />
-            <Picker.Item label="$300" value="300" />
-            <Picker.Item label="$400" value="400" />
-            <Picker.Item label="$500" value="500" />
+            {Object.keys(amountsObj).map((amount) => (
+              <Picker.Item key={`amount-${amount}`} label={`$${amount}`} value={amount} />
+            ))}
           </Picker>
         </View>
 
-        <Pressable style={styles.benefitsButton} onPress={() => Alert.alert('Beneficios', 'beneficios')}>
+        <Pressable style={styles.benefitsButton} onPress={() => Alert.alert('Beneficios', amountsObj[amount])}>
           <Text style={styles.benefitsTextButton}>
             Beneficios
           </Text>

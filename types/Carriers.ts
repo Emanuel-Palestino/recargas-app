@@ -5,3 +5,12 @@ export const Carrier = {
 } as const
 
 export type Carrier = typeof Carrier[keyof typeof Carrier]
+
+export const TelcelProductType = {
+	saldo: 'Saldo',
+	paquete: 'Paquete',
+	internet: 'Internet',
+	internetTiempo: 'Internet por Tiempo',
+} as const
+
+export type TelcelProductType = typeof TelcelProductType[keyof typeof TelcelProductType]

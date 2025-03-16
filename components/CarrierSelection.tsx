@@ -9,13 +9,14 @@ const carriers: { value: Carrier, image: any }[] = [
     image: require('../assets/images/carrier_logos/telcel.png')
   },
   {
+    value: Carrier.att,
+    image: require('../assets/images/carrier_logos/att.png')
+
+  },
+  {
     value: Carrier.movistar,
     image: require('../assets/images/carrier_logos/movistar.png')
   },
-  {
-    value: Carrier.att,
-    image: require('../assets/images/carrier_logos/att.png')
-  }
 ]
 
 interface CarrierSelectionProps {
