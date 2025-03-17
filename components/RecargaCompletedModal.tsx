@@ -29,31 +29,38 @@ export const RecargaCompletedModal = ({
   return (
     <Modal animationType="slide" transparent={true} visible={open} /* backdropColor="red" */>
       <View style={styles.modalContent}>
-        <View style={styles.barContainer}>
+        <Text style={styles.title}>Recarga Realizada con Éxito</Text>
+
+        <Text style={styles.subtitle}>Fecha y hora</Text>
+        <Text style={styles.label}>{date}</Text>
+
+        <Text style={styles.subtitle}>Compañía telefónica</Text>
+        <Text style={styles.label}>{DISPLAYED_CARRIER[carrier]}</Text>
+
+        <Text style={styles.subtitle}>Tipo de recarga</Text>
+        <Text style={styles.label}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
+
+        <Text style={styles.subtitle}>Número celular</Text>
+        <Text style={styles.label}>{phoneNumber}</Text>
+
+        <Text style={styles.subtitle}>Monto</Text>
+        <Text style={styles.label}>${amount}</Text>
+
+        <Text style={styles.subtitle}>Número de referencia</Text>
+        <Text style={styles.label}>{reference}</Text>
+
+        <View style={styles.actionsContainer}>
           <Pressable onPress={onClose}>
-            <Ionicons name="close" color="#fff" size={22} />
+            <Text style={styles.button}>Finalizar</Text>
           </Pressable>
-        </View>
-        <View style={styles.bodyContainer}>
-          <Text style={styles.title}>Recarga Realizada con Éxito</Text>
 
-          <Text style={styles.subtitle}>Fecha y hora</Text>
-          <Text style={styles.label}>{date}</Text>
+          <Pressable onPress={() => { }}>
+            <Text style={styles.button}>Guardar Cliente</Text>
+          </Pressable>
 
-          <Text style={styles.subtitle}>Compañía telefónica</Text>
-          <Text style={styles.label}>{DISPLAYED_CARRIER[carrier]}</Text>
-
-          <Text style={styles.subtitle}>Tipo de recarga</Text>
-          <Text style={styles.label}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
-
-          <Text style={styles.subtitle}>Número celular</Text>
-          <Text style={styles.label}>{phoneNumber}</Text>
-
-          <Text style={styles.subtitle}>Monto</Text>
-          <Text style={styles.label}>${amount}</Text>
-
-          <Text style={styles.subtitle}>Número de referencia</Text>
-          <Text style={styles.label}>{reference}</Text>
+          <Pressable onPress={() => { }}>
+            <Text style={styles.button}>Compartir</Text>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -63,34 +70,22 @@ export const RecargaCompletedModal = ({
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '70%',
+    height: '68%',
     width: '100%',
-    backgroundColor: '#25292e',
+    backgroundColor: '#464c55',
     borderTopRightRadius: 18,
     borderTopLeftRadius: 18,
     position: 'absolute',
     bottom: 0,
-  },
-  barContainer: {
-    height: 40,
-    backgroundColor: '#464C55',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
+    padding: 20,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   title: {
     color: '#fff',
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
-  },
-  bodyContainer: {
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   subtitle: {
     color: 'gray',
@@ -100,5 +95,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     marginBottom: 10,
+  },
+  actionsContainer: {
+    width: '100%',
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  button: {
+    width: 150,
+    backgroundColor: '#f78c50',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 10,
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'center',
   },
 })
