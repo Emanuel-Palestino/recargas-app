@@ -9,7 +9,7 @@ import { RecargaTypeSelection } from '@/components/RecargaTypeSelection';
 import { Carrier, TelcelProductType } from '@/types/Carriers';
 import { CustomerType } from '@/types/CustomerType';
 import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Alert, KeyboardAvoidingView, Platform, Pressable, Keyboard } from "react-native"
+import { Text, View, StyleSheet, Alert, KeyboardAvoidingView, Pressable, Keyboard } from "react-native"
 
 
 export default function RecargarScreen() {
@@ -78,7 +78,7 @@ export default function RecargarScreen() {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior="padding"
     >
       <View style={styles.container}>
         <CarrierSelection setCarrier={setCarrier} carrier={carrier} />
@@ -122,7 +122,16 @@ export default function RecargarScreen() {
         </View>
       </View>
 
-      <RecargaCompletedModal open={modalOpen} onClose={() => { }} />
+      <RecargaCompletedModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        date={new Date().toLocaleString()}
+        carrier={carrier}
+        type={recargaType}
+        phoneNumber={phoneNumber}
+        amount={amount}
+        reference="1234567890"
+      />
     </KeyboardAvoidingView>
   )
 
