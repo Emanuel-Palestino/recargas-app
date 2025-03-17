@@ -2,12 +2,16 @@ import { StyleSheet, Text, TextInput, View } from "react-native"
 
 
 interface PhoneNumberInputGroupProps {
+  phoneNumber: string
   setPhoneNumber: (numero: string) => void
+  phoneNumberConfirmation: string
   setPhoneNumberConfirmation: (numero: string) => void
 }
 
 export const PhoneNumberInputGroup = ({
+  phoneNumber,
   setPhoneNumber,
+  phoneNumberConfirmation,
   setPhoneNumberConfirmation,
 }: PhoneNumberInputGroupProps) => {
 
@@ -20,6 +24,7 @@ export const PhoneNumberInputGroup = ({
       <TextInput
         style={styles.input}
         keyboardType="numeric"
+        value={phoneNumber}
         onChangeText={setPhoneNumber}
       />
 
@@ -30,6 +35,7 @@ export const PhoneNumberInputGroup = ({
       <TextInput
         style={styles.input}
         keyboardType="numeric"
+        value={phoneNumberConfirmation}
         onChangeText={setPhoneNumberConfirmation}
       />
     </View>

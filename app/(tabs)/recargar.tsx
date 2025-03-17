@@ -75,6 +75,16 @@ export default function RecargarScreen() {
     })
   }
 
+  const resetInputs = () => {
+    setCarrier(Carrier.TELCEL)
+    setRecargaType(TelcelProductType.PAQUETE)
+    setAmount(10)
+    setPhoneNumber('')
+    setPhoneNumberConfirmation('')
+    setCustomerType(CustomerType.GUESS)
+    setCustomer('1')
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -100,7 +110,9 @@ export default function RecargarScreen() {
         {
           customerType === CustomerType.GUESS &&
           <PhoneNumberInputGroup
+            phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            phoneNumberConfirmation={phoneNumberConfirmation}
             setPhoneNumberConfirmation={setPhoneNumberConfirmation}
           />
         }
@@ -124,7 +136,10 @@ export default function RecargarScreen() {
 
       <RecargaCompletedModal
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => {
+          resetInputs()
+          setModalOpen(false)
+        }}
         date={new Date().toLocaleString()}
         carrier={carrier}
         type={recargaType}
