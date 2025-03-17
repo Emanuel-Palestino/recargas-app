@@ -5,16 +5,16 @@ import { Carrier } from "@/types/Carriers"
 
 const carriers: { value: Carrier, image: any }[] = [
   {
-    value: Carrier.telcel,
+    value: Carrier.TELCEL,
     image: require('../assets/images/carrier_logos/telcel.png')
   },
   {
-    value: Carrier.att,
+    value: Carrier.ATT,
     image: require('../assets/images/carrier_logos/att.png')
 
   },
   {
-    value: Carrier.movistar,
+    value: Carrier.MOVISTAR,
     image: require('../assets/images/carrier_logos/movistar.png')
   },
 ]

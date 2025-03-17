@@ -1,3 +1,4 @@
+import { DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { TelcelProductType } from "@/types/Carriers"
 import { Picker } from "@react-native-picker/picker"
 import { StyleSheet, Text, View } from "react-native"
@@ -30,7 +31,7 @@ export const RecargaTypeSelection = ({
           enabled={!disabled}
         >
           {Object.values(TelcelProductType).map((value) => (
-            <Picker.Item key={`telcel-type-${value}`} label={value} value={value} />
+            <Picker.Item key={`telcel-type-${value}`} label={DISPLAYED_TELCEL_PRODUCT_TYPE[value]} value={value} />
           ))}
         </Picker>
       </View>

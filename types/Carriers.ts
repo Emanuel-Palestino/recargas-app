@@ -1,16 +1,16 @@
 export const Carrier = {
-  telcel: 'telcel',
-  movistar: 'movistar',
-  att: 'att',
+  TELCEL: 'TELCEL',
+  MOVISTAR: 'MOVISTAR',
+  ATT: 'ATT',
 } as const
 
 export type Carrier = typeof Carrier[keyof typeof Carrier]
 
 export const TelcelProductType = {
-	saldo: 'Saldo',
-	paquete: 'Paquete',
-	internet: 'Internet',
-	internetTiempo: 'Internet por Tiempo',
+	SALDO: 'SALDO',
+	PAQUETE: 'PAQUETE',
+	INTERNET: 'INTERNET',
+	INTERNET_POR_TIEMPO: 'INTERNET_POR_TIEMPO',
 } as const
 
 export type TelcelProductType = typeof TelcelProductType[keyof typeof TelcelProductType]

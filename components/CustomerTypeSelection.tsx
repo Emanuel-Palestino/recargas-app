@@ -1,3 +1,4 @@
+import { DISPLAYED_CUSTOMER_TYPE } from "@/assets/displayedStrings"
 import { CustomerType } from "@/types/CustomerType"
 import { Picker } from "@react-native-picker/picker"
 import { StyleSheet, Text, View } from "react-native"
@@ -24,8 +25,8 @@ export const CustomerTypeSelection = ({
           selectedValue={customerType}
           onValueChange={setCustomerType}
         >
-          <Picker.Item label="Cliente Nuevo" value={CustomerType.guess} />
-          <Picker.Item label="Cliente Registrado" value={CustomerType.registered} />
+          <Picker.Item label={DISPLAYED_CUSTOMER_TYPE[CustomerType.GUESS]} value={CustomerType.GUESS} />
+          <Picker.Item label={DISPLAYED_CUSTOMER_TYPE[CustomerType.REGISTERED]} value={CustomerType.REGISTERED} />
         </Picker>
       </View>
     </View>

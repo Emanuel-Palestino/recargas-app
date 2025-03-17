@@ -1,3 +1,4 @@
+import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { Carrier, TelcelProductType } from "@/types/Carriers"
 import Ionicons from "@expo/vector-icons/MaterialIcons"
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native"
@@ -40,10 +41,10 @@ export const RecargaCompletedModal = ({
           <Text style={styles.label}>{date}</Text>
 
           <Text style={styles.subtitle}>Compañía telefónica</Text>
-          <Text style={styles.label}>{carrier}</Text>
+          <Text style={styles.label}>{DISPLAYED_CARRIER[carrier]}</Text>
 
           <Text style={styles.subtitle}>Tipo de recarga</Text>
-          <Text style={styles.label}>{type}</Text>
+          <Text style={styles.label}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
 
           <Text style={styles.subtitle}>Número celular</Text>
           <Text style={styles.label}>{phoneNumber}</Text>

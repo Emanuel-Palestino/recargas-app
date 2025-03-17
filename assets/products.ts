@@ -1,7 +1,7 @@
 import { TelcelProductType } from "@/types/Carriers";
 
 export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> = {
-  [TelcelProductType.saldo]: {
+  [TelcelProductType.SALDO]: {
     10: "Vigencia de 3 dias Whatsapp 200 MB.",
     20: "Vigencia de 3 dias. 100 MB libres. 200 MB para Facebook, Messenger y Twitter. Whatsapp Ilimitado.",
     30: "Vigencia de 3 dias. 120 MB libres. 300 MB para Facebook, Messenger y Twitter. Whatsapp Ilimitado.",
@@ -13,7 +13,7 @@ export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> 
     300: "Vigencia de 30 dias. 4 GB libres. Facebook, Messenger, Twitter, Instagram, Snapchat y Whatsapp Ilimitados.",
     500: "Vigencia de 30 dias. 6 GB libres. Facebook, Messenger, Twitter, Instagram, Snapchat y Whatsapp Ilimitados.",
   },
-  [TelcelProductType.paquete]: {
+  [TelcelProductType.PAQUETE]: {
     10: "Vigencia de 1 día. SMS y Minutos ilimitados (México, Estados Unidos y Canadá). 50 MB libres. WhatsApp Ilimitado.",
     20: "Vigencia de 2 días. SMS y Minutos ilimitados (México, Estados Unidos y Canadá). 100 MB libres. 200 MB para Facebook, Messenger y Twitter. WhatsApp Ilimitado.",
     30: "Vigencia de 3 días. SMS y Minutos ilimitados (México, Estados Unidos y Canadá). 160 MB libres. 300 MB para Facebook, Messenger y Twitter. WhatsApp Ilimitado.",
@@ -29,7 +29,7 @@ export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> 
     1200: "Vigencia de 6 meses (6 paquetes de 30 días). SMS y Minutos ilimitados (México, Estados Unidos y Canadá). 7 GB libres. Facebook, Messenger, Twitter, Instagram, Snapchat y WhatsApp Ilimitado.",
     2400: "Vigencia de 12 Meses (12 paquetes de 30 días). SMS y Minutos ilimitados (México, Estados Unidos y Canadá). 7 GB libres. Facebook, Messenger, Twitter, Instagram, Snapchat y WhatsApp Ilimitado.",
   },
-  [TelcelProductType.internet]: {
+  [TelcelProductType.INTERNET]: {
     10: "Vigencia de 1 día. 70 MB libres. WhatsApp Ilimitado.",
     20: "Vigencia de 2 días. 140 MB libres. 200 MB para Facebook, Messenger y Twitter. WhatsApp Ilimitado.",
     30: "Vigencia de 3 días. 220 MB libres. 300 MB para Facebook, Messenger y Twitter. WhatsApp Ilimitado.",
@@ -41,7 +41,7 @@ export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> 
     300: "Vigencia de 30 días. 6.5 GB libres. Facebook, Messenger, Twitter, Instagram, Snapchat y Whatsapp Ilimitados.",
     500: "Vigencia de 30 días. 10 GB libres. Facebook, Messenger, Twitter, Instagram, Snapchat y Whatsapp Ilimitados.",
   },
-  [TelcelProductType.internetTiempo]: {
+  [TelcelProductType.INTERNET_POR_TIEMPO]: {
     10: "Vigencia de 1 hora. GB ilimitados a máxima velocidad.",
     15: "Vigencia de 2 horas. GB ilimitados a máxima velocidad.",
   },

@@ -14,21 +14,21 @@ import { Text, View, StyleSheet, Alert, KeyboardAvoidingView, Pressable, Keyboar
 
 export default function RecargarScreen() {
 
-  const [carrier, setCarrier] = useState<Carrier>(Carrier.telcel)
-  const [recargaType, setRecargaType] = useState<TelcelProductType>(TelcelProductType.paquete)
+  const [carrier, setCarrier] = useState<Carrier>(Carrier.TELCEL)
+  const [recargaType, setRecargaType] = useState<TelcelProductType>(TelcelProductType.PAQUETE)
   const [amount, setAmount] = useState<number>(10)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [phoneNumberConfirmation, setPhoneNumberConfirmation] = useState<string>('')
-  const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.guess)
+  const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.GUESS)
   const [customer, setCustomer] = useState<string>('1')
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
-    if (carrier !== Carrier.telcel) {
-      setRecargaType(TelcelProductType.saldo)
+    if (carrier !== Carrier.TELCEL) {
+      setRecargaType(TelcelProductType.SALDO)
     } else {
-      setRecargaType(TelcelProductType.paquete)
+      setRecargaType(TelcelProductType.PAQUETE)
     }
 
     setAmount(10)
@@ -36,11 +36,11 @@ export default function RecargarScreen() {
 
   const getCarrierAmounts = (): Record<number, string> => {
     switch (carrier) {
-      case Carrier.telcel:
+      case Carrier.TELCEL:
         return TELCEL_PRODUCTS[recargaType]
-      case Carrier.movistar:
+      case Carrier.MOVISTAR:
         return MOVISTAR_PRODUCTS
-      case Carrier.att:
+      case Carrier.ATT:
         return ATT_PRODUCTS
       default:
         return {}
@@ -86,7 +86,7 @@ export default function RecargarScreen() {
         <RecargaTypeSelection
           setRecargaType={setRecargaType}
           recargaType={recargaType}
-          disabled={carrier !== Carrier.telcel}
+          disabled={carrier !== Carrier.TELCEL}
         />
 
         <AmountSelection
@@ -98,7 +98,7 @@ export default function RecargarScreen() {
         <CustomerTypeSelection setCustomerType={setCustomerType} customerType={customerType} />
 
         {
-          customerType === CustomerType.guess &&
+          customerType === CustomerType.GUESS &&
           <PhoneNumberInputGroup
             setPhoneNumber={setPhoneNumber}
             setPhoneNumberConfirmation={setPhoneNumberConfirmation}
@@ -106,7 +106,7 @@ export default function RecargarScreen() {
         }
 
         {
-          customerType === CustomerType.registered &&
+          customerType === CustomerType.REGISTERED &&
           <CustomerSelection
             setCustomer={setCustomer}
             customer={customer}
