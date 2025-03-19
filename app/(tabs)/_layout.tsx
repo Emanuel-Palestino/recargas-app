@@ -36,6 +36,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="reports"
+        options={{
+          title: 'Reportes',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'document-text-sharp' : 'document-text-outline'} color={color} size={26} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
