@@ -1,5 +1,7 @@
 import { Picker } from "@react-native-picker/picker"
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native"
+import { Button } from "./ui/Button"
+import { colorSchema } from "@/assets/colorSchema"
 
 
 interface AmountSelectionProps {
@@ -17,7 +19,7 @@ export const AmountSelection = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Monto de Recarga
+        Monto de recarga
       </Text>
 
       <View style={styles.benefitsContainer}>
@@ -32,11 +34,12 @@ export const AmountSelection = ({
           </Picker>
         </View>
 
-        <Pressable style={styles.benefitsButton} onPress={() => Alert.alert('Beneficios', amountsObj[amount])}>
-          <Text style={styles.benefitsTextButton}>
-            Beneficios
-          </Text>
-        </Pressable>
+        <Button
+          size="sm"
+          color="accent"
+          text="Beneficios"
+          onClick={() => Alert.alert('Beneficios', amountsObj[amount])}
+        />
       </View>
 
     </View >
@@ -47,31 +50,23 @@ export const AmountSelection = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 6
+    rowGap: 4
   },
   title: {
-    color: 'gray'
+    color: colorSchema.light.baseContent,
   },
   picker: {
     width: '50%',
-    height: 54,
+    height: 48,
     padding: 0,
     borderRadius: 10,
-    backgroundColor: '#eeeae8',
-    flexGrow: 1
+    backgroundColor: colorSchema.light.base300,
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   benefitsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10
   },
-  benefitsButton: {
-    backgroundColor: 'lightblue',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  benefitsTextButton: {
-    color: '#000'
-  }
 })

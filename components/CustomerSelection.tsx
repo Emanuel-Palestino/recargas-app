@@ -1,3 +1,4 @@
+import { colorSchema } from "@/assets/colorSchema"
 import { Picker } from "@react-native-picker/picker"
 import { StyleSheet, Text, View } from "react-native"
 
@@ -15,7 +16,7 @@ export const CustomerSelection = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Tipo de Cliente
+        Cliente
       </Text>
 
       <View style={styles.picker}>
@@ -34,16 +35,17 @@ export const CustomerSelection = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 6
+    rowGap: 4
   },
   title: {
-    color: 'gray'
+    color: colorSchema.light.baseContent,
   },
   picker: {
     width: '100%',
-    height: 54,
+    height: 48,
     padding: 0,
     borderRadius: 10,
-    backgroundColor: '#eeeae8'
+    backgroundColor: colorSchema.light.base300,
+    justifyContent: 'center',
   }
 })

@@ -1,3 +1,4 @@
+import { colorSchema } from "@/assets/colorSchema"
 import { Carrier } from "@/types/Carriers"
 import { Image, Pressable, StyleSheet } from "react-native"
 
@@ -20,7 +21,7 @@ export const CarrierButton = ({
     <Pressable
       style={[
         styles.button,
-        selected ? { backgroundColor: '#f8eee8', borderColor: '#f78c50' } : {}
+        selected && styles.buttonSelected,
       ]}
       onPress={() => onSelect(value)}
     >
@@ -36,13 +37,17 @@ export const CarrierButton = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'white',
+    backgroundColor: colorSchema.light.base100,
     paddingHorizontal: 6,
     paddingVertical: 0,
     flexGrow: 1,
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#eeeae8',
+    borderWidth: 2.5,
+    borderColor: colorSchema.light.base300,
+  },
+  buttonSelected: {
+    backgroundColor: colorSchema.light.base300,
+    borderColor: colorSchema.light.secondary,
   },
   image: {
     width: 'auto',

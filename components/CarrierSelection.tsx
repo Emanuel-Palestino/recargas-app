@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native"
 import { CarrierButton } from "./CarrierButton"
 import { Carrier } from "@/types/Carriers"
+import { colorSchema } from "@/assets/colorSchema"
 
 
 const carriers: { value: Carrier, image: any }[] = [
@@ -34,7 +35,7 @@ export const CarrierSelection = ({
       <Text
         style={styles.title}
       >
-        Compañía Telefónica
+        Compañía telefónica
       </Text>
 
       <View style={styles.buttonsContainer}>
@@ -58,10 +59,10 @@ export const CarrierSelection = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 6
+    rowGap: 4
   },
   title: {
-    color: 'gray'
+    color: colorSchema.light.baseContent,
   },
   buttonsContainer: {
     flexDirection: 'row',

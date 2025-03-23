@@ -1,18 +1,20 @@
 import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { colorSchema } from '@/assets/colorSchema';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#ffd33d',
+        tabBarActiveTintColor: colorSchema.light.primary,
         headerStyle: {
-          backgroundColor: '#25292e',
+          backgroundColor: colorSchema.light.base100,
+          height: 110,
         },
         headerShadowVisible: false,
-        headerTintColor: '#fff',
+        headerTintColor: colorSchema.light.baseContent,
         tabBarStyle: {
-          backgroundColor: '#25292e',
+          backgroundColor: colorSchema.light.base100,
           height: 60,
           paddingTop: 4,
         },

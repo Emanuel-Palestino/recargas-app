@@ -1,7 +1,9 @@
+import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { Carrier, TelcelProductType } from "@/types/Carriers"
 import Ionicons from "@expo/vector-icons/MaterialIcons"
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native"
+import { Button } from "./ui/Button"
 
 
 interface RecargaCompletedModalProps {
@@ -50,17 +52,9 @@ export const RecargaCompletedModal = ({
         <Text style={styles.label}>{reference}</Text>
 
         <View style={styles.actionsContainer}>
-          <Pressable onPress={onClose}>
-            <Text style={styles.button}>Finalizar</Text>
-          </Pressable>
-
-          <Pressable onPress={() => { }}>
-            <Text style={styles.button}>Guardar Cliente</Text>
-          </Pressable>
-
-          <Pressable onPress={() => { }}>
-            <Text style={styles.button}>Compartir</Text>
-          </Pressable>
+          <Button text="Finalizar" onClick={onClose} />
+          <Button text="Compartir" color="accent" onClick={() => { }} />
+          <Button text="Guardar Cliente" color="secondary" onClick={() => { }} />
         </View>
       </View>
     </Modal>
@@ -72,7 +66,7 @@ const styles = StyleSheet.create({
   modalContent: {
     height: '68%',
     width: '100%',
-    backgroundColor: '#464c55',
+    backgroundColor: colorSchema.light.base200,
     borderTopRightRadius: 18,
     borderTopLeftRadius: 18,
     position: 'absolute',
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: '#fff',
+    color: colorSchema.light.baseContent,
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -92,8 +86,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   label: {
-    color: '#fff',
+    color: colorSchema.light.baseContent,
     fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   actionsContainer: {
@@ -104,15 +99,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 10,
-  },
-  button: {
-    width: 150,
-    backgroundColor: '#f78c50',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 10,
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
   },
 })

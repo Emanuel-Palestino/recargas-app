@@ -1,3 +1,4 @@
+import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { TelcelProductType } from "@/types/Carriers"
 import { Picker } from "@react-native-picker/picker"
@@ -21,10 +22,10 @@ export const RecargaTypeSelection = ({
       <Text
         style={styles.title}
       >
-        Tipo de Recarga
+        Tipo de recarga
       </Text>
 
-      <View style={styles.picker} >
+      <View style={styles.picker}>
         <Picker
           selectedValue={recargaType}
           onValueChange={setRecargaType}
@@ -43,16 +44,17 @@ export const RecargaTypeSelection = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 6
+    rowGap: 4
   },
   title: {
-    color: 'gray'
+    color: colorSchema.light.baseContent,
   },
   picker: {
     width: '100%',
-    height: 54,
+    height: 48,
     padding: 0,
     borderRadius: 10,
-    backgroundColor: '#eeeae8'
-  }
+    backgroundColor: colorSchema.light.base300,
+    justifyContent: 'center',
+  },
 })

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { colorSchema } from "@/assets/colorSchema";
+import { Button } from "@/components/ui/Button";
 
 const data = [
   { id: '1', fecha: '2025-03-20', celular: '0991234567', monto: '$50.00' },
@@ -74,9 +76,7 @@ export default function ReportsScreen() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Pressable onPress={() => console.log('Generar')}>
-            <Text style={styles.button}>Generar</Text>
-          </Pressable>
+          <Button text="Generar" size="sm" onClick={() => console.log('Generar')} />
         </View>
       </View>
 
@@ -93,6 +93,7 @@ export default function ReportsScreen() {
           keyExtractor={item => item.id}
           style={styles.list}
         />
+
         <View style={styles.footer}>
           <Text style={[styles.cell, styles.footerText]}>Total</Text>
           <Text style={styles.cell}></Text>
@@ -107,7 +108,7 @@ export default function ReportsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: colorSchema.light.base100,
     paddingHorizontal: 20,
     paddingVertical: 0,
   },
@@ -116,38 +117,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    gap: 10,
   },
   inputContainer: {
     width: '48%',
   },
   title: {
-    color: 'gray',
+    color: colorSchema.light.baseContent,
     marginBottom: 4,
   },
   input: {
-    height: 46,
+    height: 48,
     borderRadius: 10,
-    backgroundColor: '#eeeae8',
+    backgroundColor: colorSchema.light.base300,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 12,
   },
   buttonContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  button: {
-    width: 150,
-    backgroundColor: '#f78c50',
-    padding: 10,
-    borderRadius: 10,
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
   },
   listContainer: {
     flex: 1,
@@ -164,24 +155,24 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     textAlign: 'center',
-    color: '#fff',
+    color: colorSchema.light.baseContent,
   },
   header: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colorSchema.light.base200,
     flexDirection: 'row',
     paddingVertical: 6,
   },
   headerText: {
     fontWeight: 'bold',
-    color: '#000',
+    color: colorSchema.light.baseContent,
   },
   footer: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: colorSchema.light.base200,
     flexDirection: 'row',
     paddingVertical: 6,
   },
   footerText: {
     fontWeight: 'bold',
-    color: '#000',
+    color: colorSchema.light.baseContent,
   },
 });

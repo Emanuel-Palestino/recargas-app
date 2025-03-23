@@ -1,0 +1,23 @@
+export const colorSchema = {
+  light: {
+    primary: '#6a994e',
+    primaryContent: '#fefee3',
+    secondary: '#1a759f',
+    secondaryContent: '#ffffff',
+    accent: '#f4a259',
+    accentContent: '#582f0e',
+    neutral: '#0b0809',
+    neutralContent: '#e7e3e4',
+    base100: '#ffffff',
+    base200: '#f8f8f8',
+    base300: '#eeeeee',
+    baseContent: '#1b1718',
+    success: '#a7c957',
+    successContent: '#283618',
+    warning: '#f4e285',
+    warningContent: '#111d13',
+    error: '#bc4749',
+    errorContent: '#f2e8cf',
+  },
+  dark: {},
+} as const

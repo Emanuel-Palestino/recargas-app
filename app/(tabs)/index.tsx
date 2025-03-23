@@ -1,3 +1,4 @@
+import { colorSchema } from "@/assets/colorSchema";
 import { Text, View, StyleSheet } from "react-native";
 
 export default function Index() {
@@ -11,11 +12,11 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#25292e",
+    backgroundColor: colorSchema.light.base100,
     justifyContent: "center",
     alignItems: "center",
   },
   text: {
-    color: "#fff",
+    color: colorSchema.light.baseContent,
   },
 })

@@ -1,3 +1,4 @@
+import { colorSchema } from '@/assets/colorSchema';
 import { ATT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from '@/assets/products';
 import { AmountSelection } from '@/components/AmountSelection';
 import { CarrierSelection } from '@/components/CarrierSelection';
@@ -6,10 +7,11 @@ import { CustomerTypeSelection } from '@/components/CustomerTypeSelection';
 import { PhoneNumberInputGroup } from '@/components/PhoneNumberInputGroup';
 import { RecargaCompletedModal } from '@/components/RecargaCompletedModal';
 import { RecargaTypeSelection } from '@/components/RecargaTypeSelection';
+import { Button } from '@/components/ui/Button';
 import { Carrier, TelcelProductType } from '@/types/Carriers';
 import { CustomerType } from '@/types/CustomerType';
 import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Alert, KeyboardAvoidingView, Pressable, Keyboard } from "react-native"
+import { View, StyleSheet, Alert, KeyboardAvoidingView, Keyboard } from "react-native"
 
 
 export default function RecargarScreen() {
@@ -128,9 +130,7 @@ export default function RecargarScreen() {
         <View style={{ flex: 1 }} />
 
         <View style={styles.actionsContainer}>
-          <Pressable onPress={recargar}>
-            <Text style={styles.recargarButton}>Recargar</Text>
-          </Pressable>
+          <Button text="Recargar" onClick={recargar} />
         </View>
       </View>
 
@@ -155,10 +155,10 @@ export default function RecargarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: colorSchema.light.base100,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    rowGap: 16,
+    rowGap: 22,
     paddingHorizontal: 20,
     paddingVertical: 0,
   },
@@ -168,15 +168,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     paddingBottom: 20,
-  },
-  recargarButton: {
-    width: 150,
-    backgroundColor: '#f78c50',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 10,
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
   },
 });

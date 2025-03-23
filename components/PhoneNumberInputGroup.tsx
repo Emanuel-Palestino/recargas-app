@@ -1,3 +1,4 @@
+import { colorSchema } from "@/assets/colorSchema"
 import { StyleSheet, Text, TextInput, View } from "react-native"
 
 
@@ -18,7 +19,7 @@ export const PhoneNumberInputGroup = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Número Celular
+        Número celular
       </Text>
 
       <TextInput
@@ -29,7 +30,7 @@ export const PhoneNumberInputGroup = ({
       />
 
       <Text style={[styles.title, { marginTop: 14 }]}>
-        Confirmar Número Celular
+        Confirmar número celular
       </Text>
 
       <TextInput
@@ -46,17 +47,16 @@ export const PhoneNumberInputGroup = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 6
+    rowGap: 4
   },
   title: {
-    color: 'gray'
+    color: colorSchema.light.baseContent,
   },
   input: {
-    height: 54,
+    height: 48,
     borderRadius: 10,
-    backgroundColor: '#eeeae8',
+    backgroundColor: colorSchema.light.base300,
     paddingHorizontal: 16,
     fontSize: 16,
-    color: '#000',
   }
 })
