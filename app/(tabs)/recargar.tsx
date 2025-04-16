@@ -8,6 +8,7 @@ import { PhoneNumberInputGroup } from '@/components/PhoneNumberInputGroup';
 import { RecargaCompletedModal } from '@/components/RecargaCompletedModal';
 import { RecargaTypeSelection } from '@/components/RecargaTypeSelection';
 import { Button } from '@/components/ui/Button';
+import { recharge, RechargeRequest } from '@/services/recharge';
 import { Carrier, TelcelProductType } from '@/types/Carriers';
 import { CustomerType } from '@/types/CustomerType';
 import { useEffect, useState } from 'react';
@@ -49,7 +50,7 @@ export default function RecargarScreen() {
     }
   }
 
-  const recargar = () => {
+  const recargar = async () => {
     if (phoneNumber !== phoneNumberConfirmation) {
       Alert.alert('Error', 'Los números de celular no coinciden')
       return
@@ -64,17 +65,26 @@ export default function RecargarScreen() {
 
     Keyboard.dismiss()
 
-    setModalOpen(true)
+    try {
+      const request: RechargeRequest = {
+        phone: sanitizedNumber,
+        amount: amount,
+        carrier: carrier,
+        extraData: recargaType,
+      }
+      const response = await recharge(request)
 
-    console.log({
-      carrier,
-      recargaType,
-      amount,
-      phoneNumber,
-      phoneNumberConfirmation,
-      customerType,
-      customer,
-    })
+      if (response.code === 1) {
+        setModalOpen(true)
+      } else {
+        Alert.alert('Error', response.message)
+      }
+    } catch (err) {
+      console.log(err)
+      Alert.alert('Error', 'Error al procesar la recarga')
+    }
+
+    return
   }
 
   const resetInputs = () => {

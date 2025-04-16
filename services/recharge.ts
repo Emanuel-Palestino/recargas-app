@@ -9,7 +9,12 @@ export type RechargeRequest = {
   extraData?: string
 }
 
-export const recharge = async (request: RechargeRequest) => {
+export type RechargeResponse = {
+	code: number
+	message: string
+}
+
+export const recharge = async (request: RechargeRequest): Promise<RechargeResponse> => {
   const { phone, amount, carrier, extraData = "" } = request
 
   const response = await fetch(`${API_URL}/recharge`, {
@@ -29,5 +34,7 @@ export const recharge = async (request: RechargeRequest) => {
     throw new Error('Error al procesar la recarga')
   }
 
-  return response.json()
+  const data = await response.json() as RechargeResponse
+
+  return data
 }
