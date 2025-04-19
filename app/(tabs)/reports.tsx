@@ -3,12 +3,11 @@ import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { colorSchema } from "@/assets/colorSchema";
 import { Button } from "@/components/ui/Button";
-
-const data = [
-  { id: '1', fecha: '2025-03-20', celular: '0991234567', monto: '$50.00' },
-];
+import { getTransactions } from "@/services/recharge";
+import { Transaction } from "@/types/Transaction";
 
 export default function ReportsScreen() {
+  const [data, setData] = useState<Transaction[]>([]);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
 
@@ -40,13 +39,21 @@ export default function ReportsScreen() {
     });
   };
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: { item: Transaction }) => (
     <View style={styles.row}>
-      <Text style={styles.cell}>{item.fecha}</Text>
-      <Text style={styles.cell}>{item.celular}</Text>
-      <Text style={styles.cell}>{item.monto}</Text>
+      <Text style={styles.cell}>{new Date(item.date).toLocaleString()}</Text>
+      <Text style={styles.cell}>{item.phone}</Text>
+      <Text style={styles.cell}>{item.amount}</Text>
     </View>
   );
+
+  const generateReport = async () => {
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    const response = await getTransactions(startDate.getTime(), endDate.getTime())
+    setData(response)
+  }
 
   return (
     <View style={styles.container}>
@@ -76,7 +83,7 @@ export default function ReportsScreen() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button text="Generar" size="sm" onClick={() => console.log('Generar')} />
+          <Button text="Generar" size="sm" onClick={generateReport} />
         </View>
       </View>
 
@@ -90,7 +97,7 @@ export default function ReportsScreen() {
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => String(item.id)}
           style={styles.list}
         />
 

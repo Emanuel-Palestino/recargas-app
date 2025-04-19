@@ -1,4 +1,5 @@
 import { Carrier } from "@/types/Carriers"
+import { Transaction } from "@/types/Transaction"
 
 const API_URL = process.env.EXPO_PUBLIC_RECHARGE_SVC_API_URL
 
@@ -41,5 +42,21 @@ export const recharge = async (request: RechargeRequest): Promise<RechargeRespon
 
   const data = await response.json() as RechargeResponse
 
+  return data
+}
+
+export const getTransactions = async (startDate: number, endDate: number): Promise<Transaction[]> => {
+  const startDateString = new Date(startDate).toISOString()
+  const endDateString = new Date(endDate).toISOString()
+
+  const response = await fetch(`${API_URL}/transactions?startDate=${startDateString}&endDate=${endDateString}`, {
+    method: 'GET',
+  })
+
+  if (!response.ok) {
+    throw new Error('Error al obtener las transacciones')
+  }
+  
+  const data = await response.json() as Transaction[]
   return data
 }
