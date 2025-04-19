@@ -76,6 +76,8 @@ export default function RecargarScreen() {
 
       if (response.code === 1) {
         setModalOpen(true)
+      } else if (response.code === 2) {
+        Alert.alert('Error', 'Número de celular inválido')
       } else {
         Alert.alert('Error', response.message)
       }

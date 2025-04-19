@@ -30,6 +30,11 @@ export const recharge = async (request: RechargeRequest): Promise<RechargeRespon
     }),
   })
 
+  if (response.status === 400) {
+    const errorResponse = await response.json() as RechargeResponse
+    return errorResponse
+  }
+
   if (!response.ok) {
     throw new Error('Error al procesar la recarga')
   }
