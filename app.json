@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/images/adaptive-icon.png",
       "package": "com.emanuelpalestino.recargasapp"
     },
     "web": {
