@@ -5,7 +5,7 @@ import { colorSchema } from "@/assets/colorSchema";
 import { Button } from "@/components/ui/Button";
 import { getTransactions } from "@/services/recharge";
 import { Transaction } from "@/types/Transaction";
-import { UsernameNotFoundError } from "@/types/errors";
+import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors";
 
 export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
@@ -58,6 +58,8 @@ export default function ReportsScreen() {
     } catch (error) {
       if (error instanceof UsernameNotFoundError) {
         Alert.alert('Error', 'No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de inicio.')
+      } else if (error instanceof InvalidUsernameError) {
+        Alert.alert('Error', 'Nombre de usuario inválido. Por favor, ingrese un nombre de usuario válido en la pantalla de inicio.')
       } else {
         console.error(error)
         Alert.alert('Error', 'Error al obtener el reporte')

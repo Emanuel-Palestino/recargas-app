@@ -1,6 +1,6 @@
 import { getUsername } from "@/store/userStore"
 import { Carrier } from "@/types/Carriers"
-import { UsernameNotFoundError } from "@/types/errors"
+import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
 import { Transaction } from "@/types/Transaction"
 
 const API_URL = process.env.EXPO_PUBLIC_RECHARGE_SVC_API_URL
@@ -13,8 +13,8 @@ export type RechargeRequest = {
 }
 
 export type RechargeResponse = {
-	code: number
-	message: string
+  code: number
+  message: string
 }
 
 export const recharge = async (request: RechargeRequest): Promise<RechargeResponse> => {
@@ -39,7 +39,9 @@ export const recharge = async (request: RechargeRequest): Promise<RechargeRespon
     }),
   })
 
-  if (response.status === 400) {
+  if (response.status === 403) {
+    throw new InvalidUsernameError('Invalid username')
+  } else if (response.status === 400) {
     const errorResponse = await response.json() as RechargeResponse
     return errorResponse
   }
@@ -69,10 +71,14 @@ export const getTransactions = async (startDate: number, endDate: number): Promi
     },
   })
 
+  if (response.status === 403) {
+    throw new InvalidUsernameError('Invalid username')
+  }
+
   if (!response.ok) {
     throw new Error('Error al obtener las transacciones')
   }
-  
+
   const data = await response.json() as Transaction[]
   return data
 }
