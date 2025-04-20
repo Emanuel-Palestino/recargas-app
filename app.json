@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "recargas-app",
+    "name": "Recarga Facil",
     "slug": "recargas-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.emanuelpalestino.recargasapp"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,20 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b1f2410e-7e1c-435c-b747-e2f9ee7a3192"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b1f2410e-7e1c-435c-b747-e2f9ee7a3192"
     }
   }
 }
