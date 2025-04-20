@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { colorSchema } from "@/assets/colorSchema";
@@ -6,12 +6,19 @@ import { Button } from "@/components/ui/Button";
 import { getTransactions } from "@/services/recharge";
 import { Transaction } from "@/types/Transaction";
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState<boolean>(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      setData([]);
+    }, [])
+  );
 
   const onChangeStartDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
     const currentDate = selectedDate || startDate;
@@ -45,7 +52,7 @@ export default function ReportsScreen() {
     <View style={styles.row}>
       <Text style={styles.cell}>{new Date(item.date).toLocaleString()}</Text>
       <Text style={styles.cell}>{item.phone}</Text>
-      <Text style={styles.cell}>{item.amount}</Text>
+      <Text style={styles.cell}>${item.amount}</Text>
     </View>
   );
 
@@ -126,7 +133,7 @@ export default function ReportsScreen() {
         <View style={styles.footer}>
           <Text style={[styles.cell, styles.footerText]}>Total</Text>
           <Text style={styles.cell}></Text>
-          <Text style={[styles.cell, styles.footerText]}>${1000}</Text>
+          <Text style={[styles.cell, styles.footerText]}>${data.reduce<number>((prev, curr) => prev + curr.amount, 0)}</Text>
         </View>
       </SafeAreaView>
     </View>
