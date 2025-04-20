@@ -4,6 +4,8 @@ import { Pressable, StyleSheet, Text } from "react-native";
 interface ButtonProps {
   text: string;
   onClick: () => void;
+  loading?: boolean;
+  disabled?: boolean;
   size?: 'sm' | 'md' | 'lg';
   color?: 'primary' | 'secondary' | 'accent';
 }
@@ -11,6 +13,8 @@ interface ButtonProps {
 export const Button = ({
   text,
   onClick,
+  loading = false,
+  disabled = false,
   size = 'md',
   color = 'primary'
 }: ButtonProps) => (
@@ -18,13 +22,14 @@ export const Button = ({
     <Text
       style={[
         styles.button,
+        disabled && styles.buttonDisabled,
         size === 'sm' && styles.buttonSm,
         size === 'lg' && styles.buttonLg,
         color === 'secondary' && styles.buttonSecondary,
         color === 'accent' && styles.buttonAccent,
       ]}
     >
-      {text}
+      {loading ? 'Cargando...' : text}
     </Text>
   </Pressable>
 )
@@ -39,6 +44,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colorSchema.light.primaryContent,
     textAlign: 'center',
+  },
+  buttonDisabled: {
+    opacity: 0.5,
   },
   buttonSm: {
     minWidth: 80,

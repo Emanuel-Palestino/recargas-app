@@ -25,6 +25,7 @@ export default function RecargarScreen() {
   const [phoneNumberConfirmation, setPhoneNumberConfirmation] = useState<string>('')
   const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.GUESS)
   const [customer, setCustomer] = useState<string>('1')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
@@ -52,8 +53,11 @@ export default function RecargarScreen() {
   }
 
   const recargar = async () => {
+    setLoading(true)
+
     if (phoneNumber !== phoneNumberConfirmation) {
       Alert.alert('Error', 'Los números de celular no coinciden')
+      setLoading(false)
       return
     }
 
@@ -61,6 +65,7 @@ export default function RecargarScreen() {
 
     if (sanitizedNumber.length !== 10) {
       Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
+      setLoading(false)
       return
     }
 
@@ -91,6 +96,8 @@ export default function RecargarScreen() {
         console.log(err)
         Alert.alert('Error', 'Error al procesar la recarga')
       }
+    } finally {
+      setLoading(false)
     }
 
     return
@@ -149,7 +156,12 @@ export default function RecargarScreen() {
         <View style={{ flex: 1 }} />
 
         <View style={styles.actionsContainer}>
-          <Button text="Recargar" onClick={recargar} />
+          <Button
+            text="Recargar"
+            onClick={recargar}
+            loading={loading}
+            disabled={loading}
+          />
         </View>
       </View>
 

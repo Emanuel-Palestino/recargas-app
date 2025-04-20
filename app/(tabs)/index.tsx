@@ -6,10 +6,19 @@ import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Alert } from "
 
 export default function Index() {
   const [username, setUsername] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleUsernameChange = async () => {
-    await storeUsername(username)
-    Alert.alert("Éxito", "Nombre de usuario guardado")
+    setLoading(true);
+    try {
+      await storeUsername(username)
+      Alert.alert("Éxito", "Nombre de usuario guardado")
+    } catch (error) {
+      console.error(error)
+      Alert.alert("Error", "No se pudo guardar el nombre de usuario")
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -40,7 +49,12 @@ export default function Index() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button text="Guardar usuario" onClick={handleUsernameChange} />
+          <Button
+            text="Guardar usuario"
+            onClick={handleUsernameChange}
+            loading={loading}
+            disabled={loading}
+          />
         </View>
 
         <View style={{ flex: 1 }} />

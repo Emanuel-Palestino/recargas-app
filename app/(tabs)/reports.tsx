@@ -11,6 +11,7 @@ export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onChangeStartDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
     const currentDate = selectedDate || startDate;
@@ -49,6 +50,7 @@ export default function ReportsScreen() {
   );
 
   const generateReport = async () => {
+    setLoading(true);
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
 
@@ -64,8 +66,9 @@ export default function ReportsScreen() {
         console.error(error)
         Alert.alert('Error', 'Error al obtener el reporte')
       }
+    } finally {
+      setLoading(false)
     }
-
   }
 
   return (
@@ -96,7 +99,13 @@ export default function ReportsScreen() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button text="Generar" size="sm" onClick={generateReport} />
+          <Button
+            text="Generar"
+            size="sm"
+            onClick={generateReport}
+            loading={loading}
+            disabled={loading}
+          />
         </View>
       </View>
 
