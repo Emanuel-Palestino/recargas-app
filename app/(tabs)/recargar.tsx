@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/Button';
 import { recharge, RechargeRequest } from '@/services/recharge';
 import { Carrier, TelcelProductType } from '@/types/Carriers';
 import { CustomerType } from '@/types/CustomerType';
+import { UsernameNotFoundError } from '@/types/errors';
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, Alert, KeyboardAvoidingView, Keyboard } from "react-native"
 
@@ -82,8 +83,12 @@ export default function RecargarScreen() {
         Alert.alert('Error', response.message)
       }
     } catch (err) {
-      console.log(err)
-      Alert.alert('Error', 'Error al procesar la recarga')
+      if (err instanceof UsernameNotFoundError) {
+        Alert.alert('Error', 'No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de inicio.')
+      } else {
+        console.log(err)
+        Alert.alert('Error', 'Error al procesar la recarga')
+      }
     }
 
     return

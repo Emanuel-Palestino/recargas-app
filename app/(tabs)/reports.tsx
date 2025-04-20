@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { colorSchema } from "@/assets/colorSchema";
 import { Button } from "@/components/ui/Button";
 import { getTransactions } from "@/services/recharge";
 import { Transaction } from "@/types/Transaction";
+import { UsernameNotFoundError } from "@/types/errors";
 
 export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
@@ -51,8 +52,18 @@ export default function ReportsScreen() {
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
 
-    const response = await getTransactions(startDate.getTime(), endDate.getTime())
-    setData(response)
+    try {
+      const response = await getTransactions(startDate.getTime(), endDate.getTime())
+      setData(response)
+    } catch (error) {
+      if (error instanceof UsernameNotFoundError) {
+        Alert.alert('Error', 'No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de inicio.')
+      } else {
+        console.error(error)
+        Alert.alert('Error', 'Error al obtener el reporte')
+      }
+    }
+
   }
 
   return (

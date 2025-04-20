@@ -1,4 +1,6 @@
+import { getUsername } from "@/store/userStore"
 import { Carrier } from "@/types/Carriers"
+import { UsernameNotFoundError } from "@/types/errors"
 import { Transaction } from "@/types/Transaction"
 
 const API_URL = process.env.EXPO_PUBLIC_RECHARGE_SVC_API_URL
@@ -18,10 +20,16 @@ export type RechargeResponse = {
 export const recharge = async (request: RechargeRequest): Promise<RechargeResponse> => {
   const { phone, amount, carrier, extraData = "" } = request
 
+  const username = await getUsername()
+  if (!username) {
+    throw new UsernameNotFoundError('Username not found')
+  }
+
   const response = await fetch(`${API_URL}/recharge`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      username: username,
     },
     body: JSON.stringify({
       phone,
@@ -49,8 +57,16 @@ export const getTransactions = async (startDate: number, endDate: number): Promi
   const startDateString = new Date(startDate).toISOString()
   const endDateString = new Date(endDate).toISOString()
 
+  const username = await getUsername()
+  if (!username) {
+    throw new UsernameNotFoundError('Username not found')
+  }
+
   const response = await fetch(`${API_URL}/transactions?startDate=${startDateString}&endDate=${endDateString}`, {
     method: 'GET',
+    headers: {
+      username: username,
+    },
   })
 
   if (!response.ok) {
