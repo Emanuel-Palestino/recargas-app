@@ -7,12 +7,10 @@ import { requestPermissionsAsync } from 'expo-contacts';
 export default function RootLayout() {
   useEffect(() => {
     (async () => {
-      const { status } = await requestPermissionsAsync();
-      if (status === 'granted') {
-
-      }
+      await requestPermissionsAsync();
     })();
   }, []);
+
   return (
     <>
       <StatusBar style='dark' />
