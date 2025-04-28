@@ -13,7 +13,7 @@ import { Carrier, TelcelProductType } from '@/types/Carriers';
 import { CustomerType } from '@/types/CustomerType';
 import { InvalidUsernameError, UsernameNotFoundError } from '@/types/errors';
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, Alert, KeyboardAvoidingView, Keyboard } from "react-native"
+import { View, StyleSheet, Alert, KeyboardAvoidingView, Keyboard, ScrollView } from "react-native"
 
 
 export default function RecargarScreen() {
@@ -118,52 +118,54 @@ export default function RecargarScreen() {
       style={{ flex: 1 }}
       behavior="padding"
     >
-      <View style={styles.container}>
-        <CarrierSelection setCarrier={setCarrier} carrier={carrier} />
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+        <View style={styles.container}>
+          <CarrierSelection setCarrier={setCarrier} carrier={carrier} />
 
-        <RecargaTypeSelection
-          setRecargaType={setRecargaType}
-          recargaType={recargaType}
-          disabled={carrier !== Carrier.TELCEL}
-        />
-
-        <AmountSelection
-          amountsObj={getCarrierAmounts()}
-          setAmount={setAmount}
-          amount={amount}
-        />
-
-        <CustomerTypeSelection setCustomerType={setCustomerType} customerType={customerType} />
-
-        {
-          customerType === CustomerType.GUESS &&
-          <PhoneNumberInputGroup
-            phoneNumber={phoneNumber}
-            setPhoneNumber={setPhoneNumber}
-            phoneNumberConfirmation={phoneNumberConfirmation}
-            setPhoneNumberConfirmation={setPhoneNumberConfirmation}
+          <RecargaTypeSelection
+            setRecargaType={setRecargaType}
+            recargaType={recargaType}
+            disabled={carrier !== Carrier.TELCEL}
           />
-        }
 
-        {
-          customerType === CustomerType.REGISTERED &&
-          <CustomerSelection
-            setCustomer={setCustomer}
-            customer={customer}
+          <AmountSelection
+            amountsObj={getCarrierAmounts()}
+            setAmount={setAmount}
+            amount={amount}
           />
-        }
 
-        <View style={{ flex: 1 }} />
+          <CustomerTypeSelection setCustomerType={setCustomerType} customerType={customerType} />
 
-        <View style={styles.actionsContainer}>
-          <Button
-            text="Recargar"
-            onClick={recargar}
-            loading={loading}
-            disabled={loading}
-          />
+          {
+            customerType === CustomerType.GUESS &&
+            <PhoneNumberInputGroup
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
+              phoneNumberConfirmation={phoneNumberConfirmation}
+              setPhoneNumberConfirmation={setPhoneNumberConfirmation}
+            />
+          }
+
+          {
+            customerType === CustomerType.REGISTERED &&
+            <CustomerSelection
+              setCustomer={setCustomer}
+              customer={customer}
+            />
+          }
+
+          <View style={{ flex: 1 }} />
+
+          <View style={styles.actionsContainer}>
+            <Button
+              text="Recargar"
+              onClick={recargar}
+              loading={loading}
+              disabled={loading}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
       <RecargaCompletedModal
         open={modalOpen}
