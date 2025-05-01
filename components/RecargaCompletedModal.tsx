@@ -1,8 +1,7 @@
 import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { Carrier, TelcelProductType } from "@/types/Carriers"
-import Ionicons from "@expo/vector-icons/MaterialIcons"
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native"
+import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
 
 
@@ -29,34 +28,45 @@ export const RecargaCompletedModal = ({
 }: RecargaCompletedModalProps) => {
 
   return (
-    <Modal animationType="slide" transparent={true} visible={open} /* backdropColor="red" */>
-      <View style={styles.modalContent}>
-        <Text style={styles.title}>Recarga Realizada con Éxito</Text>
+    <Modal
+      animationType="slide"
+      //transparent={true}
+      visible={open}
+      /* backdropColor="red" */
+      onRequestClose={onClose}
+      hardwareAccelerated={true}
+      presentationStyle="overFullScreen"
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 
-        <Text style={styles.subtitle}>Fecha y hora</Text>
-        <Text style={styles.label}>{date}</Text>
+        <View style={styles.modalContent}>
+          <Text style={styles.title}>Recarga Realizada con Éxito</Text>
 
-        <Text style={styles.subtitle}>Compañía telefónica</Text>
-        <Text style={styles.label}>{DISPLAYED_CARRIER[carrier]}</Text>
+          <Text style={styles.subtitle}>Fecha y hora</Text>
+          <Text style={styles.value}>{date}</Text>
 
-        <Text style={styles.subtitle}>Tipo de recarga</Text>
-        <Text style={styles.label}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
+          <Text style={styles.subtitle}>Compañía telefónica</Text>
+          <Text style={styles.value}>{DISPLAYED_CARRIER[carrier]}</Text>
 
-        <Text style={styles.subtitle}>Número celular</Text>
-        <Text style={styles.label}>{phoneNumber}</Text>
+          <Text style={styles.subtitle}>Tipo de recarga</Text>
+          <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
 
-        <Text style={styles.subtitle}>Monto</Text>
-        <Text style={styles.label}>${amount}</Text>
+          <Text style={styles.subtitle}>Número celular</Text>
+          <Text style={styles.value}>{phoneNumber}</Text>
 
-        <Text style={styles.subtitle}>Número de referencia</Text>
-        <Text style={styles.label}>{reference}</Text>
+          <Text style={styles.subtitle}>Monto</Text>
+          <Text style={styles.value}>${amount}</Text>
 
-        <View style={styles.actionsContainer}>
-          <Button text="Finalizar" onClick={onClose} />
-          <Button text="Compartir" color="accent" onClick={() => { }} />
-          <Button text="Guardar Cliente" color="secondary" onClick={() => { }} />
+          {/* <Text style={styles.subtitle}>Número de referencia</Text>
+          <Text style={styles.value}>{reference}</Text> */}
+
+          <View style={styles.actionsContainer}>
+            <Button text="Finalizar" onClick={onClose} />
+            {/* <Button text="Compartir" color="accent" onClick={() => { }} />
+            <Button text="Guardar Cliente" color="secondary" onClick={() => { }} /> */}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Modal>
   )
 
@@ -64,40 +74,43 @@ export const RecargaCompletedModal = ({
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '68%',
+    flex: 1,
+    height: '100%',
     width: '100%',
-    backgroundColor: colorSchema.light.base200,
-    borderTopRightRadius: 18,
-    borderTopLeftRadius: 18,
+    backgroundColor: colorSchema.light.base100,
     position: 'absolute',
-    bottom: 0,
-    padding: 20,
+    top: 0,
+    padding: 10,
+    paddingVertical: 16,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     color: colorSchema.light.baseContent,
-    fontSize: 22,
+    fontSize: 26,
+    textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   subtitle: {
     color: 'gray',
-    fontSize: 16,
-  },
-  label: {
-    color: colorSchema.light.baseContent,
     fontSize: 18,
+  },
+  value: {
+    color: colorSchema.light.baseContent,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 14,
   },
   actionsContainer: {
     width: '100%',
-    marginTop: 20,
+    marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    gap: 10,
+    columnGap: 12,
+    rowGap: 8,
   },
 })
