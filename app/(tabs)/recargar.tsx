@@ -134,7 +134,12 @@ export default function RecargarScreen() {
             amount={amount}
           />
 
-          <CustomerTypeSelection setCustomerType={setCustomerType} customerType={customerType} />
+          <CustomerTypeSelection
+            setCustomerType={setCustomerType}
+            customerType={customerType}
+            setPhoneNumber={setPhoneNumber}
+            setPhoneNumberConfirmation={setPhoneNumberConfirmation}
+          />
 
           {
             customerType === CustomerType.GUESS &&
