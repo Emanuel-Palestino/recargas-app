@@ -67,6 +67,7 @@ export const CustomerTypeSelection = ({
           size="sm"
           color="accent"
           text="Contactos"
+          disabled={customerType === CustomerType.REGISTERED}
           onClick={handleContactSelection}
         />
       </View>

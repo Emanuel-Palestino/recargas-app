@@ -18,7 +18,7 @@ export const Button = ({
   size = 'md',
   color = 'primary'
 }: ButtonProps) => (
-  <Pressable onPress={onClick}>
+  <Pressable onPress={onClick} disabled={disabled}>
     <Text
       style={[
         styles.button,
