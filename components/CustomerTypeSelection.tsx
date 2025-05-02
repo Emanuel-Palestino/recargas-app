@@ -36,7 +36,7 @@ export const CustomerTypeSelection = ({
     const primaryPhoneNumber = contact.phoneNumbers.find(phoneNumber => phoneNumber.isPrimary)
 
     if (!primaryPhoneNumber || !primaryPhoneNumber.number) {
-      Alert.alert('Error', 'El contacto no tiene un número de teléfono primario')
+      Alert.alert('Error', 'El contacto no tiene un número de teléfono primario o tiene múltiples números de teléfono.')
       return
     }
 
