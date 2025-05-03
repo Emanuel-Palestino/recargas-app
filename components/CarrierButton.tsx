@@ -37,21 +37,24 @@ export const CarrierButton = ({
 
 const styles = StyleSheet.create({
   button: {
+    width: '48%',
     backgroundColor: colorSchema.light.base100,
-    paddingHorizontal: 6,
-    paddingVertical: 0,
-    flexGrow: 1,
+    padding: 12,
     borderRadius: 10,
     borderWidth: 2.5,
     borderColor: colorSchema.light.base300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    marginHorizontal: '1%',
   },
   buttonSelected: {
     backgroundColor: colorSchema.light.base300,
     borderColor: colorSchema.light.secondary,
   },
   image: {
-    width: 'auto',
-    height: 60,
-    resizeMode: 'contain'
-  }
+    width: 100,
+    height: 50,
+    resizeMode: 'contain',
+  },
 })

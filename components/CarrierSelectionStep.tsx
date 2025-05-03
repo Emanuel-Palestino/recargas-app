@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { CarrierButton } from "./CarrierButton"
-import { Carrier } from "@/types/Carriers"
+import { Carrier, TelcelProductType } from "@/types/Carriers"
 import { colorSchema } from "@/assets/colorSchema"
 
 
@@ -20,24 +20,22 @@ const carriers: { value: Carrier, image: any }[] = [
   },
 ]
 
-interface CarrierSelectionProps {
+interface CarrierSelectionStepProps {
   setCarrier: (carrier: Carrier) => void
   carrier: Carrier
+  recargaType: TelcelProductType
+  setRecargaType: (recargaType: TelcelProductType) => void
 }
 
-export const CarrierSelection = ({
+export const CarrierSelectionStep = ({
   setCarrier,
   carrier,
-}: CarrierSelectionProps) => {
+  recargaType,
+  setRecargaType,
+}: CarrierSelectionStepProps) => {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={styles.title}
-      >
-        Compañía telefónica
-      </Text>
-
       <View style={styles.buttonsContainer}>
         {
           carriers.map(carr => (
@@ -59,15 +57,15 @@ export const CarrierSelection = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 4
+    rowGap: 4,
+    flexGrow: 1,
   },
   title: {
     color: colorSchema.light.baseContent,
   },
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10
-  }
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
 })
