@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native"
 import { CarrierButton } from "./CarrierButton"
-import { Carrier, TelcelProductType } from "@/types/Carriers"
-import { colorSchema } from "@/assets/colorSchema"
+import { Carrier } from "@/types/Carriers"
 
 
 const carriers: { value: Carrier, image: any }[] = [
@@ -23,15 +22,11 @@ const carriers: { value: Carrier, image: any }[] = [
 interface CarrierSelectionStepProps {
   setCarrier: (carrier: Carrier) => void
   carrier: Carrier
-  recargaType: TelcelProductType
-  setRecargaType: (recargaType: TelcelProductType) => void
 }
 
 export const CarrierSelectionStep = ({
   setCarrier,
   carrier,
-  recargaType,
-  setRecargaType,
 }: CarrierSelectionStepProps) => {
 
   return (
@@ -59,9 +54,6 @@ const styles = StyleSheet.create({
     width: '100%',
     rowGap: 4,
     flexGrow: 1,
-  },
-  title: {
-    color: colorSchema.light.baseContent,
   },
   buttonsContainer: {
     flexDirection: 'row',
