@@ -1,0 +1,44 @@
+import { Carrier, TelcelProductType } from '@/types/Carriers'
+import { create } from 'zustand'
+
+type RechargeStore = {
+  currentStep: number
+  phoneNumber: string
+  carrier: Carrier
+  recargaType: TelcelProductType
+  amount: number
+}
+
+type RechargeStoreActions = {
+  goToNextStep: () => void
+  goToPreviousStep: () => void
+  setPhoneNumber: (phoneNumber: string) => void
+  setCarrier: (carrier: Carrier) => void
+  setRecargaType: (recargaType: TelcelProductType) => void
+  setAmount: (amount: number) => void
+  resetState: () => void
+}
+
+export type RechargeStoreState = RechargeStore & RechargeStoreActions
+
+export const rechargeStore = create<RechargeStoreState>()((set) => ({
+  currentStep: 0,
+  phoneNumber: '',
+  carrier: Carrier.TELCEL,
+  recargaType: TelcelProductType.PAQUETE,
+  amount: 10,
+
+  goToNextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
+  goToPreviousStep: () => set((state) => ({ currentStep: state.currentStep - 1 })),
+  setPhoneNumber: (phoneNumber) => set({ phoneNumber }),
+  setCarrier: (carrier) => set({ carrier }),
+  setRecargaType: (recargaType) => set({ recargaType }),
+  setAmount: (amount) => set({ amount }),
+  resetState: () => set({
+    currentStep: 0,
+    phoneNumber: '',
+    carrier: Carrier.TELCEL,
+    recargaType: TelcelProductType.PAQUETE,
+    amount: 10
+  }),
+}))
