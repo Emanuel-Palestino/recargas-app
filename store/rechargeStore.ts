@@ -21,7 +21,7 @@ type RechargeStoreActions = {
 
 export type RechargeStoreState = RechargeStore & RechargeStoreActions
 
-export const rechargeStore = create<RechargeStoreState>()((set) => ({
+export const useRechargeStore = create<RechargeStoreState>()((set) => ({
   currentStep: 0,
   phoneNumber: '',
   carrier: Carrier.TELCEL,

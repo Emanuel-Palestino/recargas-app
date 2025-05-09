@@ -8,6 +8,8 @@ export const colorSchema = {
     accentContent: '#582f0e',
     neutral: '#0b0809',
     neutralContent: '#e7e3e4',
+    medium: '#dbdbdb',
+    mediumContent: '#1b1718',
     base100: '#ffffff',
     base200: '#f8f8f8',
     base300: '#eeeeee',

@@ -10,7 +10,7 @@ interface StepperProps {
 
 export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
   const currentStepName = steps[currentStep].name;
-  const nextStepName = steps[currentStep + 1].name;
+  const nextStepName = currentStep + 1 < steps.length ? steps[currentStep + 1].name : null;
 
   const totalSteps = steps.length;
   const progress = (currentStep + 1) / totalSteps;
@@ -21,7 +21,9 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
     <View style={styles.container}>
       <View style={styles.leftContainer}>
         <Text style={styles.currentStepText}>{currentStepName}</Text>
-        <Text style={styles.nextStepText}>Siguiente: {nextStepName}</Text>
+        {nextStepName && (
+          <Text style={styles.nextStepText}>Siguiente: {nextStepName}</Text>
+        )}
       </View>
 
       {/* Progress circle */}

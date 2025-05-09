@@ -7,7 +7,7 @@ interface ButtonProps {
   loading?: boolean;
   disabled?: boolean;
   size?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'secondary' | 'accent';
+  color?: 'primary' | 'secondary' | 'accent' | 'medium';
 }
 
 export const Button = ({
@@ -27,6 +27,7 @@ export const Button = ({
         size === 'lg' && styles.buttonLg,
         color === 'secondary' && styles.buttonSecondary,
         color === 'accent' && styles.buttonAccent,
+        color === 'medium' && styles.buttonMedium,
       ]}
     >
       {loading ? 'Cargando...' : text}
@@ -68,4 +69,8 @@ const styles = StyleSheet.create({
     backgroundColor: colorSchema.light.accent,
     color: colorSchema.light.accentContent,
   },
+  buttonMedium: {
+    backgroundColor: colorSchema.light.medium,
+    color: colorSchema.light.mediumContent,
+  }
 });
