@@ -1,23 +1,16 @@
 import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
-import { Carrier, TelcelProductType } from "@/types/Carriers"
+import { useRechargeStore } from "@/store/rechargeStore"
 import { StyleSheet, Text, View } from "react-native"
 
-interface RechargeResumeStepProps {
-  carrier: Carrier
-  type: TelcelProductType
-  phoneNumber: string
-  amount: number
-  benefits: string
-}
-
-export const RechargeResumeStep = ({
-  carrier,
-  type,
-  phoneNumber,
-  amount,
-  benefits,
-}: RechargeResumeStepProps) => {
+export const RechargeResumeStep = () => {
+  const {
+    carrier,
+    phoneNumber,
+    amount,
+    recargaType,
+    benefits,
+  } = useRechargeStore()
 
   return (
     <View style={styles.content}>
@@ -25,7 +18,7 @@ export const RechargeResumeStep = ({
       <Text style={styles.value}>{DISPLAYED_CARRIER[carrier]}</Text>
 
       <Text style={styles.subtitle}>Tipo de recarga</Text>
-      <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
+      <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[recargaType]}</Text>
 
       <Text style={styles.subtitle}>Número celular</Text>
       <Text style={styles.value}>{phoneNumber}</Text>

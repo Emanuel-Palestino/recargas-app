@@ -2,16 +2,11 @@ import { colorSchema } from "@/assets/colorSchema"
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
 import { Button } from "./ui/Button"
 import { presentContactPickerAsync } from "expo-contacts"
+import { useRechargeStore } from "@/store/rechargeStore"
 
-interface CustomerStepProps {
-  phoneNumber: string
-  setPhoneNumber: (numero: string) => void
-}
+export const CustomerStep = () => {
 
-export const CustomerStep = ({
-  phoneNumber,
-  setPhoneNumber,
-}: CustomerStepProps) => {
+  const { phoneNumber, setPhoneNumber } = useRechargeStore()
 
   const handleContactSelection = async () => {
     const contact = await presentContactPickerAsync()

@@ -57,21 +57,8 @@ export default function RecargarScreen() {
       setRecargaType(TelcelProductType.PAQUETE)
     }
 
-    setAmount(10)
+    setAmount(0)
   }, [carrier])
-
-  const getCarrierAmounts = (): Record<number, string> => {
-    switch (carrier) {
-      case Carrier.TELCEL:
-        return TELCEL_PRODUCTS[recargaType]
-      case Carrier.MOVISTAR:
-        return MOVISTAR_PRODUCTS
-      case Carrier.ATT:
-        return ATT_PRODUCTS
-      default:
-        return {}
-    }
-  }
 
   const recargar = async () => {
     setLoading(true)
@@ -135,38 +122,19 @@ export default function RecargarScreen() {
           <Stepper steps={rechargeSteps} currentStep={currentStep} />
 
           {currentStep === 0 && (
-            <CustomerStep
-              phoneNumber={phoneNumber}
-              setPhoneNumber={setPhoneNumber}
-            />
+            <CustomerStep />
           )}
 
           {currentStep === 1 && (
-            <CarrierSelectionStep
-              setCarrier={setCarrier}
-              carrier={carrier}
-            />
+            <CarrierSelectionStep />
           )}
 
           {currentStep === 2 && (
-            <AmountSelection
-              carrier={carrier}
-              recargaType={recargaType}
-              setRecargaType={setRecargaType}
-              amountsAndBenefits={getCarrierAmounts()}
-              setAmount={setAmount}
-              amount={amount}
-            />
+            <AmountSelection />
           )}
 
           {currentStep === 3 && (
-            <RechargeResumeStep
-              carrier={carrier}
-              type={recargaType}
-              phoneNumber={phoneNumber}
-              amount={amount}
-              benefits={getCarrierAmounts()[amount]}
-            />
+            <RechargeResumeStep />
           )}
 
           <View style={styles.actionsContainer}>

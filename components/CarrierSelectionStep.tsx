@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native"
 import { CarrierButton } from "./CarrierButton"
 import { Carrier } from "@/types/Carriers"
+import { useRechargeStore } from "@/store/rechargeStore"
 
 
 const carriers: { value: Carrier, image: any }[] = [
@@ -19,15 +20,8 @@ const carriers: { value: Carrier, image: any }[] = [
   },
 ]
 
-interface CarrierSelectionStepProps {
-  setCarrier: (carrier: Carrier) => void
-  carrier: Carrier
-}
-
-export const CarrierSelectionStep = ({
-  setCarrier,
-  carrier,
-}: CarrierSelectionStepProps) => {
+export const CarrierSelectionStep = () => {
+  const { carrier, setCarrier } = useRechargeStore()
 
   return (
     <View style={styles.container}>

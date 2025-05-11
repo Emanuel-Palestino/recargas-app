@@ -7,6 +7,7 @@ type RechargeStore = {
   carrier: Carrier
   recargaType: TelcelProductType
   amount: number
+  benefits: string
 }
 
 type RechargeStoreActions = {
@@ -16,6 +17,7 @@ type RechargeStoreActions = {
   setCarrier: (carrier: Carrier) => void
   setRecargaType: (recargaType: TelcelProductType) => void
   setAmount: (amount: number) => void
+  setBenefits: (benefits: string) => void
   resetState: () => void
 }
 
@@ -26,7 +28,8 @@ export const useRechargeStore = create<RechargeStoreState>()((set) => ({
   phoneNumber: '',
   carrier: Carrier.TELCEL,
   recargaType: TelcelProductType.PAQUETE,
-  amount: 10,
+  amount: 0,
+  benefits: '',
 
   goToNextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
   goToPreviousStep: () => set((state) => ({ currentStep: state.currentStep - 1 })),
@@ -34,6 +37,7 @@ export const useRechargeStore = create<RechargeStoreState>()((set) => ({
   setCarrier: (carrier) => set({ carrier }),
   setRecargaType: (recargaType) => set({ recargaType }),
   setAmount: (amount) => set({ amount }),
+  setBenefits: (benefits) => set({ benefits }),
   resetState: () => set({
     currentStep: 0,
     phoneNumber: '',
