@@ -43,6 +43,7 @@ export const useRechargeStore = create<RechargeStoreState>()((set) => ({
     phoneNumber: '',
     carrier: Carrier.TELCEL,
     recargaType: TelcelProductType.PAQUETE,
-    amount: 10
+    amount: 0,
+    benefits: '',
   }),
 }))

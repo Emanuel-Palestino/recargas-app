@@ -1,5 +1,4 @@
 import { colorSchema } from '@/assets/colorSchema';
-import { ATT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from '@/assets/products';
 import { AmountSelection } from '@/components/AmountSelectionStep';
 import { CarrierSelectionStep } from '@/components/CarrierSelectionStep';
 import { CustomerStep } from '@/components/CustomerStep';
@@ -39,15 +38,14 @@ export default function RecargarScreen() {
     phoneNumber,
     setPhoneNumber,
     carrier,
-    setCarrier,
     amount,
     setAmount,
     recargaType,
     setRecargaType,
+    resetState,
   } = useRechargeStore()
 
   const [loading, setLoading] = useState<boolean>(false)
-
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -62,20 +60,11 @@ export default function RecargarScreen() {
 
   const recargar = async () => {
     setLoading(true)
-
-    const sanitizedNumber = phoneNumber.replace(/\D/g, '')
-
-    if (sanitizedNumber.length !== 10) {
-      Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
-      setLoading(false)
-      return
-    }
-
     Keyboard.dismiss()
 
     try {
       const request: RechargeRequest = {
-        phone: sanitizedNumber,
+        phone: phoneNumber,
         amount: amount,
         carrier: carrier,
         extraData: recargaType,
@@ -106,10 +95,27 @@ export default function RecargarScreen() {
   }
 
   const resetInputs = () => {
-    setCarrier(Carrier.TELCEL)
-    setRecargaType(TelcelProductType.PAQUETE)
-    setAmount(10)
-    setPhoneNumber('')
+    resetState()
+  }
+
+  const handleNextStep = () => {
+    const sanitizedNumber = phoneNumber.replace(/\D/g, '')
+
+    if (currentStep === 0) {
+      if (sanitizedNumber.length !== 10) {
+        Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
+        return
+      }
+
+      setPhoneNumber(sanitizedNumber)
+    }
+
+    if (currentStep === 2 && amount === 0) {
+      Alert.alert('Error', 'Por favor, seleccione un monto de recarga')
+      return
+    }
+
+    goToNextStep()
   }
 
   return (
@@ -149,7 +155,7 @@ export default function RecargarScreen() {
             {currentStep < rechargeSteps.length - 1 && (
               <Button
                 text="Siguiente"
-                onClick={goToNextStep}
+                onClick={handleNextStep}
               />
             )}
 
@@ -171,11 +177,6 @@ export default function RecargarScreen() {
           setModalOpen(false)
         }}
         date={new Date().toLocaleString()}
-        carrier={carrier}
-        type={recargaType}
-        phoneNumber={phoneNumber}
-        amount={amount}
-        reference="1234567890"
       />
     </KeyboardAvoidingView>
   )

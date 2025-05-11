@@ -3,29 +3,26 @@ import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displ
 import { Carrier, TelcelProductType } from "@/types/Carriers"
 import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
+import { useRechargeStore } from "@/store/rechargeStore"
 
 
 interface RecargaCompletedModalProps {
   open: boolean
   onClose: () => void
   date: string
-  carrier: Carrier
-  type: TelcelProductType
-  phoneNumber: string
-  amount: number
-  reference: string
 }
 
 export const RecargaCompletedModal = ({
   open,
   onClose,
   date,
-  carrier,
-  type,
-  phoneNumber,
-  amount,
-  reference,
 }: RecargaCompletedModalProps) => {
+  const {
+    carrier,
+    recargaType,
+    phoneNumber,
+    amount,
+  } = useRechargeStore()
 
   return (
     <Modal
@@ -49,16 +46,13 @@ export const RecargaCompletedModal = ({
           <Text style={styles.value}>{DISPLAYED_CARRIER[carrier]}</Text>
 
           <Text style={styles.subtitle}>Tipo de recarga</Text>
-          <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[type]}</Text>
+          <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[recargaType]}</Text>
 
           <Text style={styles.subtitle}>Número celular</Text>
           <Text style={styles.value}>{phoneNumber}</Text>
 
           <Text style={styles.subtitle}>Monto</Text>
           <Text style={styles.value}>${amount}</Text>
-
-          {/* <Text style={styles.subtitle}>Número de referencia</Text>
-          <Text style={styles.value}>{reference}</Text> */}
 
           <View style={styles.actionsContainer}>
             <Button text="Finalizar" onClick={onClose} />
