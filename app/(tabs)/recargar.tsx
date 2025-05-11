@@ -1,32 +1,51 @@
 import { colorSchema } from '@/assets/colorSchema';
-import { ATT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from '@/assets/products';
-import { AmountSelection } from '@/components/AmountSelection';
-import { CarrierSelection } from '@/components/CarrierSelection';
-import { CustomerSelection } from '@/components/CustomerSelection';
-import { CustomerTypeSelection } from '@/components/CustomerTypeSelection';
-import { PhoneNumberInputGroup } from '@/components/PhoneNumberInputGroup';
+import { AmountSelection } from '@/components/AmountSelectionStep';
+import { CarrierSelectionStep } from '@/components/CarrierSelectionStep';
+import { CustomerStep } from '@/components/CustomerStep';
 import { RecargaCompletedModal } from '@/components/RecargaCompletedModal';
-import { RecargaTypeSelection } from '@/components/RecargaTypeSelection';
+import { RechargeResumeStep } from '@/components/RechargeResumeStep';
 import { Button } from '@/components/ui/Button';
+import { Stepper } from '@/components/ui/Stepper';
 import { recharge, RechargeRequest } from '@/services/recharge';
+import { useRechargeStore } from '@/store/rechargeStore';
 import { Carrier, TelcelProductType } from '@/types/Carriers';
-import { CustomerType } from '@/types/CustomerType';
 import { InvalidUsernameError, UsernameNotFoundError } from '@/types/errors';
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, Alert, KeyboardAvoidingView, Keyboard, ScrollView } from "react-native"
 
+const rechargeSteps = [
+  {
+    name: 'Número celular',
+  },
+  {
+    name: 'Compañía telefónica',
+  },
+  {
+    name: 'Monto de recarga',
+  },
+  {
+    name: 'Resumen',
+  },
+]
+
 
 export default function RecargarScreen() {
 
-  const [carrier, setCarrier] = useState<Carrier>(Carrier.TELCEL)
-  const [recargaType, setRecargaType] = useState<TelcelProductType>(TelcelProductType.PAQUETE)
-  const [amount, setAmount] = useState<number>(10)
-  const [phoneNumber, setPhoneNumber] = useState<string>('')
-  const [phoneNumberConfirmation, setPhoneNumberConfirmation] = useState<string>('')
-  const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.GUESS)
-  const [customer, setCustomer] = useState<string>('1')
-  const [loading, setLoading] = useState<boolean>(false)
+  const {
+    currentStep,
+    goToNextStep,
+    goToPreviousStep,
+    phoneNumber,
+    setPhoneNumber,
+    carrier,
+    amount,
+    setAmount,
+    recargaType,
+    setRecargaType,
+    resetState,
+  } = useRechargeStore()
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -36,44 +55,16 @@ export default function RecargarScreen() {
       setRecargaType(TelcelProductType.PAQUETE)
     }
 
-    setAmount(10)
+    setAmount(0)
   }, [carrier])
-
-  const getCarrierAmounts = (): Record<number, string> => {
-    switch (carrier) {
-      case Carrier.TELCEL:
-        return TELCEL_PRODUCTS[recargaType]
-      case Carrier.MOVISTAR:
-        return MOVISTAR_PRODUCTS
-      case Carrier.ATT:
-        return ATT_PRODUCTS
-      default:
-        return {}
-    }
-  }
 
   const recargar = async () => {
     setLoading(true)
-
-    if (phoneNumber !== phoneNumberConfirmation) {
-      Alert.alert('Error', 'Los números de celular no coinciden')
-      setLoading(false)
-      return
-    }
-
-    const sanitizedNumber = phoneNumber.replace(/\D/g, '')
-
-    if (sanitizedNumber.length !== 10) {
-      Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
-      setLoading(false)
-      return
-    }
-
     Keyboard.dismiss()
 
     try {
       const request: RechargeRequest = {
-        phone: sanitizedNumber,
+        phone: phoneNumber,
         amount: amount,
         carrier: carrier,
         extraData: recargaType,
@@ -104,13 +95,27 @@ export default function RecargarScreen() {
   }
 
   const resetInputs = () => {
-    setCarrier(Carrier.TELCEL)
-    setRecargaType(TelcelProductType.PAQUETE)
-    setAmount(10)
-    setPhoneNumber('')
-    setPhoneNumberConfirmation('')
-    setCustomerType(CustomerType.GUESS)
-    setCustomer('1')
+    resetState()
+  }
+
+  const handleNextStep = () => {
+    const sanitizedNumber = phoneNumber.replace(/\D/g, '')
+
+    if (currentStep === 0) {
+      if (sanitizedNumber.length !== 10) {
+        Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
+        return
+      }
+
+      setPhoneNumber(sanitizedNumber)
+    }
+
+    if (currentStep === 2 && amount === 0) {
+      Alert.alert('Error', 'Por favor, seleccione un monto de recarga')
+      return
+    }
+
+    goToNextStep()
   }
 
   return (
@@ -120,54 +125,47 @@ export default function RecargarScreen() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
-          <CarrierSelection setCarrier={setCarrier} carrier={carrier} />
+          <Stepper steps={rechargeSteps} currentStep={currentStep} />
 
-          <RecargaTypeSelection
-            setRecargaType={setRecargaType}
-            recargaType={recargaType}
-            disabled={carrier !== Carrier.TELCEL}
-          />
+          {currentStep === 0 && (
+            <CustomerStep />
+          )}
 
-          <AmountSelection
-            amountsObj={getCarrierAmounts()}
-            setAmount={setAmount}
-            amount={amount}
-          />
+          {currentStep === 1 && (
+            <CarrierSelectionStep />
+          )}
 
-          <CustomerTypeSelection
-            setCustomerType={setCustomerType}
-            customerType={customerType}
-            setPhoneNumber={setPhoneNumber}
-            setPhoneNumberConfirmation={setPhoneNumberConfirmation}
-          />
+          {currentStep === 2 && (
+            <AmountSelection />
+          )}
 
-          {
-            customerType === CustomerType.GUESS &&
-            <PhoneNumberInputGroup
-              phoneNumber={phoneNumber}
-              setPhoneNumber={setPhoneNumber}
-              phoneNumberConfirmation={phoneNumberConfirmation}
-              setPhoneNumberConfirmation={setPhoneNumberConfirmation}
-            />
-          }
-
-          {
-            customerType === CustomerType.REGISTERED &&
-            <CustomerSelection
-              setCustomer={setCustomer}
-              customer={customer}
-            />
-          }
-
-          <View style={{ flex: 1 }} />
+          {currentStep === 3 && (
+            <RechargeResumeStep />
+          )}
 
           <View style={styles.actionsContainer}>
-            <Button
-              text="Recargar"
-              onClick={recargar}
-              loading={loading}
-              disabled={loading}
-            />
+            {currentStep > 0 && (
+              <Button
+                text="Anterior"
+                onClick={goToPreviousStep}
+                color='medium'
+              />
+            )}
+
+            {currentStep < rechargeSteps.length - 1 && (
+              <Button
+                text="Siguiente"
+                onClick={handleNextStep}
+              />
+            )}
+
+            {currentStep === rechargeSteps.length - 1 && (
+              <Button
+                text="Recargar"
+                onClick={recargar}
+                loading={loading}
+              />
+            )}
           </View>
         </View>
       </ScrollView>
@@ -179,11 +177,6 @@ export default function RecargarScreen() {
           setModalOpen(false)
         }}
         date={new Date().toLocaleString()}
-        carrier={carrier}
-        type={recargaType}
-        phoneNumber={phoneNumber}
-        amount={amount}
-        reference="1234567890"
       />
     </KeyboardAvoidingView>
   )
@@ -194,16 +187,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colorSchema.light.base100,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
     rowGap: 22,
     paddingHorizontal: 20,
     paddingVertical: 0,
+    justifyContent: 'space-between',
   },
   actionsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    columnGap: 10,
     width: '100%',
     paddingBottom: 20,
   },

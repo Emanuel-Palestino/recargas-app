@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { CarrierButton } from "./CarrierButton"
 import { Carrier } from "@/types/Carriers"
-import { colorSchema } from "@/assets/colorSchema"
+import { useRechargeStore } from "@/store/rechargeStore"
 
 
 const carriers: { value: Carrier, image: any }[] = [
@@ -20,24 +20,11 @@ const carriers: { value: Carrier, image: any }[] = [
   },
 ]
 
-interface CarrierSelectionProps {
-  setCarrier: (carrier: Carrier) => void
-  carrier: Carrier
-}
-
-export const CarrierSelection = ({
-  setCarrier,
-  carrier,
-}: CarrierSelectionProps) => {
+export const CarrierSelectionStep = () => {
+  const { carrier, setCarrier } = useRechargeStore()
 
   return (
     <View style={styles.container}>
-      <Text
-        style={styles.title}
-      >
-        Compañía telefónica
-      </Text>
-
       <View style={styles.buttonsContainer}>
         {
           carriers.map(carr => (
@@ -59,15 +46,12 @@ export const CarrierSelection = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    rowGap: 4
-  },
-  title: {
-    color: colorSchema.light.baseContent,
+    rowGap: 4,
+    flexGrow: 1,
   },
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10
-  }
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
 })
