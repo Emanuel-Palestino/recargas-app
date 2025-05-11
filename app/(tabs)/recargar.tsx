@@ -153,7 +153,7 @@ export default function RecargarScreen() {
               carrier={carrier}
               recargaType={recargaType}
               setRecargaType={setRecargaType}
-              amountsObj={getCarrierAmounts()}
+              amountsAndBenefits={getCarrierAmounts()}
               setAmount={setAmount}
               amount={amount}
             />
@@ -165,6 +165,7 @@ export default function RecargarScreen() {
               type={recargaType}
               phoneNumber={phoneNumber}
               amount={amount}
+              benefits={getCarrierAmounts()[amount]}
             />
           )}
 

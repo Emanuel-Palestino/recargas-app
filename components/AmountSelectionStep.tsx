@@ -9,7 +9,7 @@ interface AmountSelectionProps {
   carrier: Carrier,
   recargaType: TelcelProductType,
   setRecargaType: (recargaType: TelcelProductType) => void
-  amountsObj: Record<number, string>
+  amountsAndBenefits: Record<number, string>
   setAmount: (amount: number) => void
   amount: number
 }
@@ -18,7 +18,7 @@ export const AmountSelection = ({
   carrier,
   recargaType,
   setRecargaType,
-  amountsObj,
+  amountsAndBenefits,
   setAmount,
   amount,
 }: AmountSelectionProps) => {
@@ -53,7 +53,7 @@ export const AmountSelection = ({
           selectedValue={amount}
           onValueChange={setAmount}
         >
-          {Object.keys(amountsObj).map((amount) => (
+          {Object.keys(amountsAndBenefits).map((amount) => (
             <Picker.Item key={`amount-${amount}`} label={`$${amount}`} value={amount} />
           ))}
         </Picker>
@@ -64,7 +64,7 @@ export const AmountSelection = ({
       </Text>
 
       <Text style={styles.benefits}>
-        {amountsObj[amount]}
+        {amountsAndBenefits[amount]}
       </Text>
 
     </View >

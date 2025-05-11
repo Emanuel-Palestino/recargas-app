@@ -8,6 +8,7 @@ interface RechargeResumeStepProps {
   type: TelcelProductType
   phoneNumber: string
   amount: number
+  benefits: string
 }
 
 export const RechargeResumeStep = ({
@@ -15,6 +16,7 @@ export const RechargeResumeStep = ({
   type,
   phoneNumber,
   amount,
+  benefits,
 }: RechargeResumeStepProps) => {
 
   return (
@@ -30,6 +32,9 @@ export const RechargeResumeStep = ({
 
       <Text style={styles.subtitle}>Monto</Text>
       <Text style={styles.value}>${amount}</Text>
+
+      <Text style={styles.subtitle}>Beneficios</Text>
+      <Text style={[styles.value, {fontWeight: 'semibold'}]}>{benefits}</Text>
     </View>
   )
 
@@ -59,5 +64,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 14,
+    textAlign: 'center'
   },
 })
