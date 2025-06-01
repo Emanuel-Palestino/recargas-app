@@ -8,16 +8,11 @@ export const DISPLAYED_CARRIER: Record<Carrier, string> = {
   [Carrier.BAIT]: 'Bait',
 }
 
-export const DISPLAYED_TELCEL_PRODUCT_TYPE: Record<TelcelProductType, string> = {
+export const DISPLAYED_PRODUCT_TYPE: Record<TelcelProductType | BaitProductType, string> = {
   [TelcelProductType.SALDO]: 'Saldo',
   [TelcelProductType.PAQUETE]: 'Paquete',
   [TelcelProductType.INTERNET]: 'Internet',
   [TelcelProductType.INTERNET_POR_TIEMPO]: 'Internet por tiempo',
-}
-
-export const DISPLAYED_BAIT_PRODUCT_TYPE: Record<BaitProductType, string> = {
-  [BaitProductType.SALDO]: 'Saldo',
-  [BaitProductType.PAQUETE]: 'Paquete',
   [BaitProductType.INTERNET_EN_CASA]: 'Internet en casa',
   [BaitProductType.INTERNET_PORTATIL]: 'Internet portátil',
 }

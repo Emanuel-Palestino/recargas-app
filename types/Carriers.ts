@@ -24,3 +24,5 @@ export const BaitProductType = {
 } as const
 
 export type BaitProductType = typeof BaitProductType[keyof typeof BaitProductType]
+
+export type ProductType = TelcelProductType | BaitProductType

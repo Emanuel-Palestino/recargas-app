@@ -1,5 +1,5 @@
 import { colorSchema } from "@/assets/colorSchema"
-import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
+import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { StyleSheet, Text, View } from "react-native"
 
@@ -18,7 +18,7 @@ export const RechargeResumeStep = () => {
       <Text style={styles.value}>{DISPLAYED_CARRIER[carrier]}</Text>
 
       <Text style={styles.subtitle}>Tipo de recarga</Text>
-      <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[recargaType]}</Text>
+      <Text style={styles.value}>{DISPLAYED_PRODUCT_TYPE[recargaType]}</Text>
 
       <Text style={styles.subtitle}>Número celular</Text>
       <Text style={styles.value}>{phoneNumber}</Text>
@@ -27,7 +27,7 @@ export const RechargeResumeStep = () => {
       <Text style={styles.value}>${amount}</Text>
 
       <Text style={styles.subtitle}>Beneficios</Text>
-      <Text style={[styles.value, {fontWeight: 'semibold'}]}>{benefits}</Text>
+      <Text style={[styles.value, { fontWeight: 'semibold' }]}>{benefits}</Text>
     </View>
   )
 

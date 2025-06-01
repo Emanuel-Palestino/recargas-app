@@ -1,11 +1,9 @@
 import { Picker } from "@react-native-picker/picker"
 import { StyleSheet, Text, View } from "react-native"
 import { colorSchema } from "@/assets/colorSchema"
-import { Carrier, TelcelProductType } from "@/types/Carriers"
-import { DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { useRechargeStore } from "@/store/rechargeStore"
-import { ATT_PRODUCTS, BAIT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from "@/assets/products"
-import { useEffect, useState } from "react"
+import { PRODUCTS } from "@/assets/products"
+import { DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 
 
 export const AmountSelection = () => {
@@ -18,36 +16,14 @@ export const AmountSelection = () => {
     setBenefits,
   } = useRechargeStore()
 
-  const [amountsAndBenefits, setAmountsAndBenefits] = useState<Record<number, string>>({})
-
-  const getCarrierAmounts = (): Record<number, string> => {
-    switch (carrier) {
-      case Carrier.TELCEL:
-        return TELCEL_PRODUCTS[recargaType]
-      case Carrier.MOVISTAR:
-        return MOVISTAR_PRODUCTS
-      case Carrier.ATT:
-        return ATT_PRODUCTS
-      case Carrier.BAIT:
-        return BAIT_PRODUCTS[recargaType]
-      default:
-        return {}
-    }
-  }
-
   const handleAmountChange = (value: number) => {
     setAmount(value)
-    setBenefits(amountsAndBenefits[value])
+    setBenefits(PRODUCTS[carrier].products[recargaType].benefits[value])
   }
-
-  useEffect(() => {
-    const amounts = getCarrierAmounts()
-    setAmountsAndBenefits(amounts)
-  }, [carrier])
 
   return (
     <View style={styles.container}>
-      {carrier === Carrier.TELCEL && (
+      {PRODUCTS[carrier].multiple && (
         <>
           <Text style={styles.title}>
             Tipo de recarga
@@ -58,8 +34,8 @@ export const AmountSelection = () => {
               selectedValue={recargaType}
               onValueChange={setRecargaType}
             >
-              {Object.values(TelcelProductType).map((value) => (
-                <Picker.Item key={`telcel-type-${value}`} label={DISPLAYED_TELCEL_PRODUCT_TYPE[value]} value={value} />
+              {PRODUCTS[carrier].productsList.map((value) => (
+                <Picker.Item key={`product-type-${value}`} label={DISPLAYED_PRODUCT_TYPE[value]} value={value} />
               ))}
             </Picker>
           </View>
@@ -76,8 +52,8 @@ export const AmountSelection = () => {
           onValueChange={handleAmountChange}
         >
           <Picker.Item key={`amount-0`} label={`Selecciona un monto`} value={0} enabled={false} />
-          {Object.keys(amountsAndBenefits).map((amount) => (
-            <Picker.Item key={`amount-${amount}`} label={`$${amount}`} value={amount} />
+          {PRODUCTS[carrier].products[recargaType].amounts.map((value) => (
+            <Picker.Item key={`amount-${value}`} label={`$${value}`} value={value} />
           ))}
         </Picker>
       </View>
@@ -87,7 +63,7 @@ export const AmountSelection = () => {
       </Text>
 
       <Text style={styles.benefits}>
-        {amountsAndBenefits[amount]}
+        {PRODUCTS[carrier].products[recargaType].benefits[amount] || 'Beneficios no disponibles'}
       </Text>
 
     </View >

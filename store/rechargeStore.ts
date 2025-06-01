@@ -1,11 +1,11 @@
-import { Carrier, TelcelProductType } from '@/types/Carriers'
+import { Carrier, ProductType, TelcelProductType } from '@/types/Carriers'
 import { create } from 'zustand'
 
 type RechargeStore = {
   currentStep: number
   phoneNumber: string
   carrier: Carrier
-  recargaType: TelcelProductType
+  recargaType: ProductType
   amount: number
   benefits: string
 }
@@ -15,7 +15,7 @@ type RechargeStoreActions = {
   goToPreviousStep: () => void
   setPhoneNumber: (phoneNumber: string) => void
   setCarrier: (carrier: Carrier) => void
-  setRecargaType: (recargaType: TelcelProductType) => void
+  setRecargaType: (recargaType: ProductType) => void
   setAmount: (amount: number) => void
   setBenefits: (benefits: string) => void
   resetState: () => void

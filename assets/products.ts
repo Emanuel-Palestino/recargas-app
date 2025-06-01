@@ -1,6 +1,6 @@
-import { BaitProductType, TelcelProductType } from "@/types/Carriers";
+import { BaitProductType, Carrier, TelcelProductType } from "@/types/Carriers";
 
-export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> = {
+const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> = {
   [TelcelProductType.SALDO]: {
     10: "Vigencia de 3 dias Whatsapp 200 MB.",
     20: "Vigencia de 3 dias. 100 MB libres. 200 MB para Facebook, Messenger y Twitter. Whatsapp Ilimitado.",
@@ -47,7 +47,7 @@ export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> 
   },
 };
 
-export const ATT_PRODUCTS: Record<number, string> = {
+const ATT_PRODUCTS: Record<number, string> = {
   10: "Vigencia de 1 día. 100 MB libres. SMS y Minutos ilimitados (México y Estados Unidos). Facebook, Messenger, Twitter, Instagram, WhatsApp y Maps Ilimitados.",
   15: "Vigencia de 1 día. 150 MB libres. SMS y Minutos ilimitados (México y Estados Unidos). Facebook, Messenger, Twitter, Instagram, WhatsApp y Maps Ilimitados.",
   20: "Vigencia de 1 día. 200 MB libres. SMS y Minutos ilimitados (México y Estados Unidos). Facebook, Messenger, Twitter, Instagram, WhatsApp y Maps Ilimitados.",
@@ -63,7 +63,7 @@ export const ATT_PRODUCTS: Record<number, string> = {
   1000: "Vigencia de 30 días. 20 GB libres. SMS y Minutos ilimitados (México y Estados Unidos). Facebook, Messenger, Twitter, Instagram, WhatsApp y Maps Ilimitados.",
 };
 
-export const MOVISTAR_PRODUCTS: Record<number, string> = {
+const MOVISTAR_PRODUCTS: Record<number, string> = {
   10: "",
   20: "",
   30: "",
@@ -82,7 +82,7 @@ export const MOVISTAR_PRODUCTS: Record<number, string> = {
   500: "",
 };
 
-export const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
+const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
   [BaitProductType.SALDO]: {
     30: "",
     50: "",
@@ -113,3 +113,81 @@ export const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
     410: "",
   },
 };
+
+type ProductInfo = {
+  amounts: number[],
+  benefits: Record<number, string>
+}
+
+type CarrierProducts = {
+  multiple: boolean,
+  productsList: TelcelProductType[] | BaitProductType[],
+  products: Record<string, ProductInfo>
+};
+
+export const PRODUCTS: Record<Carrier, CarrierProducts> = {
+  [Carrier.TELCEL]: {
+    multiple: true,
+    productsList: Object.keys(TelcelProductType) as TelcelProductType[],
+    products: {
+      [TelcelProductType.SALDO]: {
+        amounts: Object.keys(TELCEL_PRODUCTS[TelcelProductType.SALDO]).map(Number),
+        benefits: TELCEL_PRODUCTS[TelcelProductType.SALDO],
+      },
+      [TelcelProductType.PAQUETE]: {
+        amounts: Object.keys(TELCEL_PRODUCTS[TelcelProductType.PAQUETE]).map(Number),
+        benefits: TELCEL_PRODUCTS[TelcelProductType.PAQUETE],
+      },
+      [TelcelProductType.INTERNET]: {
+        amounts: Object.keys(TELCEL_PRODUCTS[TelcelProductType.INTERNET]).map(Number),
+        benefits: TELCEL_PRODUCTS[TelcelProductType.INTERNET],
+      },
+      [TelcelProductType.INTERNET_POR_TIEMPO]: {
+        amounts: Object.keys(TELCEL_PRODUCTS[TelcelProductType.INTERNET_POR_TIEMPO]).map(Number),
+        benefits: TELCEL_PRODUCTS[TelcelProductType.INTERNET_POR_TIEMPO],
+      },
+    },
+  },
+  [Carrier.ATT]: {
+    multiple: false,
+    productsList: ['SALDO'],
+    products: {
+      [TelcelProductType.SALDO]: {
+        amounts: Object.keys(ATT_PRODUCTS).map(Number),
+        benefits: ATT_PRODUCTS,
+      },
+    },
+  },
+  [Carrier.MOVISTAR]: {
+    multiple: false,
+    productsList: ['SALDO'],
+    products: {
+      [TelcelProductType.SALDO]: {
+        amounts: Object.keys(MOVISTAR_PRODUCTS).map(Number),
+        benefits: MOVISTAR_PRODUCTS,
+      },
+    },
+  },
+  [Carrier.BAIT]: {
+    multiple: true,
+    productsList: Object.keys(BaitProductType) as BaitProductType[],
+    products: {
+      [BaitProductType.SALDO]: {
+        amounts: Object.keys(BAIT_PRODUCTS[BaitProductType.SALDO]).map(Number),
+        benefits: BAIT_PRODUCTS[BaitProductType.SALDO],
+      },
+      [BaitProductType.PAQUETE]: {
+        amounts: Object.keys(BAIT_PRODUCTS[BaitProductType.PAQUETE]).map(Number),
+        benefits: BAIT_PRODUCTS[BaitProductType.PAQUETE],
+      },
+      [BaitProductType.INTERNET_EN_CASA]: {
+        amounts: Object.keys(BAIT_PRODUCTS[BaitProductType.INTERNET_EN_CASA]).map(Number),
+        benefits: BAIT_PRODUCTS[BaitProductType.INTERNET_EN_CASA],
+      },
+      [BaitProductType.INTERNET_PORTATIL]: {
+        amounts: Object.keys(BAIT_PRODUCTS[BaitProductType.INTERNET_PORTATIL]).map(Number),
+        benefits: BAIT_PRODUCTS[BaitProductType.INTERNET_PORTATIL],
+      },
+    },
+  },
+} as const;
