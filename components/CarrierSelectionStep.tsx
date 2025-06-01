@@ -18,6 +18,10 @@ const carriers: { value: Carrier, image: any }[] = [
     value: Carrier.MOVISTAR,
     image: require('../assets/images/carrier_logos/movistar.png')
   },
+  {
+    value: Carrier.BAIT,
+    image: require('../assets/images/carrier_logos/bait.png')
+  }
 ]
 
 export const CarrierSelectionStep = () => {

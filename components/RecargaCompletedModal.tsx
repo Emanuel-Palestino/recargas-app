@@ -1,6 +1,5 @@
 import { colorSchema } from "@/assets/colorSchema"
-import { DISPLAYED_CARRIER, DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
-import { Carrier, TelcelProductType } from "@/types/Carriers"
+import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
 import { useRechargeStore } from "@/store/rechargeStore"
@@ -46,7 +45,7 @@ export const RecargaCompletedModal = ({
           <Text style={styles.value}>{DISPLAYED_CARRIER[carrier]}</Text>
 
           <Text style={styles.subtitle}>Tipo de recarga</Text>
-          <Text style={styles.value}>{DISPLAYED_TELCEL_PRODUCT_TYPE[recargaType]}</Text>
+          <Text style={styles.value}>{DISPLAYED_PRODUCT_TYPE[recargaType]}</Text>
 
           <Text style={styles.subtitle}>Número celular</Text>
           <Text style={styles.value}>{phoneNumber}</Text>
