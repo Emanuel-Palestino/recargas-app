@@ -1,4 +1,4 @@
-import { TelcelProductType } from "@/types/Carriers";
+import { BaitProductType, TelcelProductType } from "@/types/Carriers";
 
 export const TELCEL_PRODUCTS: Record<TelcelProductType, Record<number, string>> = {
   [TelcelProductType.SALDO]: {
@@ -80,4 +80,36 @@ export const MOVISTAR_PRODUCTS: Record<number, string> = {
   300: "",
   400: "",
   500: "",
+};
+
+export const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
+  [BaitProductType.SALDO]: {
+    30: "",
+    50: "",
+    60: "",
+    100: "",
+    120: "",
+    125: "",
+    200: "",
+    230: "",
+    300: "",
+  },
+  [BaitProductType.PAQUETE]: {
+    550: "",
+    800: "",
+    1000: "",
+    1500: "",
+    2000: "",
+    2300: "",
+    2900: "",
+  },
+  [BaitProductType.INTERNET_EN_CASA]: {
+    99: "",
+    349: "",
+  },
+  [BaitProductType.INTERNET_PORTATIL]: {
+    110: "",
+    210: "",
+    410: "",
+  },
 };

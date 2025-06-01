@@ -4,7 +4,7 @@ import { colorSchema } from "@/assets/colorSchema"
 import { Carrier, TelcelProductType } from "@/types/Carriers"
 import { DISPLAYED_TELCEL_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { useRechargeStore } from "@/store/rechargeStore"
-import { ATT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from "@/assets/products"
+import { ATT_PRODUCTS, BAIT_PRODUCTS, MOVISTAR_PRODUCTS, TELCEL_PRODUCTS } from "@/assets/products"
 import { useEffect, useState } from "react"
 
 
@@ -28,6 +28,8 @@ export const AmountSelection = () => {
         return MOVISTAR_PRODUCTS
       case Carrier.ATT:
         return ATT_PRODUCTS
+      case Carrier.BAIT:
+        return BAIT_PRODUCTS[recargaType]
       default:
         return {}
     }
