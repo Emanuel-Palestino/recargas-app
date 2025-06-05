@@ -84,6 +84,8 @@ const MOVISTAR_PRODUCTS: Record<number, string> = {
 
 const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
   [BaitProductType.SALDO]: {
+    10: "",
+    20: "",
     30: "",
     50: "",
     60: "",
@@ -92,7 +94,9 @@ const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
     125: "",
     200: "",
     230: "",
+    250: "",
     300: "",
+    349: "",
   },
   [BaitProductType.PAQUETE]: {
     550: "",
@@ -101,7 +105,7 @@ const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
     1500: "",
     2000: "",
     2300: "",
-    2900: "",
+    3000: "",
   },
   [BaitProductType.INTERNET_EN_CASA]: {
     99: "",
