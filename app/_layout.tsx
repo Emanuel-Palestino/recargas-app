@@ -32,7 +32,7 @@ export default function RootLayout() {
       }}
       >
         <Stack.Screen name="index" />
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(features)" />
         <Stack.Screen name="+not-found" />
       </Stack>
     </>
