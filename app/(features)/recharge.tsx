@@ -29,7 +29,7 @@ const rechargeSteps = [
 ]
 
 
-export default function RecargarScreen() {
+export default function RechargeScreen() {
 
   const {
     currentStep,

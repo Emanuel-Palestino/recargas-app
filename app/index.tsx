@@ -5,7 +5,7 @@ export default function Index() {
   return (
     <View>
       <Text>Bienvenido</Text>
-      <Link href="/recargar">Recargar celular</Link>
+      <Link href="/recharge">Recargar celular</Link>
       <Link href="/reports">Ver reportes</Link>
       <Link href="/settings">Ajustes</Link>
     </View>
