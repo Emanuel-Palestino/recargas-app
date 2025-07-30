@@ -4,7 +4,7 @@ import { getUsername, storeUsername } from "@/store/userStore";
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Alert } from "react-native";
 
-export default function Index() {
+export default function Settings() {
   const [username, setUsername] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 

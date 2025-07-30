@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { requestPermissionsAsync } from 'expo-contacts';
+import { colorSchema } from '@/assets/colorSchema';
 
 
 export default function RootLayout() {
@@ -14,8 +15,24 @@ export default function RootLayout() {
   return (
     <>
       <StatusBar style='dark' />
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack
+        screenOptions={{
+        //tabBarActiveTintColor: colorSchema.light.primary,
+        headerStyle: {
+          backgroundColor: colorSchema.light.base100,
+          //height: 110,
+        },
+        headerShadowVisible: false,
+        headerTintColor: colorSchema.light.baseContent,
+        /* tabBarStyle: {
+          backgroundColor: colorSchema.light.base100,
+          height: 60,
+          paddingTop: 4,
+        }, */
+      }}
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>
     </>
