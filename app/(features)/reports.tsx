@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { colorSchema } from "@/assets/colorSchema";
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorSchema.light.base100,
     paddingHorizontal: 20,
-    paddingVertical: 0,
+    paddingVertical: 10,
   },
   filterContainer: {
     width: '100%',

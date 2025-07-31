@@ -17,23 +17,17 @@ export default function RootLayout() {
       <StatusBar style='dark' />
       <Stack
         screenOptions={{
-        //tabBarActiveTintColor: colorSchema.light.primary,
-        headerStyle: {
-          backgroundColor: colorSchema.light.base100,
-          //height: 110,
-        },
-        headerShadowVisible: false,
-        headerTintColor: colorSchema.light.baseContent,
-        /* tabBarStyle: {
-          backgroundColor: colorSchema.light.base100,
-          height: 60,
-          paddingTop: 4,
-        }, */
-      }}
+          headerStyle: {
+            backgroundColor: colorSchema.light.base100,
+          },
+          headerShadowVisible: false,
+          headerTintColor: colorSchema.light.baseContent,
+        }}
       >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(features)" />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(features)" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ title: 'Ajustes' }} />
+        <Stack.Screen name="+not-found" options={{ title: 'No encontrado' }} />
       </Stack>
     </>
   );

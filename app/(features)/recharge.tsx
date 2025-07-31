@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: colorSchema.light.base100,
     rowGap: 22,
     paddingHorizontal: 20,
-    paddingVertical: 0,
+    paddingVertical: 10,
     justifyContent: 'space-between',
   },
   actionsContainer: {

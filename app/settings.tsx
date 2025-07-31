@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     rowGap: 22,
     paddingHorizontal: 20,
-    paddingVertical: 0,
+    paddingVertical: 20,
   },
   text: {
     color: colorSchema.light.baseContent,
