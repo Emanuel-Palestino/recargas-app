@@ -19,7 +19,7 @@ export default function Index() {
         <Link href="/reports" asChild>
           <Pressable style={styles.featureContainer}>
             <Image
-              source={require('../assets/images/icons/file.png')}
+              source={require('../assets/images/icons/financial-plan.png')}
               style={styles.featureImage}
             />
             <Text style={styles.featureText}>Reportes</Text>
@@ -31,7 +31,7 @@ export default function Index() {
         <Link href="/settings" asChild>
           <Pressable style={styles.optionContainer}>
             <Image
-              source={require('../assets/images/icons/cogwheel.png')}
+              source={require('../assets/images/icons/settings.png')}
               style={styles.optionImage}
             />
             <Text style={styles.optionText}>Ajustes</Text>
@@ -47,10 +47,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorSchema.light.base100,
     alignItems: 'center',
-    padding: 20,
+    paddingVertical: 24,
+    paddingHorizontal: 28,
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
     color: colorSchema.light.baseContent,
     marginTop: 26,
@@ -65,10 +66,10 @@ const styles = StyleSheet.create({
   },
   featureContainer: {
     flexDirection: 'column',
-    rowGap: 10,
-    borderRadius: 20,
+    rowGap: 16,
+    borderRadius: 24,
     paddingVertical: 24,
-    paddingHorizontal: 30,
+    paddingHorizontal: 26,
     backgroundColor: colorSchema.light.primary,
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -76,12 +77,12 @@ const styles = StyleSheet.create({
   },
   featureText: {
     color: colorSchema.light.primaryContent,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   featureImage: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     resizeMode: 'contain',
   },
   miscelaneousContainer: {
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   optionContainer: {
     flexDirection: 'column',
     rowGap: 8,
-    borderRadius: 20,
+    borderRadius: 24,
     paddingVertical: 12,
     paddingHorizontal: 18,
     backgroundColor: colorSchema.light.secondary,
@@ -102,8 +103,8 @@ const styles = StyleSheet.create({
     width: '32%',
   },
   optionImage: {
-    width: 40,
-    height: 40,
+    width: 42,
+    height: 42,
     resizeMode: 'contain',
   },
   optionText: {

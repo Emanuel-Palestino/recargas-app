@@ -51,5 +51,5 @@ Join our community of developers creating universal apps.
 
 ### Image credits
 - <a href="https://www.flaticon.com/free-icons/coin" title="coin icons">Coin icons created by vectorsmarket15 - Flaticon</a>
-- <a href="https://www.flaticon.com/free-icons/invoice" title="invoice icons">Invoice icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by nawicon - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>
