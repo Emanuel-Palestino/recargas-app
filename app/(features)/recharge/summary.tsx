@@ -95,7 +95,7 @@ export default function RechargeSummary() {
 
       <View style={styles.stepperActionsContainer}>
         <Button
-          text="Recargar"
+          text="RECARGAR"
           onClick={recargar}
           loading={loading}
         />

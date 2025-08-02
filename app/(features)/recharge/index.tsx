@@ -8,7 +8,7 @@ import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function RechargeIndex() {
 
-  const { phoneNumber, setPhoneNumber, goToNextStep, resetState } = useRechargeStore()
+  const { phoneNumber, setPhoneNumber, goToNextStep, setCurrentStep } = useRechargeStore()
   const router = useRouter()
 
   const handleContactSelection = async () => {
@@ -50,7 +50,7 @@ export default function RechargeIndex() {
   }
 
   useEffect(() => {
-    resetState()
+    setCurrentStep(0)
   }, [])
 
   return (
