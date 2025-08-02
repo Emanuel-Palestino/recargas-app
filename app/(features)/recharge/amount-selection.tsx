@@ -82,7 +82,7 @@ export default function AmountSelection() {
             selectedValue={amount}
             onValueChange={handleAmountChange}
           >
-            <Picker.Item key={`amount-0`} label={`Selecciona un monto`} value={0} enabled={false} />
+            <Picker.Item key={`amount-0`} label={`Selecciona un monto`} value={0} />
             {PRODUCTS[carrier].products[recargaType].amounts.map((value) => (
               <Picker.Item key={`amount-${value}`} label={`$${value}`} value={value} />
             ))}
