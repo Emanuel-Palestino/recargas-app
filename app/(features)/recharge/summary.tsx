@@ -91,14 +91,14 @@ export default function RechargeSummary() {
 
       <View style={styles.stepperActionsContainer}>
         <Button
-          text="Anterior"
-          onClick={handlePreviousStep}
-          color='medium'
-        />
-        <Button
           text="Recargar"
           onClick={recargar}
           loading={loading}
+        />
+        <Button
+          text="Anterior"
+          onClick={handlePreviousStep}
+          color='medium'
         />
       </View>
 
@@ -139,10 +139,9 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   stepperActionsContainer: {
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    columnGap: 10,
+    rowGap: 10,
     width: '100%',
     paddingBottom: 20,
   },

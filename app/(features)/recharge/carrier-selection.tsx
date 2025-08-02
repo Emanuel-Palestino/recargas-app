@@ -58,7 +58,7 @@ export default function CarrierSelection() {
       }
 
       setAmount(0)
-      
+
       prevCarrierRef.current = carrier
     }
   }, [carrier, setRecargaType, setAmount])
@@ -87,13 +87,13 @@ export default function CarrierSelection() {
 
       <View style={styles.stepperActionsContainer}>
         <Button
+          text="Siguiente"
+          onClick={handleNextStep}
+        />
+        <Button
           text="Anterior"
           onClick={handlePreviousStep}
           color='medium'
-        />
-        <Button
-          text="Siguiente"
-          onClick={handleNextStep}
         />
       </View>
     </>
@@ -113,10 +113,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   stepperActionsContainer: {
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    columnGap: 10,
+    rowGap: 10,
     width: '100%',
     paddingBottom: 20,
   },
