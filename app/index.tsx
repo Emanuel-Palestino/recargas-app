@@ -10,6 +10,11 @@ const FEATURES_LIST = [
     link: "/recharge",
   },
   {
+    title: "Programar Recarga",
+    image: require('../assets/images/icons/calendar.png'),
+    link: "/schedule-recharge",
+  },
+  {
     title: "Reportes",
     image: require('../assets/images/icons/financial-plan.png'),
     link: "/reports",
@@ -107,11 +112,13 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginBottom: 20,
+    gap: 16,
   },
   featureContainer: {
     width: '100%',
+    height: 185,
     flexDirection: 'column',
     rowGap: 16,
     borderRadius: 24,

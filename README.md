@@ -53,3 +53,4 @@ Join our community of developers creating universal apps.
 - <a href="https://www.flaticon.com/free-icons/coin" title="coin icons">Coin icons created by vectorsmarket15 - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by nawicon - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/calendar" title="calendar icons">Calendar icons created by pojok d - Flaticon</a>

@@ -9,6 +9,7 @@ export default function FeaturesLayout() {
         }}
       >
         <Stack.Screen name="recharge" options={{ title: 'Recargar Celular' }} />
+        <Stack.Screen name="schedule-recharge" options={{ title: 'Programar Recarga' }} />
         <Stack.Screen name="reports" options={{ title: 'Reportes' }} />
       </Stack>
     </>
