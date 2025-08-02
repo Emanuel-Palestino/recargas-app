@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   input: {
-    width: '100%',
-    height: 50,
-    borderRadius: 10,
+    width: '90%',
+    height: 64,
+    borderRadius: 16,
     backgroundColor: colorSchema.light.base300,
     paddingHorizontal: 16,
-    fontSize: 24,
+    fontSize: 32,
     textAlign: 'center',
     marginBottom: 4,
   },
@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     rowGap: 6,
+    width: '90%',
   },
   stepperActionsContainer: {
     justifyContent: 'center',

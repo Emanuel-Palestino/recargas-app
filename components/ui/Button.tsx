@@ -24,7 +24,7 @@ export const Button = ({
 
   const handlePressIn = () => {
     Animated.spring(scale, {
-      toValue: 0.96,
+      toValue: 0.98,
       useNativeDriver: true,
       speed: 20,
       bounciness: 10,
