@@ -6,6 +6,7 @@ import { PRODUCTS } from "@/assets/products"
 import { DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { useRouter } from "expo-router"
 import { Button } from "@/components/ui/Button"
+import { useEffect } from "react"
 
 
 export default function AmountSelection() {
@@ -19,6 +20,7 @@ export default function AmountSelection() {
     setBenefits,
     goToPreviousStep,
     goToNextStep,
+    setCurrentStep,
   } = useRechargeStore()
   const router = useRouter()
 
@@ -40,6 +42,10 @@ export default function AmountSelection() {
     goToNextStep()
     router.navigate('/recharge/summary')
   }
+
+  useEffect(() => {
+    setCurrentStep(2) // steps start from 0
+  }, [])
 
   return (
     <>

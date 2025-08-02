@@ -34,6 +34,7 @@ export default function CarrierSelection() {
     goToNextStep,
     setRecargaType,
     setAmount,
+    setCurrentStep,
   } = useRechargeStore()
   const router = useRouter()
   const prevCarrierRef = useRef<Carrier>(carrier)
@@ -61,6 +62,10 @@ export default function CarrierSelection() {
       prevCarrierRef.current = carrier
     }
   }, [carrier, setRecargaType, setAmount])
+
+  useEffect(() => {
+    setCurrentStep(1) // steps start from 0
+  }, [])
 
   return (
     <>

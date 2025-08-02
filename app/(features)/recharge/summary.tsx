@@ -39,10 +39,7 @@ export default function RechargeSummary() {
         carrier: carrier,
         extraData: recargaType,
       }
-      //const response = await recharge(request)
-      const response: any = {code: 1}
-      console.log(request)
-
+      const response = await recharge(request)
 
       if (response.code === 1) {
         setModalOpen(true)
@@ -67,8 +64,10 @@ export default function RechargeSummary() {
     return
   }
 
-  const resetInputs = () => {
+  const handleCloseModal = () => {
     resetState()
+    setModalOpen(false)
+    router.dismissTo('/')
   }
 
   return (
@@ -105,10 +104,7 @@ export default function RechargeSummary() {
 
       <RecargaCompletedModal
         open={modalOpen}
-        onClose={() => {
-          resetInputs()
-          setModalOpen(false)
-        }}
+        onClose={handleCloseModal}
         date={new Date().toLocaleString()}
       />
     </>

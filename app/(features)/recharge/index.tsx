@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { presentContactPickerAsync } from "expo-contacts";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function RechargeIndex() {
 
-  const { phoneNumber, setPhoneNumber, goToNextStep } = useRechargeStore()
+  const { phoneNumber, setPhoneNumber, goToNextStep, resetState } = useRechargeStore()
   const router = useRouter()
 
   const handleContactSelection = async () => {
@@ -47,6 +48,10 @@ export default function RechargeIndex() {
     goToNextStep()
     router.navigate('/recharge/carrier-selection')
   }
+
+  useEffect(() => {
+    resetState()
+  }, [])
 
   return (
     <>

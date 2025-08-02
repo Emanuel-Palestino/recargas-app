@@ -19,6 +19,7 @@ type RechargeStoreActions = {
   setAmount: (amount: number) => void
   setBenefits: (benefits: string) => void
   resetState: () => void
+  setCurrentStep: (step: number) => void
 }
 
 export type RechargeStoreState = RechargeStore & RechargeStoreActions
@@ -46,4 +47,5 @@ export const useRechargeStore = create<RechargeStoreState>()((set) => ({
     amount: 0,
     benefits: '',
   }),
+  setCurrentStep: (step) => set({ currentStep: step }),
 }))
