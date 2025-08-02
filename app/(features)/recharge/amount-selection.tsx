@@ -31,7 +31,11 @@ export default function AmountSelection() {
 
   const handlePreviousStep = () => {
     goToPreviousStep()
-    router.navigate('/recharge/carrier-selection')
+    if (router.canGoBack()) {
+      router.back()
+    } else {
+      router.navigate('/recharge/carrier-selection')
+    }
   }
 
   const handleNextStep = () => {

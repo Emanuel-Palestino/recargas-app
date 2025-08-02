@@ -101,8 +101,6 @@ const styles = StyleSheet.create({
   buttonSmContainer: {
     minWidth: 80,
     height: 'auto',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
   },
   buttonSmText: {
     fontSize: 14,

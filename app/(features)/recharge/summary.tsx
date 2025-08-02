@@ -25,7 +25,11 @@ export default function RechargeSummary() {
 
   const handlePreviousStep = () => {
     goToPreviousStep()
-    router.navigate('/recharge/amount-selection')
+    if (router.canGoBack()) {
+      router.back()
+    } else {
+      router.navigate('/recharge/amount-selection')
+    }
   }
 
   const recargar = async () => {

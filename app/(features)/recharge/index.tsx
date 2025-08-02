@@ -92,6 +92,9 @@ export default function RechargeIndex() {
           text="Siguiente"
           onClick={handleNextStep}
         />
+
+        {/* Empty container to maintain spacing */}
+        <View style={{ height: 45 }} />
       </View>
     </>
   )
@@ -131,10 +134,9 @@ const styles = StyleSheet.create({
     rowGap: 6,
   },
   stepperActionsContainer: {
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    columnGap: 10,
+    rowGap: 10,
     width: '100%',
     paddingBottom: 20,
   },

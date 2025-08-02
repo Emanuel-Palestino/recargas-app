@@ -41,7 +41,11 @@ export default function CarrierSelection() {
 
   const handlePreviousStep = () => {
     goToPreviousStep()
-    router.navigate('/recharge')
+    if (router.canGoBack()) {
+      router.back()
+    } else {
+      router.navigate('/recharge')
+    }
   }
 
   const handleNextStep = () => {
