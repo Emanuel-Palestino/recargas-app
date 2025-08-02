@@ -1,40 +1,86 @@
 import { colorSchema } from "@/assets/colorSchema";
 import { Link } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useRef } from "react";
+import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
+
+const FEATURES_LIST = [
+  {
+    title: "Recargar",
+    image: require('../assets/images/icons/coin-stack.png'),
+    link: "/recharge",
+  },
+  {
+    title: "Reportes",
+    image: require('../assets/images/icons/financial-plan.png'),
+    link: "/reports",
+  },
+] as const;
 
 export default function Index() {
+
+  const featuresScales = useRef(FEATURES_LIST.map(() => new Animated.Value(1))).current;
+  const settingsScale = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = (scale: Animated.Value) => {
+    Animated.spring(scale, {
+      toValue: 0.98,
+      useNativeDriver: true,
+      speed: 20,
+      bounciness: 10,
+    }).start()
+  }
+
+  const handlePressOut = (scale: Animated.Value) => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 20,
+      bounciness: 10,
+    }).start()
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
       <View style={styles.featuresContainer}>
-        <Link href="/recharge" asChild>
-          <Pressable style={styles.featureContainer}>
-            <Image
-              source={require('../assets/images/icons/coin-stack.png')}
-              style={styles.featureImage}
-            />
-            <Text style={styles.featureText}>Recargar</Text>
-          </Pressable>
-        </Link>
-        <Link href="/reports" asChild>
-          <Pressable style={styles.featureContainer}>
-            <Image
-              source={require('../assets/images/icons/financial-plan.png')}
-              style={styles.featureImage}
-            />
-            <Text style={styles.featureText}>Reportes</Text>
-          </Pressable>
-        </Link>
+        {FEATURES_LIST.map((feature, index) => (
+          <Link href={feature.link} asChild key={index}>
+            <Pressable
+              onPressIn={() => handlePressIn(featuresScales[index])}
+              onPressOut={() => handlePressOut(featuresScales[index])}
+              style={{ width: '47%' }}
+            >
+              <Animated.View
+                style={[
+                  styles.featureContainer,
+                  { transform: [{ scale: featuresScales[index] }] },
+                ]}
+              >
+                <Image
+                  source={feature.image}
+                  style={styles.featureImage}
+                />
+                <Text style={styles.featureText}>{feature.title}</Text>
+              </Animated.View>
+            </Pressable>
+          </Link>
+        ))}
       </View>
 
       <View style={styles.miscelaneousContainer}>
         <Link href="/settings" asChild>
-          <Pressable style={styles.optionContainer}>
-            <Image
-              source={require('../assets/images/icons/settings.png')}
-              style={styles.optionImage}
-            />
-            <Text style={styles.optionText}>Ajustes</Text>
+          <Pressable 
+            style={styles.optionContainer}
+            onPressIn={() => handlePressIn(settingsScale)}
+            onPressOut={() => handlePressOut(settingsScale)}
+          >
+            <Animated.View style={{ transform: [{ scale: settingsScale }] }}>
+              <Image
+                source={require('../assets/images/icons/settings.png')}
+                style={styles.optionImage}
+              />
+              <Text style={styles.optionText}>Ajustes</Text>
+            </Animated.View>
           </Pressable>
         </Link>
       </View>
@@ -65,6 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   featureContainer: {
+    width: '100%',
     flexDirection: 'column',
     rowGap: 16,
     borderRadius: 24,
@@ -73,7 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: colorSchema.light.primary,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    width: '47%',
   },
   featureText: {
     color: colorSchema.light.primaryContent,
