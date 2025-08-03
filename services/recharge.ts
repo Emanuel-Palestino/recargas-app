@@ -1,6 +1,7 @@
 import { getUsername } from "@/store/userStore"
 import { BaitProductType, Carrier, TelcelProductType } from "@/types/Carriers"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
+import { ScheduledTransaction } from "@/types/ScheduledTransaction"
 import { Transaction } from "@/types/Transaction"
 
 const API_URL = process.env.EXPO_PUBLIC_RECHARGE_SVC_API_URL
@@ -122,5 +123,30 @@ export const scheduleRecharge = async (request: ScheduleRechargeRequest): Promis
 
   const data = await response.json() as RechargeResponse
 
+  return data
+}
+
+export const getScheduledRecharges = async (): Promise<ScheduledTransaction[]> => {
+  const username = await getUsername()
+  if (!username) {
+    throw new UsernameNotFoundError('Username not found')
+  }
+
+  const response = await fetch(`${API_URL}/scheduledTransactions/byUser`, {
+    method: 'GET',
+    headers: {
+      username: username,
+    },
+  })
+
+  if (response.status === 403) {
+    throw new InvalidUsernameError('Invalid username')
+  }
+
+  if (!response.ok) {
+    throw new Error('Error al obtener las recargas programadas')
+  }
+
+  const data = await response.json() as ScheduledTransaction[]
   return data
 }

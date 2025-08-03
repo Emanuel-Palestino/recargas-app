@@ -16,6 +16,11 @@ const FEATURES_LIST = [
     link: "/recharge",
   },
   {
+    title: "Recargas Programadas",
+    image: require('../assets/images/icons/schedule.png'),
+    link: "/scheduled-recharges",
+  },
+  {
     title: "Reportes",
     image: require('../assets/images/icons/financial-plan.png'),
     link: "/reports",
@@ -128,20 +133,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     rowGap: 16,
     borderRadius: 24,
-    paddingVertical: 24,
-    paddingHorizontal: 26,
+    paddingVertical: 18,
+    paddingHorizontal: 22,
     backgroundColor: colorSchema.light.primary,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
   featureText: {
     color: colorSchema.light.primaryContent,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   featureImage: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     resizeMode: 'contain',
   },
   miscelaneousContainer: {
