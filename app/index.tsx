@@ -3,6 +3,7 @@ import { useRechargeStore } from "@/store/rechargeStore";
 import { Link } from "expo-router";
 import { useRef } from "react";
 import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const FEATURES_LIST = [
   {
@@ -52,7 +53,7 @@ export default function Index() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Bienvenido</Text>
       <View style={styles.featuresContainer}>
         {FEATURES_LIST.map((feature, index) => (
@@ -76,7 +77,14 @@ export default function Index() {
                   source={feature.image}
                   style={styles.featureImage}
                 />
-                <Text style={styles.featureText}>{feature.title}</Text>
+                <Text
+                  style={[
+                    styles.featureText,
+                    feature.title.length > 10 ? { fontSize: 18 } : { fontSize: 20 },
+                  ]}
+                >
+                  {feature.title}
+                </Text>
               </Animated.View>
             </Pressable>
           </Link>
@@ -100,7 +108,7 @@ export default function Index() {
           </Pressable>
         </Link>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -109,14 +117,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorSchema.light.base100,
     alignItems: 'center',
-    paddingVertical: 24,
-    paddingHorizontal: 28,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: colorSchema.light.baseContent,
-    marginTop: 26,
     marginBottom: 20,
   },
   featuresContainer: {
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
   },
   featureContainer: {
     width: '100%',
-    height: 185,
+    height: 160,
     flexDirection: 'column',
     rowGap: 16,
     borderRadius: 24,
@@ -141,7 +148,6 @@ const styles = StyleSheet.create({
   },
   featureText: {
     color: colorSchema.light.primaryContent,
-    fontSize: 20,
     fontWeight: 'bold',
   },
   featureImage: {

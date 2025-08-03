@@ -1,3 +1,4 @@
+import { formatDate } from "@/app/_utils"
 import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { RecargaCompletedModal } from "@/components/RecargaCompletedModal"
@@ -109,12 +110,12 @@ export default function RechargeSummary() {
         {isScheduledRecharge && (
           <>
             <Text style={styles.subtitle}>Fecha Programada</Text>
-            <Text style={styles.value}>{new Date(targetDateTs).toDateString()}</Text>
+            <Text style={styles.value}>{formatDate(new Date(targetDateTs))}</Text>
           </>
         )}
 
         <Text style={styles.subtitle}>Beneficios</Text>
-        <Text style={[styles.value, { fontWeight: 'semibold' }]}>{benefits}</Text>
+        <Text style={[styles.value, { fontSize: 17, fontWeight: 'semibold' }]}>{benefits}</Text>
       </View>
 
       <View style={styles.stepperActionsContainer}>
@@ -149,22 +150,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  title: {
-    color: colorSchema.light.baseContent,
-    fontSize: 26,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginBottom: 30,
-  },
   subtitle: {
     color: 'gray',
-    fontSize: 18,
+    fontSize: 17,
   },
   value: {
     color: colorSchema.light.baseContent,
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: 'bold',
-    marginBottom: 14,
+    marginBottom: 10,
     textAlign: 'center'
   },
   stepperActionsContainer: {

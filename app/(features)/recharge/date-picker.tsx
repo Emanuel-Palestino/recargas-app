@@ -1,3 +1,4 @@
+import { formatDate } from "@/app/_utils";
 import { colorSchema } from "@/assets/colorSchema";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
@@ -62,7 +63,7 @@ export default function DatePicker() {
           style={styles.input}
           onPress={showStartDatepicker}
         >
-          <Text style={styles.inputText}>{new Date(targetDateTs).toDateString()}</Text>
+          <Text style={styles.inputText}>{formatDate(new Date(targetDateTs))}</Text>
         </Pressable>
       </View >
 
@@ -97,15 +98,16 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    height: 60,
-    borderRadius: 10,
+    height: 70,
+    borderRadius: 12,
     backgroundColor: colorSchema.light.base300,
     justifyContent: 'center',
     alignItems: 'center',
   },
   inputText: {
     color: colorSchema.light.baseContent,
-    fontSize: 28,
+    fontSize: 26,
+    textAlign: 'center',
   },
   stepperActionsContainer: {
     justifyContent: 'center',
