@@ -119,7 +119,7 @@ export default function RechargeSummary() {
 
       <View style={styles.stepperActionsContainer}>
         <Button
-          text="RECARGAR"
+          text={isScheduledRecharge ? "PROGRAMAR RECARGA" : "RECARGAR"}
           onClick={recargar}
           loading={loading}
           disabled={loading}
