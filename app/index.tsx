@@ -1,4 +1,5 @@
 import { colorSchema } from "@/assets/colorSchema";
+import { useRechargeStore } from "@/store/rechargeStore";
 import { Link } from "expo-router";
 import { useRef } from "react";
 import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
@@ -12,7 +13,7 @@ const FEATURES_LIST = [
   {
     title: "Programar Recarga",
     image: require('../assets/images/icons/calendar.png'),
-    link: "/schedule-recharge",
+    link: "/recharge",
   },
   {
     title: "Reportes",
@@ -23,6 +24,7 @@ const FEATURES_LIST = [
 
 export default function Index() {
 
+  const { setIsScheduledRecharge, resetState } = useRechargeStore();
   const featuresScales = useRef(FEATURES_LIST.map(() => new Animated.Value(1))).current;
   const settingsScale = useRef(new Animated.Value(1)).current;
 
@@ -53,6 +55,10 @@ export default function Index() {
             <Pressable
               onPressIn={() => handlePressIn(featuresScales[index])}
               onPressOut={() => handlePressOut(featuresScales[index])}
+              onPress={() => {
+                resetState()
+                setIsScheduledRecharge(feature.title === "Programar Recarga")
+              }}
               style={{ width: '47%' }}
             >
               <Animated.View
@@ -74,7 +80,7 @@ export default function Index() {
 
       <View style={styles.miscelaneousContainer}>
         <Link href="/settings" asChild>
-          <Pressable 
+          <Pressable
             style={styles.optionContainer}
             onPressIn={() => handlePressIn(settingsScale)}
             onPressOut={() => handlePressOut(settingsScale)}

@@ -15,13 +15,16 @@ const rechargeSteps = [
     name: 'Monto de recarga',
   },
   {
+    name: 'Fecha de recarga',
+  },
+  {
     name: 'Resumen',
   },
 ]
 
 export default function RechargeLayout() {
 
-  const { currentStep } = useRechargeStore()
+  const { currentStep, isScheduledRecharge } = useRechargeStore()
 
   return (
     <KeyboardAvoidingView
@@ -30,7 +33,10 @@ export default function RechargeLayout() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
-          <Stepper steps={rechargeSteps} currentStep={currentStep} />
+          <Stepper
+            steps={rechargeSteps.filter((step) => step.name !== 'Fecha de recarga' || isScheduledRecharge)}
+            currentStep={currentStep}
+          />
 
           <Slot />
         </View>

@@ -1,5 +1,5 @@
 import { getUsername } from "@/store/userStore"
-import { Carrier } from "@/types/Carriers"
+import { BaitProductType, Carrier, TelcelProductType } from "@/types/Carriers"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
 import { Transaction } from "@/types/Transaction"
 
@@ -9,7 +9,17 @@ export type RechargeRequest = {
   phone: string
   amount: number
   carrier: Carrier
-  extraData?: string
+  extraData?: TelcelProductType | BaitProductType
+}
+
+export type ScheduleRechargeRequest = {
+	targetDay: number,
+	targetMonth: number,
+	targetYear: number,
+	phone: string,
+	amount: number,
+	carrier: Carrier,
+	extraData?: TelcelProductType | BaitProductType,
 }
 
 export type RechargeResponse = {
@@ -80,5 +90,37 @@ export const getTransactions = async (startDate: number, endDate: number): Promi
   }
 
   const data = await response.json() as Transaction[]
+  return data
+}
+
+export const scheduleRecharge = async (request: ScheduleRechargeRequest): Promise<RechargeResponse> => {
+
+  const username = await getUsername()
+  if (!username) {
+    throw new UsernameNotFoundError('Username not found')
+  }
+
+  const response = await fetch(`${API_URL}/scheduledTransactions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      username: username,
+    },
+    body: JSON.stringify(request),
+  })
+
+  if (response.status === 403) {
+    throw new InvalidUsernameError('Invalid username')
+  } else if (response.status === 400) {
+    const errorResponse = await response.json() as RechargeResponse
+    return errorResponse
+  }
+
+  if (!response.ok) {
+    throw new Error('Error al procesar la recarga')
+  }
+
+  const data = await response.json() as RechargeResponse
+
   return data
 }

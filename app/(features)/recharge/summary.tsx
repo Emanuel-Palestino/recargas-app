@@ -2,7 +2,7 @@ import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { RecargaCompletedModal } from "@/components/RecargaCompletedModal"
 import { Button } from "@/components/ui/Button"
-import { recharge, RechargeRequest } from "@/services/recharge"
+import { recharge, RechargeRequest, scheduleRecharge } from "@/services/recharge"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
 import { useRouter } from "expo-router"
@@ -18,6 +18,8 @@ export default function RechargeSummary() {
     benefits,
     goToPreviousStep,
     resetState,
+    isScheduledRecharge,
+    targetDateTs,
   } = useRechargeStore()
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
@@ -28,7 +30,11 @@ export default function RechargeSummary() {
     if (router.canGoBack()) {
       router.back()
     } else {
-      router.navigate('/recharge/amount-selection')
+      if (isScheduledRecharge) {
+        router.navigate('/recharge/date-picker')
+      } else {
+        router.navigate('/recharge/amount-selection')
+      }
     }
   }
 
@@ -43,7 +49,18 @@ export default function RechargeSummary() {
         carrier: carrier,
         extraData: recargaType,
       }
-      const response = await recharge(request)
+
+      let response;
+      if (isScheduledRecharge) {
+        response = await scheduleRecharge({
+          ...request,
+          targetDay: new Date(targetDateTs).getDate(),
+          targetMonth: new Date(targetDateTs).getMonth() + 1,
+          targetYear: new Date(targetDateTs).getFullYear(),
+        })
+      } else {
+        response = await recharge(request)
+      }
 
       if (response.code === 1) {
         setModalOpen(true)
@@ -89,6 +106,13 @@ export default function RechargeSummary() {
         <Text style={styles.subtitle}>Monto</Text>
         <Text style={styles.value}>${amount}</Text>
 
+        {isScheduledRecharge && (
+          <>
+            <Text style={styles.subtitle}>Fecha Programada</Text>
+            <Text style={styles.value}>{new Date(targetDateTs).toDateString()}</Text>
+          </>
+        )}
+
         <Text style={styles.subtitle}>Beneficios</Text>
         <Text style={[styles.value, { fontWeight: 'semibold' }]}>{benefits}</Text>
       </View>
@@ -98,6 +122,7 @@ export default function RechargeSummary() {
           text="RECARGAR"
           onClick={recargar}
           loading={loading}
+          disabled={loading}
         />
         <Button
           text="Anterior"

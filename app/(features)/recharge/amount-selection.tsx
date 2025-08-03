@@ -21,6 +21,7 @@ export default function AmountSelection() {
     goToPreviousStep,
     goToNextStep,
     setCurrentStep,
+    isScheduledRecharge,
   } = useRechargeStore()
   const router = useRouter()
 
@@ -44,7 +45,11 @@ export default function AmountSelection() {
       return
     }
     goToNextStep()
-    router.navigate('/recharge/summary')
+    if (isScheduledRecharge) {
+      router.navigate('/recharge/date-picker')
+    } else {
+      router.navigate('/recharge/summary')
+    }
   }
 
   useEffect(() => {

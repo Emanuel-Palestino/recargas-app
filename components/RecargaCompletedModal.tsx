@@ -21,6 +21,8 @@ export const RecargaCompletedModal = ({
     recargaType,
     phoneNumber,
     amount,
+    isScheduledRecharge,
+    targetDateTs,
   } = useRechargeStore()
 
   return (
@@ -36,10 +38,16 @@ export const RecargaCompletedModal = ({
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 
         <View style={styles.modalContent}>
-          <Text style={styles.title}>Recarga Realizada con Éxito</Text>
+          <Text style={styles.title}>
+            {isScheduledRecharge ? 'Recarga Programada con Éxito' : 'Recarga Realizada con Éxito'}
+          </Text>
 
-          <Text style={styles.subtitle}>Fecha y hora</Text>
-          <Text style={styles.value}>{date}</Text>
+          <Text style={styles.subtitle}>
+            {isScheduledRecharge ? 'Recarga programada para:' : 'Recarga realizada el:'}
+          </Text>
+          <Text style={styles.value}>{
+            isScheduledRecharge ? new Date(targetDateTs).toDateString() : date
+          }</Text>
 
           <Text style={styles.subtitle}>Compañía telefónica</Text>
           <Text style={styles.value}>{DISPLAYED_CARRIER[carrier]}</Text>
