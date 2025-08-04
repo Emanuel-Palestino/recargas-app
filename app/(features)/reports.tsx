@@ -7,6 +7,7 @@ import { getTransactions } from "@/services/recharge";
 import { Transaction } from "@/types/Transaction";
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors";
 import { useFocusEffect } from "@react-navigation/native";
+import { formatDate } from "@/utils";
 
 export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
@@ -50,7 +51,7 @@ export default function ReportsScreen() {
 
   const renderItem = ({ item }: { item: Transaction }) => (
     <View style={styles.row}>
-      <Text style={styles.cell}>{new Date(item.date).toLocaleString()}</Text>
+      <Text style={styles.cell}>{formatDate(new Date(item.date), true, true)}</Text>
       <Text style={styles.cell}>{item.phone}</Text>
       <Text style={styles.cell}>${item.amount}</Text>
     </View>

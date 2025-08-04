@@ -3,18 +3,17 @@ import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStr
 import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
 import { useRechargeStore } from "@/store/rechargeStore"
+import { formatDate } from "@/utils"
 
 
 interface RecargaCompletedModalProps {
   open: boolean
   onClose: () => void
-  date: string
 }
 
 export const RecargaCompletedModal = ({
   open,
   onClose,
-  date,
 }: RecargaCompletedModalProps) => {
   const {
     carrier,
@@ -46,7 +45,7 @@ export const RecargaCompletedModal = ({
             {isScheduledRecharge ? 'Recarga programada para:' : 'Recarga realizada el:'}
           </Text>
           <Text style={styles.value}>{
-            isScheduledRecharge ? new Date(targetDateTs).toDateString() : date
+            isScheduledRecharge ?  formatDate(new Date(targetDateTs)) : formatDate(new Date(), true, true)
           }</Text>
 
           <Text style={styles.subtitle}>Compañía telefónica</Text>

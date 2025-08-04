@@ -3,6 +3,7 @@ import { getScheduledRecharges } from "@/services/recharge";
 import { ScheduledTransaction } from "@/types/ScheduledTransaction";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import { formatDate } from "@/utils";
 
 export default function ScheduledRecharges() {
 
@@ -20,7 +21,7 @@ export default function ScheduledRecharges() {
     const targetDate = new Date(item.targetYear, item.targetMonth - 1, item.targetDay);
     return (
       <View style={styles.row}>
-        <Text style={styles.cell}>{targetDate.toDateString()}</Text>
+        <Text style={styles.cell}>{formatDate(targetDate)}</Text>
         <Text style={styles.cell}>{item.phone}</Text>
         <Text style={styles.cell}></Text>
       </View>

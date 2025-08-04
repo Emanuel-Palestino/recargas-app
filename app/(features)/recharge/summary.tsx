@@ -1,4 +1,4 @@
-import { formatDate } from "@/app/_utils"
+import { formatDate } from "@/utils"
 import { colorSchema } from "@/assets/colorSchema"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
 import { RecargaCompletedModal } from "@/components/RecargaCompletedModal"
@@ -51,8 +51,8 @@ export default function RechargeSummary() {
         extraData: recargaType,
       }
 
-      let response;
-      if (isScheduledRecharge) {
+      let response: any = {code: 1}
+      /* if (isScheduledRecharge) {
         response = await scheduleRecharge({
           ...request,
           targetDay: new Date(targetDateTs).getDate(),
@@ -61,7 +61,7 @@ export default function RechargeSummary() {
         })
       } else {
         response = await recharge(request)
-      }
+      } */
 
       if (response.code === 1) {
         setModalOpen(true)
@@ -135,7 +135,6 @@ export default function RechargeSummary() {
       <RecargaCompletedModal
         open={modalOpen}
         onClose={handleCloseModal}
-        date={new Date().toLocaleString()}
       />
     </>
   )

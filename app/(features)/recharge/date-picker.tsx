@@ -1,4 +1,4 @@
-import { formatDate } from "@/app/_utils";
+import { formatDate } from "@/utils";
 import { colorSchema } from "@/assets/colorSchema";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
