@@ -8,22 +8,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const FEATURES_LIST = [
   {
     title: "Recargar",
-    image: require('../assets/images/icons/coin-stack.png'),
+    image: require('@/assets/images/icons/coin-stack.png'),
     link: "/recharge",
   },
   {
     title: "Programar Recarga",
-    image: require('../assets/images/icons/calendar.png'),
+    image: require('@/assets/images/icons/calendar.png'),
     link: "/recharge",
   },
   {
     title: "Recargas Programadas",
-    image: require('../assets/images/icons/schedule.png'),
+    image: require('@/assets/images/icons/schedule.png'),
     link: "/scheduled-recharges",
   },
   {
     title: "Reportes",
-    image: require('../assets/images/icons/financial-plan.png'),
+    image: require('@/assets/images/icons/financial-plan.png'),
     link: "/reports",
   },
 ] as const;
@@ -100,7 +100,7 @@ export default function Index() {
           >
             <Animated.View style={{ transform: [{ scale: settingsScale }] }}>
               <Image
-                source={require('../assets/images/icons/settings.png')}
+                source={require('@/assets/images/icons/settings.png')}
                 style={styles.optionImage}
               />
               <Text style={styles.optionText}>Ajustes</Text>
