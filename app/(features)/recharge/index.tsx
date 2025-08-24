@@ -30,13 +30,12 @@ export default function RechargeIndex() {
       return
     }
 
-    const phoneNumber = primaryPhoneNumber.number.replace(/\D/g, '')
-    const sanitizedPhoneNumber = phoneNumber.startsWith('52') ? phoneNumber.slice(2) : phoneNumber
+    const sanitizedPhoneNumber = sanitizePhoneNumber(primaryPhoneNumber.number)
     setPhoneNumber(sanitizedPhoneNumber)
   }
 
   const handleNextStep = () => {
-    const sanitizedNumber = phoneNumber.replace(/\D/g, '')
+    const sanitizedNumber = sanitizePhoneNumber(phoneNumber)
 
     if (sanitizedNumber.length !== 10) {
       Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
@@ -47,6 +46,12 @@ export default function RechargeIndex() {
 
     goToNextStep()
     router.navigate('/recharge/carrier-selection')
+  }
+
+  const sanitizePhoneNumber = (phoneNumber: string) => {
+    const onlyDigits = phoneNumber.replace(/\D/g, '')
+    const noCountryCodeNumber = onlyDigits.startsWith('52') ? onlyDigits.slice(2) : onlyDigits
+    return noCountryCodeNumber
   }
 
   useEffect(() => {
