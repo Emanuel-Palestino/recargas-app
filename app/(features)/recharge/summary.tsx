@@ -51,8 +51,8 @@ export default function RechargeSummary() {
         extraData: recargaType,
       }
 
-      let response: any = {code: 1}
-      /* if (isScheduledRecharge) {
+      let response
+      if (isScheduledRecharge) {
         response = await scheduleRecharge({
           ...request,
           targetDay: new Date(targetDateTs).getDate(),
@@ -61,7 +61,7 @@ export default function RechargeSummary() {
         })
       } else {
         response = await recharge(request)
-      } */
+      }
 
       if (response.code === 1) {
         setModalOpen(true)
