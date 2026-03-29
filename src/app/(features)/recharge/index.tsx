@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { presentContactPickerAsync } from "expo-contacts";
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: -24,
   },
   title: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 64,
     borderRadius: 16,
-    backgroundColor: colorSchema.light.base300,
+    backgroundColor: Colors.light.base300,
     paddingHorizontal: 16,
     fontSize: 32,
     textAlign: 'center',

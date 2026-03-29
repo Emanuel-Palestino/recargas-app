@@ -1,8 +1,10 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors, Spacing } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { getUsername, storeUsername } from "@/store/userStore";
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet, TextInput, KeyboardAvoidingView, Alert } from "react-native";
+import { Text, StyleSheet, TextInput, KeyboardAvoidingView, Alert } from "react-native";
+import { ThemedView } from "@/components/ThemedView";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Settings() {
   const [username, setUsername] = useState<string>("");
@@ -34,31 +36,33 @@ export default function Settings() {
       style={{ flex: 1 }}
       behavior="padding"
     >
-      <View style={styles.container}>
-        <View style={{ width: '100%', rowGap: 4 }}>
-          <Text style={styles.title}>
-            Nombre de usuario
-          </Text>
+      <ThemedView style={styles.container}>
+        <SafeAreaView style={styles.safeArea}>
+          <ThemedView style={styles.inputGroup}>
+            <Text style={styles.title}>
+              Nombre de usuario
+            </Text>
 
-          <TextInput
-            style={styles.input}
-            keyboardType="default"
-            value={username}
-            onChangeText={setUsername}
-          />
-        </View>
+            <TextInput
+              style={styles.input}
+              keyboardType="default"
+              value={username}
+              onChangeText={setUsername}
+            />
+          </ThemedView>
 
-        <View style={styles.buttonContainer}>
-          <Button
-            text="Guardar usuario"
-            onClick={handleUsernameChange}
-            loading={loading}
-            disabled={loading}
-          />
-        </View>
+          <ThemedView style={styles.buttonContainer}>
+            <Button
+              text="Guardar usuario"
+              onClick={handleUsernameChange}
+              loading={loading}
+              disabled={loading}
+            />
+          </ThemedView>
 
-        <View style={{ flex: 1 }} />
-      </View>
+          <ThemedView style={{ flex: 1 }} />
+        </SafeAreaView>
+      </ThemedView>
     </KeyboardAvoidingView>
   );
 }
@@ -66,23 +70,30 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorSchema.light.base100,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    rowGap: 22,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    justifyContent: "center",
+    flexDirection: "column",
+  },
+  safeArea: {
+    flex: 1,
+    alignItems: "flex-start",
+    rowGap: Spacing.three,
+    paddingHorizontal: Spacing.four,
+    paddingVertical: Spacing.one,
+  },
+  inputGroup: {
+    width: '100%',
+    gap: Spacing.one,
   },
   text: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   title: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   input: {
     height: 48,
     borderRadius: 10,
-    backgroundColor: colorSchema.light.base300,
+    backgroundColor: Colors.light.base300,
     paddingHorizontal: 16,
     fontSize: 16,
   },

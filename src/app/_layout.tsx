@@ -1,8 +1,9 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { requestPermissionsAsync } from 'expo-contacts';
-import { colorSchema } from '@/assets/colorSchema';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from 'react-native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { NativeTabs } from 'expo-router/build/native-tabs';
 
 
 export default function RootLayout() {
@@ -12,23 +13,31 @@ export default function RootLayout() {
     })();
   }, []);
 
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme === 'unspecified' ? 'light' : colorScheme];
+
   return (
-    <>
-      <StatusBar style='dark' />
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: colorSchema.light.base100,
-          },
-          headerShadowVisible: false,
-          headerTintColor: colorSchema.light.baseContent,
-        }}
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <NativeTabs
+        backgroundColor={colors.base100}
+        indicatorColor={colors.base200}
+        labelStyle={{ selected: { color: colors.baseContent }}}
       >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(features)" options={{ headerShown: false }} />
-        <Stack.Screen name="settings" options={{ title: 'Ajustes' }} />
-        <Stack.Screen name="+not-found" options={{ title: 'No encontrado' }} />
-      </Stack>
-    </>
+        <NativeTabs.Trigger name="index">
+          <NativeTabs.Trigger.Label>Recargar</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="paid" sf={{default: 'dollarsign.circle', selected: 'dollarsign.circle.fill'}} />
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger name="reporting">
+          <NativeTabs.Trigger.Label>Reportes</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="docs" sf={{default: 'doc.text', selected: 'doc.text.fill'}} />
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger name="settings">
+          <NativeTabs.Trigger.Label>Ajustes</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="settings" sf={{default: 'gearshape', selected: 'gearshape.fill'}} />
+        </NativeTabs.Trigger>
+      </NativeTabs>
+    </ThemeProvider>
   );
 }

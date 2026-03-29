@@ -1,5 +1,5 @@
 import { formatDate } from "@/utils";
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { DateTimePickerAndroid, DateTimePickerEvent } from "@react-native-community/datetimepicker";
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: -20,
   },
   title: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 18,
     textAlign: 'center',
     lineHeight: 20,
@@ -100,12 +100,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 70,
     borderRadius: 12,
-    backgroundColor: colorSchema.light.base300,
+    backgroundColor: Colors.light.base300,
     justifyContent: 'center',
     alignItems: 'center',
   },
   inputText: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 26,
     textAlign: 'center',
   },

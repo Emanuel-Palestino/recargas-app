@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { Stepper } from "@/components/ui/Stepper";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { Slot } from "expo-router";
@@ -48,7 +48,7 @@ export default function RechargeLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
     rowGap: 22,
     paddingHorizontal: 20,
     paddingVertical: 10,

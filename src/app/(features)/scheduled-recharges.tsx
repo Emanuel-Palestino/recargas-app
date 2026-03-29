@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { getScheduledRecharges } from "@/services/recharge";
 import { ScheduledTransaction } from "@/types/ScheduledTransaction";
 import { useEffect, useState } from "react";
@@ -60,7 +60,7 @@ export default function ScheduledRecharges() {
   if (loading) {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
-        <ActivityIndicator size="large" color={colorSchema.light.primary} />
+        <ActivityIndicator size="large" color={Colors.light.primary} />
       </View>
     )
   }
@@ -85,7 +85,7 @@ export default function ScheduledRecharges() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
   },
   loadingContainer: {
     justifyContent: 'center',
@@ -103,20 +103,20 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     textAlign: 'center',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   header: {
-    backgroundColor: colorSchema.light.base200,
+    backgroundColor: Colors.light.base200,
     flexDirection: 'row',
     paddingVertical: 6,
   },
   headerText: {
     fontWeight: 'bold',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   emptyListText: {
     textAlign: 'center',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 18,
     marginTop: -25,
   },

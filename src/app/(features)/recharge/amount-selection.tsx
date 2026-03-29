@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker"
 import { Alert, StyleSheet, Text, View } from "react-native"
-import { colorSchema } from "@/assets/colorSchema"
+import { Colors } from "@/constants/theme"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { PRODUCTS } from "@/constants/products"
 import { DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
@@ -127,18 +127,18 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   picker: {
     height: 48,
     padding: 0,
     borderRadius: 10,
-    backgroundColor: colorSchema.light.base300,
+    backgroundColor: Colors.light.base300,
     justifyContent: 'center',
     marginBottom: 12,
   },
   benefits: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 18,
   },
   stepperActionsContainer: {

@@ -1,5 +1,5 @@
 import { formatDate } from "@/utils"
-import { colorSchema } from "@/assets/colorSchema"
+import { Colors } from "@/constants/theme"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { RecargaCompletedModal } from "@/components/RecargaCompletedModal"
 import { Button } from "@/components/ui/Button"
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexGrow: 1,
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
     display: 'flex',
     alignItems: 'center',
   },
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   value: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 19,
     fontWeight: 'bold',
     marginBottom: 10,

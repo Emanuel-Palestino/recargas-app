@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { Link } from "expo-router";
 import { useRef } from "react";
@@ -115,7 +115,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
     alignItems: 'center',
     paddingVertical: 6,
     paddingHorizontal: 12,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     marginBottom: 20,
   },
   featuresContainer: {
@@ -142,12 +142,12 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     paddingVertical: 18,
     paddingHorizontal: 22,
-    backgroundColor: colorSchema.light.primary,
+    backgroundColor: Colors.light.primary,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
   featureText: {
-    color: colorSchema.light.primaryContent,
+    color: Colors.light.primaryContent,
     fontWeight: 'bold',
   },
   featureImage: {
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     paddingVertical: 12,
     paddingHorizontal: 18,
-    backgroundColor: colorSchema.light.secondary,
+    backgroundColor: Colors.light.secondary,
     justifyContent: 'center',
     alignItems: 'flex-start',
     width: '32%',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   optionText: {
-    color: colorSchema.light.secondaryContent,
+    color: Colors.light.secondaryContent,
     fontSize: 18,
     fontWeight: 'bold',
   },

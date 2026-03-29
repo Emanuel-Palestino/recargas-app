@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { useRef } from "react";
 import { Animated, Pressable, StyleSheet, Text } from "react-native";
 
@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minWidth: 120,
     height: 45,
-    backgroundColor: colorSchema.light.primary,
+    backgroundColor: Colors.light.primary,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 12,
   },
   buttonText: {
-    color: colorSchema.light.primaryContent,
+    color: Colors.light.primaryContent,
     fontSize: 16,
     textAlign: 'center',
   },
@@ -114,21 +114,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonSecondaryContainer: {
-    backgroundColor: colorSchema.light.secondary,
+    backgroundColor: Colors.light.secondary,
   },
   buttonSecondaryText: {
-    color: colorSchema.light.secondaryContent,
+    color: Colors.light.secondaryContent,
   },
   buttonAccentContainer: {
-    backgroundColor: colorSchema.light.accent,
+    backgroundColor: Colors.light.accent,
   },
   buttonAccentText: {
-    color: colorSchema.light.accentContent,
+    color: Colors.light.accentContent,
   },
   buttonMediumContainer: {
-    backgroundColor: colorSchema.light.medium,
+    backgroundColor: Colors.light.medium,
   },
   buttonMediumText: {
-    color: colorSchema.light.mediumContent,
+    color: Colors.light.mediumContent,
   },
 });

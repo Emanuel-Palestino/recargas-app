@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema"
+import { Colors } from "@/constants/theme"
 import { Carrier } from "@/types/Carriers"
 import { Image, Pressable, StyleSheet } from "react-native"
 
@@ -38,19 +38,19 @@ export const CarrierButton = ({
 const styles = StyleSheet.create({
   button: {
     width: '48%',
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
     padding: 12,
     borderRadius: 10,
     borderWidth: 2.5,
-    borderColor: colorSchema.light.base300,
+    borderColor: Colors.light.base300,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
     marginHorizontal: '1%',
   },
   buttonSelected: {
-    backgroundColor: colorSchema.light.base300,
-    borderColor: colorSchema.light.secondary,
+    backgroundColor: Colors.light.base300,
+    borderColor: Colors.light.secondary,
   },
   image: {
     width: 100,

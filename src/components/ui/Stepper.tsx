@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { FC } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
@@ -34,7 +34,7 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             cx="50"
             cy="50"
             r="45"
-            stroke={colorSchema.light.base300}
+            stroke={Colors.light.base300}
             strokeWidth="10"
             fill="none"
           />
@@ -43,7 +43,7 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             cx="50"
             cy="50"
             r="45"
-            stroke={colorSchema.light.success}
+            stroke={Colors.light.success}
             strokeWidth="10"
             fill="none"
             strokeDasharray={`${circumference} ${circumference}`}

@@ -1,4 +1,4 @@
-import { colorSchema } from "@/assets/colorSchema"
+import { Colors } from "@/constants/theme"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     width: '100%',
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
     position: 'absolute',
     top: 0,
     padding: 10,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 26,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   value: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 14,

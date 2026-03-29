@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { Alert, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { colorSchema } from "@/assets/colorSchema";
+import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { getTransactions } from "@/services/recharge";
 import { Transaction } from "@/types/Transaction";
@@ -145,7 +145,7 @@ export default function ReportsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colorSchema.light.base100,
+    backgroundColor: Colors.light.base100,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
@@ -160,13 +160,13 @@ const styles = StyleSheet.create({
     width: '48%',
   },
   title: {
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
     marginBottom: 4,
   },
   input: {
     height: 48,
     borderRadius: 10,
-    backgroundColor: colorSchema.light.base300,
+    backgroundColor: Colors.light.base300,
     paddingHorizontal: 16,
     fontSize: 16,
     justifyContent: 'center',
@@ -192,24 +192,24 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     textAlign: 'center',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   header: {
-    backgroundColor: colorSchema.light.base200,
+    backgroundColor: Colors.light.base200,
     flexDirection: 'row',
     paddingVertical: 6,
   },
   headerText: {
     fontWeight: 'bold',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
   footer: {
-    backgroundColor: colorSchema.light.base200,
+    backgroundColor: Colors.light.base200,
     flexDirection: 'row',
     paddingVertical: 6,
   },
   footerText: {
     fontWeight: 'bold',
-    color: colorSchema.light.baseContent,
+    color: Colors.light.baseContent,
   },
 });
