@@ -1,6 +1,6 @@
 import { formatDate } from "@/utils"
 import { colorSchema } from "@/assets/colorSchema"
-import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
+import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { RecargaCompletedModal } from "@/components/RecargaCompletedModal"
 import { Button } from "@/components/ui/Button"
 import { recharge, RechargeRequest, scheduleRecharge } from "@/services/recharge"

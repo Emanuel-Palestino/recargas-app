@@ -1,5 +1,5 @@
 import { colorSchema } from "@/assets/colorSchema"
-import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/assets/displayedStrings"
+import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
 import { useRechargeStore } from "@/store/rechargeStore"
