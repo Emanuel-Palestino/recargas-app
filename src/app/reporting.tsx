@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import { Alert, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { Alert, FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
+import { DatetimeInput } from "@/components/ui/DatetimeInput";
 import { getTransactions } from "@/services/recharge";
 import { Transaction } from "@/types/Transaction";
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors";
@@ -20,34 +20,6 @@ export default function ReportsScreen() {
       setData([]);
     }, [])
   );
-
-  const onChangeStartDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
-    const currentDate = selectedDate || startDate;
-    setStartDate(currentDate);
-  };
-
-  const onChangeEndDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
-    const currentDate = selectedDate || endDate;
-    setEndDate(currentDate);
-  };
-
-  const showStartDatepicker = () => {
-    DateTimePickerAndroid.open({
-      value: startDate,
-      onChange: onChangeStartDate,
-      mode: 'date',
-      is24Hour: true,
-    });
-  };
-
-  const showEndDatepicker = () => {
-    DateTimePickerAndroid.open({
-      value: endDate,
-      onChange: onChangeEndDate,
-      mode: 'date',
-      is24Hour: true,
-    });
-  };
 
   const renderItem = ({ item }: { item: Transaction }) => (
     <View style={styles.row}>
@@ -82,29 +54,16 @@ export default function ReportsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.filterContainer}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.title}>
-            Fecha inicial
-          </Text>
-          <Pressable
-            style={styles.input}
-            onPress={showStartDatepicker}
-          >
-            <Text>{startDate.toDateString()}</Text>
-          </Pressable>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.title}>
-            Fecha final
-          </Text>
-          <Pressable
-            style={styles.input}
-            onPress={showEndDatepicker}
-          >
-            <Text>{endDate.toDateString()}</Text>
-          </Pressable>
-        </View>
+        <DatetimeInput
+          mode="range"
+          startLabel="Fecha inicial"
+          endLabel="Fecha final"
+          startValue={startDate}
+          endValue={endDate}
+          onStartChange={setStartDate}
+          onEndChange={setEndDate}
+          style={styles.datesContainer}
+        />
 
         <View style={styles.buttonContainer}>
           <Button
@@ -156,21 +115,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 10,
   },
+  datesContainer: {
+    width: '100%',
+  },
   inputContainer: {
     width: '48%',
-  },
-  title: {
-    color: Colors.light.baseContent,
-    marginBottom: 4,
-  },
-  input: {
-    height: 48,
-    borderRadius: 10,
-    backgroundColor: Colors.light.base300,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonContainer: {
     width: '100%',

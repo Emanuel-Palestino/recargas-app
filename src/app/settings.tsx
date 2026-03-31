@@ -1,8 +1,9 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { getUsername, storeUsername } from "@/store/userStore";
 import { useEffect, useState } from "react";
-import { Text, StyleSheet, TextInput, KeyboardAvoidingView, Alert } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Alert } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -38,18 +39,13 @@ export default function Settings() {
     >
       <ThemedView style={styles.container}>
         <SafeAreaView style={styles.safeArea}>
-          <ThemedView style={styles.inputGroup}>
-            <Text style={styles.title}>
-              Nombre de usuario
-            </Text>
-
-            <TextInput
-              style={styles.input}
-              keyboardType="default"
-              value={username}
-              onChangeText={setUsername}
-            />
-          </ThemedView>
+          <Input
+            type="text"
+            label="Nombre de usuario"
+            value={username}
+            onChangeText={setUsername}
+            style={styles.inputGroup}
+          />
 
           <ThemedView style={styles.buttonContainer}>
             <Button
@@ -82,20 +78,6 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     width: '100%',
-    gap: Spacing.one,
-  },
-  text: {
-    color: Colors.light.baseContent,
-  },
-  title: {
-    color: Colors.light.baseContent,
-  },
-  input: {
-    height: 48,
-    borderRadius: 10,
-    backgroundColor: Colors.light.base300,
-    paddingHorizontal: 16,
-    fontSize: 16,
   },
   buttonContainer: {
     width: '100%',
