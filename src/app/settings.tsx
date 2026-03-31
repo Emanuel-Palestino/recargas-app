@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "flex-start",
     rowGap: Spacing.three,
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.one,
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.two,
   },
   inputGroup: {
     width: '100%',

@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   rangeContainer: {
     flexDirection: 'row',
     gap: Spacing.two,
+    width: '100%',
   },
   rangeField: {
     flex: 1,

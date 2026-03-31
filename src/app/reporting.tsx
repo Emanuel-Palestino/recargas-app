@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { Alert, FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { Colors } from "@/constants/theme";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { Colors, Spacing } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { DatetimeInput } from "@/components/ui/DatetimeInput";
 import { getTransactions } from "@/services/recharge";
@@ -8,6 +8,8 @@ import { Transaction } from "@/types/Transaction";
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors";
 import { useFocusEffect } from "@react-navigation/native";
 import { formatDate } from "@/utils";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ThemedView } from "@/components/ThemedView";
 
 export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
@@ -52,8 +54,8 @@ export default function ReportsScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.filterContainer}>
+    <ThemedView style={styles.container}>
+      <SafeAreaView edges={["left", "top", "right"]} style={styles.safeArea}>
         <DatetimeInput
           mode="range"
           startLabel="Fecha inicial"
@@ -62,7 +64,6 @@ export default function ReportsScreen() {
           endValue={endDate}
           onStartChange={setStartDate}
           onEndChange={setEndDate}
-          style={styles.datesContainer}
         />
 
         <View style={styles.buttonContainer}>
@@ -74,29 +75,29 @@ export default function ReportsScreen() {
             disabled={loading}
           />
         </View>
-      </View>
 
-      <SafeAreaView style={styles.listContainer}>
-        <View style={styles.header}>
-          <Text style={[styles.cell, styles.headerText]}>Fecha</Text>
-          <Text style={[styles.cell, styles.headerText]}>Número celular</Text>
-          <Text style={[styles.cell, styles.headerText]}>Monto</Text>
-        </View>
+        <ThemedView style={styles.listContainer}>
+          <View style={styles.header}>
+            <Text style={[styles.cell, styles.headerText]}>Fecha</Text>
+            <Text style={[styles.cell, styles.headerText]}>Número celular</Text>
+            <Text style={[styles.cell, styles.headerText]}>Monto</Text>
+          </View>
 
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => String(item.id)}
-          style={styles.list}
-        />
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={item => String(item.id)}
+            style={styles.list}
+          />
 
-        <View style={styles.footer}>
-          <Text style={[styles.cell, styles.footerText]}>Total</Text>
-          <Text style={styles.cell}></Text>
-          <Text style={[styles.cell, styles.footerText]}>${data.reduce<number>((prev, curr) => prev + curr.amount, 0)}</Text>
-        </View>
+          <View style={styles.footer}>
+            <Text style={[styles.cell, styles.footerText]}>Total</Text>
+            <Text style={styles.cell}></Text>
+            <Text style={[styles.cell, styles.footerText]}>${data.reduce<number>((prev, curr) => prev + curr.amount, 0)}</Text>
+          </View>
+        </ThemedView>
       </SafeAreaView>
-    </View>
+    </ThemedView>
   )
 
 }
@@ -104,32 +105,23 @@ export default function ReportsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.base100,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    justifyContent: "center",
+    flexDirection: "column",
   },
-  filterContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap: 10,
-  },
-  datesContainer: {
-    width: '100%',
-  },
-  inputContainer: {
-    width: '48%',
+  safeArea: {
+    flex: 1,
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.two,
   },
   buttonContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: Spacing.two,
   },
   listContainer: {
     flex: 1,
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: Spacing.three,
   },
   list: {
     flex: 1,

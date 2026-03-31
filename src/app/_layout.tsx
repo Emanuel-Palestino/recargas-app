@@ -19,23 +19,23 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <NativeTabs
-        backgroundColor={colors.base100}
+        backgroundColor={colors.base200}
         indicatorColor={colors.base200}
-        labelStyle={{ selected: { color: colors.baseContent }}}
+        labelStyle={{ selected: { color: colors.baseContent } }}
       >
         <NativeTabs.Trigger name="index">
           <NativeTabs.Trigger.Label>Recargar</NativeTabs.Trigger.Label>
-          <NativeTabs.Trigger.Icon md="paid" sf={{default: 'dollarsign.circle', selected: 'dollarsign.circle.fill'}} />
+          <NativeTabs.Trigger.Icon md="paid" sf={{ default: 'dollarsign.circle', selected: 'dollarsign.circle.fill' }} />
         </NativeTabs.Trigger>
 
         <NativeTabs.Trigger name="reporting">
           <NativeTabs.Trigger.Label>Reportes</NativeTabs.Trigger.Label>
-          <NativeTabs.Trigger.Icon md="docs" sf={{default: 'doc.text', selected: 'doc.text.fill'}} />
+          <NativeTabs.Trigger.Icon md="docs" sf={{ default: 'doc.text', selected: 'doc.text.fill' }} />
         </NativeTabs.Trigger>
 
         <NativeTabs.Trigger name="settings">
           <NativeTabs.Trigger.Label>Ajustes</NativeTabs.Trigger.Label>
-          <NativeTabs.Trigger.Icon md="settings" sf={{default: 'gearshape', selected: 'gearshape.fill'}} />
+          <NativeTabs.Trigger.Icon md="settings" sf={{ default: 'gearshape', selected: 'gearshape.fill' }} />
         </NativeTabs.Trigger>
       </NativeTabs>
     </ThemeProvider>
