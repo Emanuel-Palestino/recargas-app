@@ -146,6 +146,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     rowGap: 10,
     width: '100%',
-    paddingBottom: 20,
   },
 })

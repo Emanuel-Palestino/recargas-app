@@ -30,7 +30,6 @@ export default function RechargeLayout() {
   const contentContainerStyle = Platform.select({
     android: {
       paddingTop: safeAreaInsets.top,
-      paddingBottom: safeAreaInsets.bottom,
       paddingLeft: safeAreaInsets.left,
       paddingRight: safeAreaInsets.right,
     }
