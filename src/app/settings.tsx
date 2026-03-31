@@ -38,7 +38,7 @@ export default function Settings() {
       behavior="padding"
     >
       <ThemedView style={styles.container}>
-        <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView edges={["left", "top", "right"]} style={styles.safeArea}>
           <Input
             type="text"
             label="Nombre de usuario"

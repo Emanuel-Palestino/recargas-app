@@ -20,10 +20,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <NativeTabs
         backgroundColor={colors.base200}
-        indicatorColor={colors.base200}
+        indicatorColor={colors.primary}
+        iconColor={{default: undefined, selected: '#ffffff'}}
+        rippleColor="#87c563"
         labelStyle={{ selected: { color: colors.baseContent } }}
       >
-        <NativeTabs.Trigger name="index">
+        <NativeTabs.Trigger name="recharge">
           <NativeTabs.Trigger.Label>Recargar</NativeTabs.Trigger.Label>
           <NativeTabs.Trigger.Icon md="paid" sf={{ default: 'dollarsign.circle', selected: 'dollarsign.circle.fill' }} />
         </NativeTabs.Trigger>
