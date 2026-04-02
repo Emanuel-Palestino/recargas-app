@@ -7,11 +7,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const FEATURES_LIST = [
   {
-    title: "Recargar",
-    image: require('@/assets/images/icons/coin-stack.png'),
-    link: "/recharge",
-  },
-  {
     title: "Programar Recarga",
     image: require('@/assets/images/icons/calendar.png'),
     link: "/recharge",
@@ -19,12 +14,7 @@ const FEATURES_LIST = [
   {
     title: "Recargas Programadas",
     image: require('@/assets/images/icons/schedule.png'),
-    link: "/scheduled-recharges",
-  },
-  {
-    title: "Reportes",
-    image: require('@/assets/images/icons/financial-plan.png'),
-    link: "/reports",
+    link: "/extra/scheduled-recharges",
   },
 ] as const;
 
@@ -92,7 +82,7 @@ export default function Index() {
       </View>
 
       <View style={styles.miscelaneousContainer}>
-        <Link href="/settings" asChild>
+        <Link href="/extra/settings" asChild>
           <Pressable
             style={styles.optionContainer}
             onPressIn={() => handlePressIn(settingsScale)}

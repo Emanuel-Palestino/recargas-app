@@ -21,7 +21,7 @@ export default function RootLayout() {
       <NativeTabs
         backgroundColor={colors.base200}
         indicatorColor={colors.primary}
-        iconColor={{default: undefined, selected: '#ffffff'}}
+        iconColor={{ default: undefined, selected: '#ffffff' }}
         rippleColor="#87c563"
         labelStyle={{ selected: { color: colors.baseContent } }}
       >
@@ -35,9 +35,9 @@ export default function RootLayout() {
           <NativeTabs.Trigger.Icon md="docs" sf={{ default: 'doc.text', selected: 'doc.text.fill' }} />
         </NativeTabs.Trigger>
 
-        <NativeTabs.Trigger name="settings">
-          <NativeTabs.Trigger.Label>Ajustes</NativeTabs.Trigger.Label>
-          <NativeTabs.Trigger.Icon md="settings" sf={{ default: 'gearshape', selected: 'gearshape.fill' }} />
+        <NativeTabs.Trigger name="extra">
+          <NativeTabs.Trigger.Label>Más</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="add_box" sf={{ default: 'doc.text', selected: 'doc.text.fill' }} />
         </NativeTabs.Trigger>
       </NativeTabs>
     </ThemeProvider>
