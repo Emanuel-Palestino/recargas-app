@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useMemo } from "react";
+import { FlatList, RefreshControlProps, StyleSheet, Text, View } from "react-native";
 import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -7,6 +7,7 @@ export type Column<T> = {
   key: string;
   header: string;
   render: (item: T) => string;
+  minWidth?: number;
 };
 
 export type FooterCell = {
@@ -20,6 +21,7 @@ type TableProps<T> = {
   keyExtractor: (item: T) => string;
   footer?: FooterCell[];
   emptyText?: string;
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 };
 
 export function Table<T>({
@@ -28,6 +30,7 @@ export function Table<T>({
   keyExtractor,
   footer,
   emptyText = "Sin resultados",
+  refreshControl,
 }: TableProps<T>) {
   const theme = useTheme();
 
@@ -78,45 +81,49 @@ export function Table<T>({
   const renderItem = ({ item, index }: { item: T; index: number }) => (
     <View style={[styles.row, index % 2 !== 0 && styles.bandedRow]}>
       {columns.map((col, i) => (
-        <Text key={col.key} style={[styles.cell, { flex: flexValues[i] }]}>
+        <Text key={col.key} style={[styles.cell, { flex: flexValues[i], minWidth: col.minWidth }]}>
           {col.render(item)}
         </Text>
       ))}
     </View>
   );
 
-  return (
-    <>
-      <View style={styles.stripe}>
-        {columns.map((col, i) => (
-          <Text key={col.key} style={[styles.stripeText, { flex: flexValues[i] }]}>
-            {col.header}
+  const renderHeader = () => (
+    <View style={styles.stripe}>
+      {columns.map((col, i) => (
+        <Text key={col.key} style={[styles.stripeText, { flex: flexValues[i], minWidth: col.minWidth }]}>
+          {col.header}
+        </Text>
+      ))}
+    </View>
+  );
+
+  const renderFooter = () => footer && footer.length > 0 ? (
+    <View style={styles.stripe}>
+      {columns.map((col, i) => {
+        const cell = footer.find((f) => f.key === col.key);
+        return (
+          <Text key={col.key} style={[styles.stripeText, { flex: flexValues[i], minWidth: col.minWidth }]}>
+            {cell?.value ?? ""}
           </Text>
-        ))}
-      </View>
+        );
+      })}
+    </View>
+  ) : null;
 
-      {data.length === 0 ? (
-        <Text style={styles.empty}>{emptyText}</Text>
-      ) : (
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-        />
-      )}
+  const renderEmpty = () => (
+    <Text style={styles.empty}>{emptyText}</Text>
+  );
 
-      {footer && footer.length > 0 && (
-        <View style={styles.stripe}>
-          {columns.map((col, i) => {
-            const cell = footer.find((f) => f.key === col.key);
-            return (
-              <Text key={col.key} style={[styles.stripeText, { flex: flexValues[i] }]}>
-                {cell?.value ?? ""}
-              </Text>
-            );
-          })}
-        </View>
-      )}
-    </>
+  return (
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+      ListHeaderComponent={renderHeader}
+      ListFooterComponent={renderFooter}
+      ListEmptyComponent={renderEmpty}
+      refreshControl={refreshControl}
+    />
   );
 }

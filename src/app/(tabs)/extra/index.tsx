@@ -1,19 +1,23 @@
-import { Colors } from "@/constants/theme";
+import { ThemedView } from "@/components/ThemedView";
+import { Colors, Spacing } from "@/constants/theme";
+import ScheduledRechargesIcon from "@/icons/ScheduledRechargesIcon";
+import ScheduleRechargeIcon from "@/icons/ScheduleRechargeIcon";
+import SettingsIcon from "@/icons/SettingsIcon";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { Link } from "expo-router";
 import { useRef } from "react";
-import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const FEATURES_LIST = [
   {
     title: "Programar Recarga",
-    image: require('@/assets/images/icons/calendar.png'),
+    icon: <ScheduleRechargeIcon width={45} height={45} fill={Colors.light.primaryContent} />,
     link: "/recharge",
   },
   {
     title: "Recargas Programadas",
-    image: require('@/assets/images/icons/schedule.png'),
+    icon: <ScheduledRechargesIcon width={45} height={45} fill={Colors.light.primaryContent} />,
     link: "/extra/scheduled-recharges",
   },
 ] as const;
@@ -43,95 +47,83 @@ export default function Index() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Bienvenido</Text>
-      <View style={styles.featuresContainer}>
-        {FEATURES_LIST.map((feature, index) => (
-          <Link href={feature.link} asChild key={index}>
-            <Pressable
-              onPressIn={() => handlePressIn(featuresScales[index])}
-              onPressOut={() => handlePressOut(featuresScales[index])}
-              onPress={() => {
-                resetState()
-                setIsScheduledRecharge(feature.title === "Programar Recarga")
-              }}
-              style={{ width: '47%' }}
-            >
-              <Animated.View
-                style={[
-                  styles.featureContainer,
-                  { transform: [{ scale: featuresScales[index] }] },
-                ]}
+    <ThemedView style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.featuresContainer}>
+          {FEATURES_LIST.map((feature, index) => (
+            <Link href={feature.link} asChild key={index} style={{ flex: 1 }}>
+              <Pressable
+                onPressIn={() => handlePressIn(featuresScales[index])}
+                onPressOut={() => handlePressOut(featuresScales[index])}
+                onPress={() => {
+                  resetState()
+                  setIsScheduledRecharge(feature.title === "Programar Recarga")
+                }}
               >
-                <Image
-                  source={feature.image}
-                  style={styles.featureImage}
-                />
-                <Text
+                <Animated.View
                   style={[
-                    styles.featureText,
-                    feature.title.length > 10 ? { fontSize: 18 } : { fontSize: 20 },
+                    styles.featureContainer,
+                    { transform: [{ scale: featuresScales[index] }] },
                   ]}
                 >
-                  {feature.title}
-                </Text>
+                  {feature.icon}
+                  <Text
+                    style={[
+                      styles.featureText,
+                      feature.title.length > 10 ? { fontSize: 18 } : { fontSize: 20 },
+                    ]}
+                  >
+                    {feature.title}
+                  </Text>
+                </Animated.View>
+              </Pressable>
+            </Link>
+          ))}
+        </View>
+
+        <View style={styles.miscelaneousContainer}>
+          <Link href="/extra/settings" asChild>
+            <Pressable
+              style={{ width: '32%' }}
+              onPressIn={() => handlePressIn(settingsScale)}
+              onPressOut={() => handlePressOut(settingsScale)}
+            >
+              <Animated.View style={[styles.optionContainer, { transform: [{ scale: settingsScale }] }]}>
+                <SettingsIcon width={30} height={30} fill={Colors.light.secondaryContent} />
+                <Text style={styles.optionText}>Ajustes</Text>
               </Animated.View>
             </Pressable>
           </Link>
-        ))}
-      </View>
-
-      <View style={styles.miscelaneousContainer}>
-        <Link href="/extra/settings" asChild>
-          <Pressable
-            style={styles.optionContainer}
-            onPressIn={() => handlePressIn(settingsScale)}
-            onPressOut={() => handlePressOut(settingsScale)}
-          >
-            <Animated.View style={{ transform: [{ scale: settingsScale }] }}>
-              <Image
-                source={require('@/assets/images/icons/settings.png')}
-                style={styles.optionImage}
-              />
-              <Text style={styles.optionText}>Ajustes</Text>
-            </Animated.View>
-          </Pressable>
-        </Link>
-      </View>
-    </SafeAreaView>
+        </View>
+      </SafeAreaView>
+    </ThemedView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.base100,
-    alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: Colors.light.baseContent,
-    marginBottom: 20,
+  safeArea: {
+    flex: 1,
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.two,
   },
   featuresContainer: {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginBottom: 20,
-    gap: 16,
+    marginBottom: Spacing.four,
+    gap: Spacing.three,
   },
   featureContainer: {
-    width: '100%',
-    height: 160,
     flexDirection: 'column',
-    rowGap: 16,
+    rowGap: Spacing.three,
     borderRadius: 24,
-    paddingVertical: 18,
-    paddingHorizontal: 22,
+    paddingVertical: Spacing.three,
+    paddingHorizontal: Spacing.four,
     backgroundColor: Colors.light.primary,
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -139,11 +131,6 @@ const styles = StyleSheet.create({
   featureText: {
     color: Colors.light.primaryContent,
     fontWeight: 'bold',
-  },
-  featureImage: {
-    width: 60,
-    height: 60,
-    resizeMode: 'contain',
   },
   miscelaneousContainer: {
     width: '100%',
@@ -153,19 +140,13 @@ const styles = StyleSheet.create({
   },
   optionContainer: {
     flexDirection: 'column',
-    rowGap: 8,
+    rowGap: Spacing.two,
     borderRadius: 24,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
+    paddingVertical: Spacing.three,
+    paddingHorizontal: Spacing.three,
     backgroundColor: Colors.light.secondary,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    width: '32%',
-  },
-  optionImage: {
-    width: 42,
-    height: 42,
-    resizeMode: 'contain',
   },
   optionText: {
     color: Colors.light.secondaryContent,

@@ -5,7 +5,6 @@ import { getUsername, storeUsername } from "@/store/userStore";
 import { useEffect, useState } from "react";
 import { StyleSheet, KeyboardAvoidingView, Alert } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Settings() {
   const [username, setUsername] = useState<string>("");
@@ -34,30 +33,28 @@ export default function Settings() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={styles.container}
       behavior="padding"
     >
-      <ThemedView style={styles.container}>
-        <SafeAreaView edges={["left", "top", "right"]} style={styles.safeArea}>
-          <Input
-            type="text"
-            label="Nombre de usuario"
-            value={username}
-            onChangeText={setUsername}
-            style={styles.inputGroup}
+      <ThemedView style={styles.themedView}>
+        <Input
+          type="text"
+          label="Nombre de usuario"
+          value={username}
+          onChangeText={setUsername}
+          style={styles.inputGroup}
+        />
+
+        <ThemedView style={styles.buttonContainer}>
+          <Button
+            text="Guardar usuario"
+            onClick={handleUsernameChange}
+            loading={loading}
+            disabled={loading}
           />
+        </ThemedView>
 
-          <ThemedView style={styles.buttonContainer}>
-            <Button
-              text="Guardar usuario"
-              onClick={handleUsernameChange}
-              loading={loading}
-              disabled={loading}
-            />
-          </ThemedView>
-
-          <ThemedView style={{ flex: 1 }} />
-        </SafeAreaView>
+        <ThemedView style={{ flex: 1 }} />
       </ThemedView>
     </KeyboardAvoidingView>
   );
@@ -69,7 +66,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
   },
-  safeArea: {
+  themedView: {
     flex: 1,
     alignItems: "flex-start",
     rowGap: Spacing.three,
