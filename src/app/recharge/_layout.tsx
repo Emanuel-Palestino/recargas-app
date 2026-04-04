@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     rowGap: Spacing.four,
     paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
+    paddingVertical: Spacing.three,
     justifyContent: 'space-between',
   },
   scheduledBadge: {

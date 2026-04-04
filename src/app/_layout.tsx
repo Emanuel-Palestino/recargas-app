@@ -5,6 +5,7 @@ import { useColorScheme } from 'react-native';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { NativeTabs } from 'expo-router/build/native-tabs';
 import { useRouter, useGlobalSearchParams } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function TabsLayout() {
@@ -23,6 +24,7 @@ export default function TabsLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
       <NativeTabs
         backgroundColor={colors.base200}
         indicatorColor={colors.primary}
