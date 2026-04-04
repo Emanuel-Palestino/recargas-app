@@ -14,7 +14,6 @@ const carriers: { value: Carrier, image: any }[] = [
   {
     value: Carrier.ATT,
     image: require('@/assets/images/carrier_logos/att.png')
-
   },
   {
     value: Carrier.MOVISTAR,
@@ -25,33 +24,11 @@ const carriers: { value: Carrier, image: any }[] = [
     image: require('@/assets/images/carrier_logos/bait.png')
   }
 ]
-export default function CarrierSelection() {
 
-  const {
-    carrier,
-    setCarrier,
-    goToPreviousStep,
-    goToNextStep,
-    setRecargaType,
-    setAmount,
-    setCurrentStep,
-  } = useRechargeStore()
+export default function CarrierSelection() {
+  const { carrier, setCarrier, setRecargaType, setAmount } = useRechargeStore()
   const router = useRouter()
   const prevCarrierRef = useRef<Carrier>(carrier)
-
-  const handlePreviousStep = () => {
-    goToPreviousStep()
-    if (router.canGoBack()) {
-      router.back()
-    } else {
-      router.navigate('/recharge')
-    }
-  }
-
-  const handleNextStep = () => {
-    goToNextStep()
-    router.navigate('/recharge/amount-selection')
-  }
 
   useEffect(() => {
     if (prevCarrierRef.current !== carrier) {
@@ -62,47 +39,39 @@ export default function CarrierSelection() {
       }
 
       setAmount(0)
-
       prevCarrierRef.current = carrier
     }
   }, [carrier, setRecargaType, setAmount])
-
-  useEffect(() => {
-    setCurrentStep(1) // steps start from 0
-  }, [])
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.buttonsContainer}>
-          {
-            carriers.map(carr => (
-              <CarrierButton
-                key={carr.value}
-                onSelect={setCarrier}
-                selected={carr.value === carrier}
-                image={carr.image}
-                value={carr.value}
-              />
-            ))
-          }
+          {carriers.map(carr => (
+            <CarrierButton
+              key={carr.value}
+              onSelect={setCarrier}
+              selected={carr.value === carrier}
+              image={carr.image}
+              value={carr.value}
+            />
+          ))}
         </View>
-      </View >
+      </View>
 
       <View style={styles.stepperActionsContainer}>
         <Button
           text="Siguiente"
-          onClick={handleNextStep}
+          onClick={() => router.navigate('/recharge/amount-selection')}
         />
         <Button
           text="Anterior"
-          onClick={handlePreviousStep}
+          onClick={() => router.back()}
           color='medium'
         />
       </View>
     </>
   )
-
 }
 
 const styles = StyleSheet.create({

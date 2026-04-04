@@ -3,8 +3,7 @@ import { Colors, Spacing } from "@/constants/theme";
 import ScheduledRechargesIcon from "@/icons/ScheduledRechargesIcon";
 import ScheduleRechargeIcon from "@/icons/ScheduleRechargeIcon";
 import SettingsIcon from "@/icons/SettingsIcon";
-import { useRechargeStore } from "@/store/rechargeStore";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useRef } from "react";
 import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,18 +12,20 @@ const FEATURES_LIST = [
   {
     title: "Programar Recarga",
     icon: <ScheduleRechargeIcon width={45} height={45} fill={Colors.light.primaryContent} />,
-    link: "/recharge",
+    onNavigate: (router: ReturnType<typeof useRouter>) => {
+      router.navigate({ pathname: '/recharge', params: { scheduled: 'true', wasManualTriggered: 'true' } });
+    }
   },
   {
     title: "Recargas Programadas",
     icon: <ScheduledRechargesIcon width={45} height={45} fill={Colors.light.primaryContent} />,
-    link: "/extra/scheduled-recharges",
+    onNavigate: (router: ReturnType<typeof useRouter>) =>
+      router.navigate('/extra/scheduled-recharges'),
   },
-] as const;
+];
 
 export default function Index() {
-
-  const { setIsScheduledRecharge, resetState } = useRechargeStore();
+  const router = useRouter();
   const featuresScales = useRef(FEATURES_LIST.map(() => new Animated.Value(1))).current;
   const settingsScale = useRef(new Animated.Value(1)).current;
 
@@ -51,33 +52,30 @@ export default function Index() {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.featuresContainer}>
           {FEATURES_LIST.map((feature, index) => (
-            <Link href={feature.link} asChild key={index} style={{ flex: 1 }}>
-              <Pressable
-                onPressIn={() => handlePressIn(featuresScales[index])}
-                onPressOut={() => handlePressOut(featuresScales[index])}
-                onPress={() => {
-                  resetState()
-                  setIsScheduledRecharge(feature.title === "Programar Recarga")
-                }}
+            <Pressable
+              key={index}
+              style={{ flex: 1 }}
+              onPressIn={() => handlePressIn(featuresScales[index])}
+              onPressOut={() => handlePressOut(featuresScales[index])}
+              onPress={() => feature.onNavigate(router)}
+            >
+              <Animated.View
+                style={[
+                  styles.featureContainer,
+                  { transform: [{ scale: featuresScales[index] }] },
+                ]}
               >
-                <Animated.View
+                {feature.icon}
+                <Text
                   style={[
-                    styles.featureContainer,
-                    { transform: [{ scale: featuresScales[index] }] },
+                    styles.featureText,
+                    feature.title.length > 10 ? { fontSize: 18 } : { fontSize: 20 },
                   ]}
                 >
-                  {feature.icon}
-                  <Text
-                    style={[
-                      styles.featureText,
-                      feature.title.length > 10 ? { fontSize: 18 } : { fontSize: 20 },
-                    ]}
-                  >
-                    {feature.title}
-                  </Text>
-                </Animated.View>
-              </Pressable>
-            </Link>
+                  {feature.title}
+                </Text>
+              </Animated.View>
+            </Pressable>
           ))}
         </View>
 

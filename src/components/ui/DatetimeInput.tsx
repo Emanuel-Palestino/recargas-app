@@ -1,10 +1,11 @@
 import { Colors, Spacing } from "@/constants/theme";
+import { formatDate } from "@/utils";
 import DateTimePicker, {
   DateTimePickerAndroid,
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import { useState } from "react";
-import { Platform, Pressable, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 
 // ─── Internal single-field picker ────────────────────────────────────────────
 
@@ -14,14 +15,22 @@ interface FieldProps {
   onChange: (date: Date) => void;
   includeTime?: boolean;
   style?: ViewStyle;
+  inputStyle?: ViewStyle;
+  inputTextStyle?: TextStyle;
 }
 
-const PickerField = ({ label, value, onChange, includeTime = false, style }: FieldProps) => {
+const PickerField = ({
+  label,
+  value,
+  onChange,
+  includeTime = false,
+  style,
+  inputStyle,
+  inputTextStyle,
+}: FieldProps) => {
   const [showIosPicker, setShowIosPicker] = useState(false);
 
-  const displayText = includeTime
-    ? value.toLocaleString()
-    : value.toDateString();
+  const displayText = formatDate(value, includeTime);
 
   const openAndroid = () => {
     DateTimePickerAndroid.open({
@@ -67,8 +76,8 @@ const PickerField = ({ label, value, onChange, includeTime = false, style }: Fie
   return (
     <View style={[styles.fieldContainer, style]}>
       <Text style={styles.label}>{label}</Text>
-      <Pressable style={styles.input} onPress={handlePress}>
-        <Text style={styles.inputText}>{displayText}</Text>
+      <Pressable style={[styles.input, inputStyle]} onPress={handlePress}>
+        <Text style={[styles.inputText, inputTextStyle]}>{displayText}</Text>
       </Pressable>
       {Platform.OS === 'ios' && showIosPicker && (
         <DateTimePicker
@@ -91,6 +100,8 @@ interface SingleProps {
   onChange: (date: Date) => void;
   includeTime?: boolean;
   style?: ViewStyle;
+  inputStyle?: ViewStyle;
+  inputTextStyle?: TextStyle;
 }
 
 interface RangeProps {
@@ -103,13 +114,26 @@ interface RangeProps {
   onEndChange: (date: Date) => void;
   includeTime?: boolean;
   style?: ViewStyle;
+  inputStyle?: ViewStyle;
+  inputTextStyle?: TextStyle;
 }
 
 type DatetimeInputProps = SingleProps | RangeProps;
 
 export const DatetimeInput = (props: DatetimeInputProps) => {
   if (props.mode === 'range') {
-    const { startLabel, endLabel, startValue, endValue, onStartChange, onEndChange, includeTime, style } = props;
+    const {
+      startLabel,
+      endLabel,
+      startValue,
+      endValue,
+      onStartChange,
+      onEndChange,
+      includeTime,
+      style,
+      inputTextStyle,
+      inputStyle,
+    } = props;
     return (
       <View style={[styles.rangeContainer, style]}>
         <PickerField
@@ -118,6 +142,8 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
           onChange={onStartChange}
           includeTime={includeTime}
           style={styles.rangeField}
+          inputStyle={inputStyle}
+          inputTextStyle={inputTextStyle}
         />
         <PickerField
           label={endLabel}
@@ -125,12 +151,22 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
           onChange={onEndChange}
           includeTime={includeTime}
           style={styles.rangeField}
+          inputStyle={inputStyle}
+          inputTextStyle={inputTextStyle}
         />
       </View>
     );
   }
 
-  const { label, value, onChange, includeTime, style } = props;
+  const {
+    label,
+    value,
+    onChange,
+    includeTime,
+    style,
+    inputStyle,
+    inputTextStyle,
+  } = props;
   return (
     <PickerField
       label={label}
@@ -138,6 +174,8 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
       onChange={onChange}
       includeTime={includeTime}
       style={style}
+      inputStyle={inputStyle}
+      inputTextStyle={inputTextStyle}
     />
   );
 };

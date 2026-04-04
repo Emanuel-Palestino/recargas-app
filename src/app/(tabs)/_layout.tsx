@@ -4,6 +4,7 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from 'react-native';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { NativeTabs } from 'expo-router/build/native-tabs';
+import { useRouter, useGlobalSearchParams } from 'expo-router';
 
 
 export default function RootLayout() {
@@ -16,6 +17,10 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme === 'unspecified' ? 'light' : colorScheme];
 
+  const router = useRouter();
+  const { scheduled, wasManualTriggered } = useGlobalSearchParams<{ scheduled?: string; wasManualTriggered?: string }>();
+
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <NativeTabs
@@ -24,6 +29,19 @@ export default function RootLayout() {
         iconColor={{ default: undefined, selected: '#ffffff' }}
         rippleColor="#87c563"
         labelStyle={{ selected: { color: colors.baseContent } }}
+        screenListeners={{
+          tabPress: (e) => {
+            const page = e.target?.split('-')[0]
+
+            if (page === 'recharge') {
+              if (wasManualTriggered === 'true') {
+                router.setParams({ scheduled: scheduled, wasManualTriggered: undefined })
+              } else {
+                router.navigate('/recharge')
+              }
+            }
+          },
+        }}
       >
         <NativeTabs.Trigger name="recharge">
           <NativeTabs.Trigger.Label>Recargar</NativeTabs.Trigger.Label>

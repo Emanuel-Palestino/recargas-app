@@ -17,7 +17,6 @@ export default function RechargeSummary() {
     amount,
     recargaType,
     benefits,
-    goToPreviousStep,
     resetState,
     isScheduledRecharge,
     targetDateTs,
@@ -25,19 +24,6 @@ export default function RechargeSummary() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
-
-  const handlePreviousStep = () => {
-    goToPreviousStep()
-    if (router.canGoBack()) {
-      router.back()
-    } else {
-      if (isScheduledRecharge) {
-        router.navigate('/recharge/date-picker')
-      } else {
-        router.navigate('/recharge/amount-selection')
-      }
-    }
-  }
 
   const recargar = async () => {
     setLoading(true)
@@ -82,14 +68,12 @@ export default function RechargeSummary() {
     } finally {
       setLoading(false)
     }
-
-    return
   }
 
   const handleCloseModal = () => {
     resetState()
     setModalOpen(false)
-    router.dismissTo('/')
+    router.dismissTo('/recharge')
   }
 
   return (
@@ -127,7 +111,7 @@ export default function RechargeSummary() {
         />
         <Button
           text="Anterior"
-          onClick={handlePreviousStep}
+          onClick={() => router.back()}
           color='medium'
         />
       </View>

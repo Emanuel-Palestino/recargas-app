@@ -6,11 +6,9 @@ import { PRODUCTS } from "@/constants/products"
 import { DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { useRouter } from "expo-router"
 import { Button } from "@/components/ui/Button"
-import { useEffect } from "react"
 
 
 export default function AmountSelection() {
-
   const {
     carrier,
     recargaType,
@@ -18,9 +16,6 @@ export default function AmountSelection() {
     amount,
     setAmount,
     setBenefits,
-    goToPreviousStep,
-    goToNextStep,
-    setCurrentStep,
     isScheduledRecharge,
   } = useRechargeStore()
   const router = useRouter()
@@ -30,31 +25,17 @@ export default function AmountSelection() {
     setBenefits(PRODUCTS[carrier].products[recargaType].benefits[value])
   }
 
-  const handlePreviousStep = () => {
-    goToPreviousStep()
-    if (router.canGoBack()) {
-      router.back()
-    } else {
-      router.navigate('/recharge/carrier-selection')
-    }
-  }
-
   const handleNextStep = () => {
     if (amount === 0) {
       Alert.alert('Error', 'Por favor, selecciona un monto de recarga')
       return
     }
-    goToNextStep()
     if (isScheduledRecharge) {
       router.navigate('/recharge/date-picker')
     } else {
       router.navigate('/recharge/summary')
     }
   }
-
-  useEffect(() => {
-    setCurrentStep(2) // steps start from 0
-  }, [])
 
   return (
     <>
@@ -82,7 +63,7 @@ export default function AmountSelection() {
           Monto
         </Text>
 
-        <View style={styles.picker} >
+        <View style={styles.picker}>
           <Picker
             selectedValue={amount}
             onValueChange={handleAmountChange}
@@ -102,7 +83,7 @@ export default function AmountSelection() {
           {PRODUCTS[carrier].products[recargaType].benefits[amount] || 'Beneficios no disponibles'}
         </Text>
 
-      </View >
+      </View>
 
       <View style={styles.stepperActionsContainer}>
         <Button
@@ -111,7 +92,7 @@ export default function AmountSelection() {
         />
         <Button
           text="Anterior"
-          onClick={handlePreviousStep}
+          onClick={() => router.back()}
           color='medium'
         />
       </View>

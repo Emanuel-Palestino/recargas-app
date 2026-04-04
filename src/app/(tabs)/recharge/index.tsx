@@ -2,14 +2,21 @@ import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { presentContactPickerAsync } from "expo-contacts";
-import { useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { useCallback } from "react";
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function RechargeIndex() {
-
-  const { phoneNumber, setPhoneNumber, goToNextStep, setCurrentStep } = useRechargeStore()
+  const { phoneNumber, setPhoneNumber, resetState, setIsScheduledRecharge } = useRechargeStore()
   const router = useRouter()
+  const { scheduled } = useLocalSearchParams<{ scheduled?: string }>()
+
+  useFocusEffect(
+    useCallback(() => {
+      resetState()
+      setIsScheduledRecharge(scheduled === 'true')
+    }, [scheduled])
+  )
 
   const handleContactSelection = async () => {
     const contact = await presentContactPickerAsync()
@@ -43,8 +50,6 @@ export default function RechargeIndex() {
     }
 
     setPhoneNumber(sanitizedNumber)
-
-    goToNextStep()
     router.navigate('/recharge/carrier-selection')
   }
 
@@ -53,10 +58,6 @@ export default function RechargeIndex() {
     const noCountryCodeNumber = onlyDigits.startsWith('52') ? onlyDigits.slice(2) : onlyDigits
     return noCountryCodeNumber
   }
-
-  useEffect(() => {
-    setCurrentStep(0)
-  }, [])
 
   return (
     <>
