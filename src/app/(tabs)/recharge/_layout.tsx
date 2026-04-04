@@ -72,7 +72,7 @@ export default function RechargeLayout() {
 
             {isScheduledRecharge && (
               <View style={styles.scheduledBadge}>
-                <Text style={styles.scheduledBadgeText}>Tipo de recarga: Programada</Text>
+                <Text style={styles.scheduledBadgeText}>Proceso: Recarga Programada</Text>
               </View>
             )}
           </View>
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
   },
   scheduledBadge: {
     alignSelf: 'center',
-    backgroundColor: Colors.light.primary,
+    backgroundColor: Colors.light.secondary,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.one,
     borderRadius: 99,
     marginTop: Spacing.two,
   },
   scheduledBadgeText: {
-    color: Colors.light.primaryContent,
+    color: Colors.light.secondaryContent,
     fontSize: 13,
     fontWeight: 'bold',
   },

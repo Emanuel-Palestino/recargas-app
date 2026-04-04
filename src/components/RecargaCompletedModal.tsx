@@ -1,9 +1,10 @@
-import { Colors } from "@/constants/theme"
+import { Colors, Spacing } from "@/constants/theme"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { Modal, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button } from "./ui/Button"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { formatDate } from "@/utils"
+import { ThemedView } from "./ThemedView"
 
 
 interface RecargaCompletedModalProps {
@@ -27,16 +28,17 @@ export const RecargaCompletedModal = ({
   return (
     <Modal
       animationType="slide"
-      //transparent={true}
       visible={open}
-      /* backdropColor="red" */
+      backdropColor="rgba(0, 0, 0, 0.2)"
       onRequestClose={onClose}
       hardwareAccelerated={true}
-      presentationStyle="overFullScreen"
+    //presentationStyle="pageSheet" // ios only
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
-
-        <View style={styles.modalContent}>
+      <ScrollView
+        contentContainerStyle={{ height: '100%', justifyContent: 'flex-end' }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <ThemedView style={styles.modalContent}>
           <Text style={styles.title}>
             {isScheduledRecharge ? 'Recarga Programada con Éxito' : 'Recarga Realizada con Éxito'}
           </Text>
@@ -45,7 +47,7 @@ export const RecargaCompletedModal = ({
             {isScheduledRecharge ? 'Recarga programada para:' : 'Recarga realizada el:'}
           </Text>
           <Text style={styles.value}>{
-            isScheduledRecharge ?  formatDate(new Date(targetDateTs)) : formatDate(new Date(), true, true)
+            isScheduledRecharge ? formatDate(new Date(targetDateTs)) : formatDate(new Date(), true, true)
           }</Text>
 
           <Text style={styles.subtitle}>Compañía telefónica</Text>
@@ -65,7 +67,7 @@ export const RecargaCompletedModal = ({
             {/* <Button text="Compartir" color="accent" onClick={() => { }} />
             <Button text="Guardar Cliente" color="secondary" onClick={() => { }} /> */}
           </View>
-        </View>
+        </ThemedView>
       </ScrollView>
     </Modal>
   )
@@ -74,14 +76,10 @@ export const RecargaCompletedModal = ({
 
 const styles = StyleSheet.create({
   modalContent: {
-    flex: 1,
-    height: '100%',
-    width: '100%',
-    backgroundColor: Colors.light.base100,
-    position: 'absolute',
-    top: 0,
-    padding: 10,
-    paddingVertical: 16,
+    minHeight: '80%',
+    height: 'auto',
+    paddingHorizontal: Spacing.four,
+    paddingVertical: Spacing.three,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -91,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: Spacing.five,
   },
   subtitle: {
     color: 'gray',
@@ -101,16 +99,16 @@ const styles = StyleSheet.create({
     color: Colors.light.baseContent,
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 14,
+    marginBottom: Spacing.three,
   },
   actionsContainer: {
     width: '100%',
-    marginTop: 30,
+    marginTop: Spacing.five,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    columnGap: 12,
-    rowGap: 8,
+    columnGap: Spacing.three,
+    rowGap: Spacing.two,
   },
 })

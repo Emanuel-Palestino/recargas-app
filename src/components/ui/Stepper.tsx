@@ -1,7 +1,10 @@
 import { Colors } from "@/constants/theme";
-import { FC } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { FC, useEffect, useRef } from "react";
+import { Animated, View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
+import { ThemedView } from "../ThemedView";
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface StepperProps {
   steps: { name: string }[];
@@ -13,12 +16,25 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
   const nextStepName = currentStep + 1 < steps.length ? steps[currentStep + 1].name : null;
 
   const totalSteps = steps.length;
-  const progress = (currentStep + 1) / totalSteps;
-  const circumference = 2 * Math.PI * 45; // Circle circumference (radius = 45)
-  const strokeDashoffset = circumference * (1 - progress); // Offset for linear progress
+  const circumference = 2 * Math.PI * 45;
+
+  const animatedProgress = useRef(new Animated.Value((currentStep + 1) / totalSteps)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedProgress, {
+      toValue: (currentStep + 1) / totalSteps,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  }, [currentStep, totalSteps]);
+
+  const strokeDashoffset = animatedProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [circumference, 0],
+  });
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <View style={styles.leftContainer}>
         <Text style={styles.currentStepText}>{currentStepName}</Text>
         {nextStepName && (
@@ -39,7 +55,7 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             fill="none"
           />
           {/* Stroke */}
-          <Circle
+          <AnimatedCircle
             cx="50"
             cy="50"
             r="45"
@@ -48,14 +64,14 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             fill="none"
             strokeDasharray={`${circumference} ${circumference}`}
             strokeDashoffset={strokeDashoffset}
-            transform="rotate(-90 50 50)" // Rotate to start from the top
+            transform="rotate(-90 50 50)"
           />
         </Svg>
         <Text style={styles.circleText}>
           {currentStep + 1}/{totalSteps}
         </Text>
       </View>
-    </View>
+    </ThemedView>
   );
 };
 

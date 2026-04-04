@@ -17,6 +17,7 @@ interface FieldProps {
   style?: ViewStyle;
   inputStyle?: ViewStyle;
   inputTextStyle?: TextStyle;
+  minDate?: Date;
 }
 
 const PickerField = ({
@@ -27,6 +28,7 @@ const PickerField = ({
   style,
   inputStyle,
   inputTextStyle,
+  minDate,
 }: FieldProps) => {
   const [showIosPicker, setShowIosPicker] = useState(false);
 
@@ -37,6 +39,7 @@ const PickerField = ({
       value,
       mode: 'date',
       is24Hour: true,
+      minimumDate: minDate,
       onChange: (event: DateTimePickerEvent, selectedDate?: Date) => {
         if (event.type !== 'set' || !selectedDate) return;
 
@@ -85,6 +88,7 @@ const PickerField = ({
           mode={includeTime ? 'datetime' : 'date'}
           display="spinner"
           onChange={handleIosChange}
+          minimumDate={minDate}
         />
       )}
     </View>
@@ -102,6 +106,7 @@ interface SingleProps {
   style?: ViewStyle;
   inputStyle?: ViewStyle;
   inputTextStyle?: TextStyle;
+  minDate?: Date;
 }
 
 interface RangeProps {
@@ -116,6 +121,7 @@ interface RangeProps {
   style?: ViewStyle;
   inputStyle?: ViewStyle;
   inputTextStyle?: TextStyle;
+  minDate?: Date;
 }
 
 type DatetimeInputProps = SingleProps | RangeProps;
@@ -133,6 +139,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
       style,
       inputTextStyle,
       inputStyle,
+      minDate,
     } = props;
     return (
       <View style={[styles.rangeContainer, style]}>
@@ -144,6 +151,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
           style={styles.rangeField}
           inputStyle={inputStyle}
           inputTextStyle={inputTextStyle}
+          minDate={minDate}
         />
         <PickerField
           label={endLabel}
@@ -153,6 +161,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
           style={styles.rangeField}
           inputStyle={inputStyle}
           inputTextStyle={inputTextStyle}
+          minDate={minDate}
         />
       </View>
     );
@@ -166,6 +175,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
     style,
     inputStyle,
     inputTextStyle,
+    minDate,
   } = props;
   return (
     <PickerField
@@ -176,6 +186,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
       style={style}
       inputStyle={inputStyle}
       inputTextStyle={inputTextStyle}
+      minDate={minDate}
     />
   );
 };

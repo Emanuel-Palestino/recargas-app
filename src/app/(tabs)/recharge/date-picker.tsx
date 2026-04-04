@@ -1,7 +1,6 @@
 import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
-import { DateTimePickerAndroid, DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -20,20 +19,6 @@ export default function DatePicker() {
     }
   }, [])
 
-  const onChangeDate = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
-    const currentDate = selectedDate || new Date(targetDateTs);
-    setTargetDateTs(currentDate.getTime());
-  };
-
-  const showStartDatepicker = () => {
-    DateTimePickerAndroid.open({
-      value: new Date(targetDateTs),
-      onChange: onChangeDate,
-      mode: 'date',
-      minimumDate: tomorrow,
-    });
-  };
-
   return (
     <>
       <View style={styles.container}>
@@ -47,6 +32,7 @@ export default function DatePicker() {
           style={{width: '100%'}}
           inputStyle={styles.input}
           inputTextStyle={styles.inputText}
+          minDate={tomorrow}
         />
       </View>
 
