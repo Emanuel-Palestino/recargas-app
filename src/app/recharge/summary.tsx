@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/Button"
 import { recharge, RechargeRequest, scheduleRecharge } from "@/services/recharge"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
-import { useRouter } from "expo-router"
-import { useState } from "react"
+import { useNavigation, useRouter } from "expo-router"
+import { useEffect, useState } from "react"
 import { Alert, Keyboard, StyleSheet, Text, View } from "react-native"
 
 export default function RechargeSummary() {
@@ -22,8 +22,15 @@ export default function RechargeSummary() {
     targetDateTs,
   } = useRechargeStore()
   const router = useRouter()
+  const navigation = useNavigation()
   const [loading, setLoading] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    return navigation.addListener('beforeRemove', (e) => {
+      if (loading) e.preventDefault()
+    })
+  }, [navigation, loading])
 
   const recargar = async () => {
     setLoading(true)
@@ -113,6 +120,8 @@ export default function RechargeSummary() {
           text="Anterior"
           onClick={() => router.back()}
           color='medium'
+          loading={loading}
+          disabled={loading}
         />
       </View>
 
