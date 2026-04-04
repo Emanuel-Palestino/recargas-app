@@ -1,9 +1,6 @@
 import { Colors, Spacing } from "@/constants/theme";
 import { formatDate } from "@/utils";
-import DateTimePicker, {
-  DateTimePickerAndroid,
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import DateTimePicker, { DateTimePickerChangeEvent } from "@expo/ui/datetimepicker";
 import { useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 
@@ -30,65 +27,47 @@ const PickerField = ({
   inputTextStyle,
   minDate,
 }: FieldProps) => {
-  const [showIosPicker, setShowIosPicker] = useState(false);
+  const [showAndroidPicker, setShowAndroidPicker] = useState(false);
 
-  const displayText = formatDate(value, includeTime);
-
-  const openAndroid = () => {
-    DateTimePickerAndroid.open({
-      value,
-      mode: 'date',
-      is24Hour: true,
-      minimumDate: minDate,
-      onChange: (event: DateTimePickerEvent, selectedDate?: Date) => {
-        if (event.type !== 'set' || !selectedDate) return;
-
-        if (!includeTime) {
-          onChange(selectedDate);
-          return;
-        }
-
-        DateTimePickerAndroid.open({
-          value: selectedDate,
-          mode: 'time',
-          is24Hour: true,
-          onChange: (timeEvent: DateTimePickerEvent, selectedTime?: Date) => {
-            if (timeEvent.type === 'set' && selectedTime) {
-              onChange(selectedTime);
-            }
-          },
-        });
-      },
-    });
-  };
-
-  const handlePress = () => {
-    if (Platform.OS === 'android') {
-      openAndroid();
-    } else {
-      setShowIosPicker((prev) => !prev);
-    }
-  };
-
-  const handleIosChange = (_event: DateTimePickerEvent, selectedDate?: Date) => {
-    if (selectedDate) {
-      onChange(selectedDate);
-    }
-  };
+  const mode = includeTime ? 'datetime' : 'date';
 
   return (
     <View style={[styles.fieldContainer, style]}>
       <Text style={styles.label}>{label}</Text>
-      <Pressable style={[styles.input, inputStyle]} onPress={handlePress}>
-        <Text style={[styles.inputText, inputTextStyle]}>{displayText}</Text>
-      </Pressable>
-      {Platform.OS === 'ios' && showIosPicker && (
+      {Platform.OS === 'android' ? (
+        <>
+          <Pressable style={[styles.input, inputStyle]} onPress={() => setShowAndroidPicker(true)}>
+            <Text style={[styles.inputText, inputTextStyle]}>{formatDate(value, includeTime)}</Text>
+          </Pressable>
+          {showAndroidPicker && (
+            <DateTimePicker
+              value={value}
+              mode={mode}
+              presentation="dialog"
+              onValueChange={(_event: DateTimePickerChangeEvent, selectedDate: Date) => {
+                setShowAndroidPicker(false);
+                const mexOffset = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+                const mexicanDate = new Date(selectedDate.getTime() + mexOffset);
+                onChange(mexicanDate);
+              }}
+              onDismiss={() => setShowAndroidPicker(false)}
+              minimumDate={minDate}
+              timeZoneName="America/Mexico_City"
+            />
+          )}
+        </>
+      ) : (
         <DateTimePicker
           value={value}
-          mode={includeTime ? 'datetime' : 'date'}
-          display="spinner"
-          onChange={handleIosChange}
+          mode={mode}
+          display="compact"
+          onValueChange={(_event: DateTimePickerChangeEvent, selectedDate: Date) => {
+            const mexOffset = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+            const mexicanDate = new Date(selectedDate.getTime() + mexOffset);
+            onChange(mexicanDate);
+          }}
           minimumDate={minDate}
+          timeZoneName="America/Mexico_City"
         />
       )}
     </View>
@@ -167,16 +146,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
     );
   }
 
-  const {
-    label,
-    value,
-    onChange,
-    includeTime,
-    style,
-    inputStyle,
-    inputTextStyle,
-    minDate,
-  } = props;
+  const { label, value, onChange, includeTime, style, inputStyle, inputTextStyle, minDate } = props;
   return (
     <PickerField
       label={label}
@@ -193,7 +163,7 @@ export const DatetimeInput = (props: DatetimeInputProps) => {
 
 const styles = StyleSheet.create({
   fieldContainer: {
-    gap: Spacing.one,
+    //gap: Spacing.one,
   },
   label: {
     color: Colors.light.baseContent,
