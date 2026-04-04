@@ -7,7 +7,7 @@ import { NativeTabs } from 'expo-router/build/native-tabs';
 import { useRouter, useGlobalSearchParams } from 'expo-router';
 
 
-export default function RootLayout() {
+export default function TabsLayout() {
   useEffect(() => {
     (async () => {
       await requestPermissionsAsync();
