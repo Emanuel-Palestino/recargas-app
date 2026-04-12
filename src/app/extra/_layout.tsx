@@ -4,8 +4,11 @@ import { Spacing } from "@/constants/theme";
 import { Stack } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function ExtraLayout() {
+  const colors = useTheme();
+
   return (
     <Stack
       screenOptions={{
@@ -19,9 +22,9 @@ export default function ExtraLayout() {
               <SafeAreaView edges={['left', 'top', 'right']} style={{}}>
                 <View style={styles.headerContainer}>
                   <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <BackIcon />
+                    <BackIcon fill={colors.baseContent} />
                   </Pressable>
-                  <Text style={styles.headerTitle}>{title}</Text>
+                  <Text style={[styles.headerTitle, { color: colors.baseContent }]}>{title}</Text>
                 </View>
               </SafeAreaView>
             </ThemedView>

@@ -1,11 +1,11 @@
 import { Picker } from "@react-native-picker/picker"
 import { Alert, StyleSheet, Text, View } from "react-native"
-import { Colors } from "@/constants/theme"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { PRODUCTS } from "@/constants/products"
 import { DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { useRouter } from "expo-router"
 import { Button } from "@/components/ui/Button"
+import { useTheme } from "@/hooks/useTheme"
 
 
 export default function AmountSelection() {
@@ -19,6 +19,7 @@ export default function AmountSelection() {
     isScheduledRecharge,
   } = useRechargeStore()
   const router = useRouter()
+  const colors = useTheme()
 
   const handleAmountChange = (value: number) => {
     setAmount(Number(value))
@@ -42,14 +43,15 @@ export default function AmountSelection() {
       <View style={styles.container}>
         {PRODUCTS[carrier].multiple && (
           <>
-            <Text style={styles.title}>
+            <Text style={{color: colors.baseContent}}>
               Tipo de recarga
             </Text>
 
-            <View style={styles.picker}>
+            <View style={[styles.picker, { backgroundColor: colors.base300 }]}>
               <Picker
                 selectedValue={recargaType}
                 onValueChange={setRecargaType}
+                style={{ color: colors.baseContent }}
               >
                 {PRODUCTS[carrier].productsList.map((value) => (
                   <Picker.Item key={`product-type-${value}`} label={DISPLAYED_PRODUCT_TYPE[value]} value={value} />
@@ -59,14 +61,15 @@ export default function AmountSelection() {
           </>
         )}
 
-        <Text style={styles.title}>
+        <Text style={{color: colors.baseContent}}>
           Monto
         </Text>
 
-        <View style={styles.picker}>
+        <View style={[styles.picker, { backgroundColor: colors.base300 }]}>
           <Picker
             selectedValue={amount}
             onValueChange={handleAmountChange}
+            style={{ color: colors.baseContent }}
           >
             <Picker.Item key={`amount-0`} label={`Selecciona un monto`} value={0} />
             {PRODUCTS[carrier].products[recargaType].amounts.map((value) => (
@@ -75,11 +78,11 @@ export default function AmountSelection() {
           </Picker>
         </View>
 
-        <Text style={styles.title}>
+        <Text style={{color: colors.baseContent}}>
           Beneficios
         </Text>
 
-        <Text style={styles.benefits}>
+        <Text style={[styles.benefits, { color: colors.baseContent }]}>
           {PRODUCTS[carrier].products[recargaType].benefits[amount] || 'Beneficios no disponibles'}
         </Text>
 
@@ -107,19 +110,14 @@ const styles = StyleSheet.create({
     rowGap: 4,
     flexGrow: 1,
   },
-  title: {
-    color: Colors.light.baseContent,
-  },
   picker: {
     height: 48,
     padding: 0,
     borderRadius: 10,
-    backgroundColor: Colors.light.base300,
     justifyContent: 'center',
     marginBottom: 12,
   },
   benefits: {
-    color: Colors.light.baseContent,
     fontSize: 18,
   },
   stepperActionsContainer: {

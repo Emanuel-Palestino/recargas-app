@@ -84,8 +84,6 @@ const MOVISTAR_PRODUCTS: Record<number, string> = {
 
 const BAIT_PRODUCTS: Record<BaitProductType, Record<number, string>> = {
   [BaitProductType.SALDO]: {
-    10: "",
-    20: "",
     30: "",
     50: "",
     60: "",

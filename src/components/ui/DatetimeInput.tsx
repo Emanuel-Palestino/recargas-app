@@ -1,4 +1,5 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
 import { formatDate } from "@/utils";
 import DateTimePicker, { DateTimePickerChangeEvent } from "@expo/ui/datetimepicker";
 import { useState } from "react";
@@ -30,14 +31,15 @@ const PickerField = ({
   const [showAndroidPicker, setShowAndroidPicker] = useState(false);
 
   const mode = includeTime ? 'datetime' : 'date';
+  const colors = useTheme();
 
   return (
     <View style={[styles.fieldContainer, style]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[{ color: colors.baseContent }]}>{label}</Text>
       {Platform.OS === 'android' ? (
         <>
-          <Pressable style={[styles.input, inputStyle]} onPress={() => setShowAndroidPicker(true)}>
-            <Text style={[styles.inputText, inputTextStyle]}>{formatDate(value, includeTime)}</Text>
+          <Pressable style={[styles.input, { backgroundColor: colors.base300 }, inputStyle]} onPress={() => setShowAndroidPicker(true)}>
+            <Text style={[styles.inputText, {color: colors.baseContent}, inputTextStyle]}>{formatDate(value, includeTime)}</Text>
           </Pressable>
           {showAndroidPicker && (
             <DateTimePicker
@@ -165,19 +167,14 @@ const styles = StyleSheet.create({
   fieldContainer: {
     //gap: Spacing.one,
   },
-  label: {
-    color: Colors.light.baseContent,
-  },
   input: {
     height: 48,
     borderRadius: 10,
-    backgroundColor: Colors.light.base300,
     paddingHorizontal: Spacing.three,
     justifyContent: 'center',
   },
   inputText: {
     fontSize: 16,
-    color: Colors.light.baseContent,
   },
   rangeContainer: {
     flexDirection: 'row',

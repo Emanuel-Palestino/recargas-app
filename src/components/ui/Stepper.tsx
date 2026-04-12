@@ -3,6 +3,7 @@ import { FC, useEffect, useRef } from "react";
 import { Animated, View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import { ThemedView } from "../ThemedView";
+import { useTheme } from "@/hooks/useTheme";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -20,6 +21,8 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
 
   const animatedProgress = useRef(new Animated.Value((currentStep + 1) / totalSteps)).current;
 
+  const colors = useTheme();
+
   useEffect(() => {
     Animated.timing(animatedProgress, {
       toValue: (currentStep + 1) / totalSteps,
@@ -36,9 +39,9 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
   return (
     <ThemedView style={styles.container}>
       <View style={styles.leftContainer}>
-        <Text style={styles.currentStepText}>{currentStepName}</Text>
+        <Text style={[styles.currentStepText, { color: colors.baseContent }]}>{currentStepName}</Text>
         {nextStepName && (
-          <Text style={styles.nextStepText}>Siguiente: {nextStepName}</Text>
+          <Text style={[styles.nextStepText, { color: colors.baseContent }]}>Siguiente: {nextStepName}</Text>
         )}
       </View>
 
@@ -50,7 +53,7 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             cx="50"
             cy="50"
             r="45"
-            stroke={Colors.light.base300}
+            stroke={colors.base300}
             strokeWidth="10"
             fill="none"
           />
@@ -59,7 +62,7 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             cx="50"
             cy="50"
             r="45"
-            stroke={Colors.light.success}
+            stroke={colors.success}
             strokeWidth="10"
             fill="none"
             strokeDasharray={`${circumference} ${circumference}`}
@@ -67,7 +70,7 @@ export const Stepper: FC<StepperProps> = ({ steps, currentStep }) => {
             transform="rotate(-90 50 50)"
           />
         </Svg>
-        <Text style={styles.circleText}>
+        <Text style={[styles.circleText, { color: colors.baseContent }]}>
           {currentStep + 1}/{totalSteps}
         </Text>
       </View>
@@ -89,12 +92,10 @@ const styles = StyleSheet.create({
   currentStepText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
     marginBottom: 2,
   },
   nextStepText: {
     fontSize: 14,
-    color: "#888",
   },
   circleContainer: {
     position: "relative",
@@ -105,7 +106,6 @@ const styles = StyleSheet.create({
   },
   circleText: {
     position: "absolute",
-    color: "#333",
     fontSize: 14,
     fontWeight: "bold",
   },

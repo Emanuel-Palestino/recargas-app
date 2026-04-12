@@ -1,10 +1,10 @@
-import { Colors } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DatetimeInput } from "@/components/ui/DatetimeInput";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function DatePicker() {
   const tomorrow = new Date();
@@ -12,6 +12,8 @@ export default function DatePicker() {
 
   const { targetDateTs, setTargetDateTs } = useRechargeStore()
   const router = useRouter()
+
+  const colors = useTheme()
 
   useEffect(() => {
     if (targetDateTs === 0) {
@@ -22,7 +24,7 @@ export default function DatePicker() {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>
+        <Text style={[styles.title, { color: colors.baseContent }]}>
           Selecciona la fecha en la que deseas que se realice la recarga
         </Text>
         <DatetimeInput
@@ -60,7 +62,6 @@ const styles = StyleSheet.create({
     marginTop: -20,
   },
   title: {
-    color: Colors.light.baseContent,
     fontSize: 18,
     textAlign: 'center',
     lineHeight: 20,
