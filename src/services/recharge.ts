@@ -1,27 +1,10 @@
 import { getUsername } from "@/store/userStore"
-import { BaitProductType, Carrier, TelcelProductType } from "@/types/Carriers"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
-import { ScheduledTransaction } from "@/types/ScheduledTransaction"
-import { Transaction } from "@/types/Transaction"
+import { ScheduledTransaction, ScheduledTransactionCreateApi } from "@/types/ScheduledTransaction"
+import { RechargeRequest, Transaction } from "@/types/Transaction"
 
 const API_URL = process.env.EXPO_PUBLIC_RECHARGE_SVC_API_URL
 
-export type RechargeRequest = {
-  phone: string
-  amount: number
-  carrier: Carrier
-  extraData?: TelcelProductType | BaitProductType
-}
-
-export type ScheduleRechargeRequest = {
-	targetDay: number,
-	targetMonth: number,
-	targetYear: number,
-	phone: string,
-	amount: number,
-	carrier: Carrier,
-	extraData?: TelcelProductType | BaitProductType,
-}
 
 export type RechargeResponse = {
   code: number
@@ -29,8 +12,6 @@ export type RechargeResponse = {
 }
 
 export const recharge = async (request: RechargeRequest): Promise<RechargeResponse> => {
-  const { phone, amount, carrier, extraData = "" } = request
-
   const username = await getUsername()
   if (!username) {
     throw new UsernameNotFoundError('Username not found')
@@ -42,12 +23,7 @@ export const recharge = async (request: RechargeRequest): Promise<RechargeRespon
       'Content-Type': 'application/json',
       username: username,
     },
-    body: JSON.stringify({
-      phone,
-      amount,
-      carrier,
-      extraData,
-    }),
+    body: JSON.stringify(request),
   })
 
   if (response.status === 403) {
@@ -66,16 +42,13 @@ export const recharge = async (request: RechargeRequest): Promise<RechargeRespon
   return data
 }
 
-export const getTransactions = async (startDate: number, endDate: number): Promise<Transaction[]> => {
-  const startDateString = new Date(startDate).toISOString()
-  const endDateString = new Date(endDate).toISOString()
-
+export const getTransactions = async (startDateIso: string, endDateIso: string): Promise<Transaction[]> => {
   const username = await getUsername()
   if (!username) {
     throw new UsernameNotFoundError('Username not found')
   }
 
-  const response = await fetch(`${API_URL}/transactions?startDate=${startDateString}&endDate=${endDateString}`, {
+  const response = await fetch(`${API_URL}/transactions?startDateIso=${startDateIso}&endDateIso=${endDateIso}`, {
     method: 'GET',
     headers: {
       username: username,
@@ -94,8 +67,7 @@ export const getTransactions = async (startDate: number, endDate: number): Promi
   return data
 }
 
-export const scheduleRecharge = async (request: ScheduleRechargeRequest): Promise<RechargeResponse> => {
-
+export const scheduleRecharge = async (request: ScheduledTransactionCreateApi): Promise<RechargeResponse> => {
   const username = await getUsername()
   if (!username) {
     throw new UsernameNotFoundError('Username not found')

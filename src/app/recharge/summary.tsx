@@ -3,12 +3,14 @@ import { Colors } from "@/constants/theme"
 import { DISPLAYED_CARRIER, DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { RecargaCompletedModal } from "@/components/RecargaCompletedModal"
 import { Button } from "@/components/ui/Button"
-import { recharge, RechargeRequest, scheduleRecharge } from "@/services/recharge"
+import { recharge, scheduleRecharge } from "@/services/recharge"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
 import { useNavigation, useRouter } from "expo-router"
 import { useEffect, useState } from "react"
 import { Alert, Keyboard, StyleSheet, Text, View } from "react-native"
+import { RechargeRequest } from "@/types/Transaction"
+import { ScheduledTransactionType } from "@/types/ScheduledTransaction"
 
 export default function RechargeSummary() {
   const {
@@ -41,16 +43,15 @@ export default function RechargeSummary() {
         phone: phoneNumber,
         amount: amount,
         carrier: carrier,
-        extraData: recargaType,
+        productType: recargaType,
       }
 
       let response
       if (isScheduledRecharge) {
         response = await scheduleRecharge({
-          ...request,
-          targetDay: new Date(targetDateTs).getDate(),
-          targetMonth: new Date(targetDateTs).getMonth() + 1,
-          targetYear: new Date(targetDateTs).getFullYear(),
+          type: ScheduledTransactionType.ONE_TIME,
+          rechargePayload: request,
+          nextExecutionDateIso: new Date(targetDateTs).toISOString(),
         })
       } else {
         response = await recharge(request)

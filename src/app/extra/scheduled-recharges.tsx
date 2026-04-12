@@ -11,17 +11,17 @@ const columns: Column<ScheduledTransaction>[] = [
   {
     key: "date",
     header: "Fecha Programada",
-    render: (item) => formatDate(new Date(item.targetYear, item.targetMonth - 1, item.targetDay)),
+    render: (item) => formatDate(new Date(item.nextExecutionDateIso)),
   },
   {
     key: "phone",
     header: "Número celular",
-    render: (item) => item.phone,
+    render: (item) => item.rechargePayload.phone,
   },
   {
     key: "amount",
     header: "Monto",
-    render: (item) => `$${item.amount}`,
+    render: (item) => `$${item.rechargePayload.amount}`,
     minWidth: 30,
   },
 ];
@@ -34,7 +34,7 @@ export default function ScheduledRecharges() {
 
   const fetchScheduledRecharges = async () => {
     const scheduledRecharges = await getScheduledRecharges()
-    const filteredRecharges = scheduledRecharges.filter(recharge => !recharge.success)
+    const filteredRecharges = scheduledRecharges.filter(recharge => !recharge.finished)
     setData(filteredRecharges)
   }
 

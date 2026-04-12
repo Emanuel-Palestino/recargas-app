@@ -16,24 +16,24 @@ const columns: Column<Transaction>[] = [
   {
     key: "date",
     header: "Fecha",
-    render: (item) => formatDate(new Date(item.date), true, true),
+    render: (item) => formatDate(new Date(item.createdAtIso), true, true),
   },
   {
     key: "phone",
     header: "Número celular",
-    render: (item) => item.phone,
+    render: (item) => item.rechargePayload.phone,
   },
   {
     key: "amount",
     header: "Monto",
-    render: (item) => `$${item.amount}`,
+    render: (item) => `$${item.rechargePayload.amount}`,
   },
 ];
 
 export default function ReportsScreen() {
   const [data, setData] = useState<Transaction[]>([]);
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date(new Date().setHours(0, 0, 0, 0)));
+  const [endDate, setEndDate] = useState<Date>(new Date(new Date().setHours(23, 59, 59, 999)));
   const [loading, setLoading] = useState<boolean>(false);
 
   useFocusEffect(
@@ -43,7 +43,7 @@ export default function ReportsScreen() {
   );
 
   const footer = useMemo<FooterCell[]>(() => {
-    const total = data.reduce<number>((prev, curr) => prev + curr.amount, 0);
+    const total = data.reduce<number>((prev, curr) => prev + curr.rechargePayload.amount, 0);
     return [
       { key: "date", value: "Total" },
       { key: "phone", value: "" },
@@ -53,11 +53,10 @@ export default function ReportsScreen() {
 
   const generateReport = async () => {
     setLoading(true);
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(23, 59, 59, 999);
+    console.log("Generating report with dates:", startDate.toISOString(), endDate.toISOString());
 
     try {
-      const response = await getTransactions(startDate.getTime(), endDate.getTime());
+      const response = await getTransactions(startDate.toISOString(), endDate.toISOString());
       setData(response);
     } catch (error) {
       if (error instanceof UsernameNotFoundError) {
