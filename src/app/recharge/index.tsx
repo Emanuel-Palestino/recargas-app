@@ -3,14 +3,16 @@ import { useRechargeStore } from "@/store/rechargeStore";
 import { presentContactPickerAsync } from "expo-contacts";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback } from "react";
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useTheme } from "@/hooks/useTheme";
+import { useAlert } from "@/hooks/useAlert";
 
 export default function RechargeIndex() {
   const { phoneNumber, setPhoneNumber, resetState, setIsScheduledRecharge } = useRechargeStore()
   const router = useRouter()
   const { scheduled } = useLocalSearchParams<{ scheduled?: string }>()
   const colors = useTheme()
+  const { AlertContainer, showAlert } = useAlert()
 
   useFocusEffect(
     useCallback(() => {
@@ -27,14 +29,14 @@ export default function RechargeIndex() {
     }
 
     if (!contact.phoneNumbers || contact.phoneNumbers.length === 0) {
-      Alert.alert('Error', 'El contacto no tiene números de teléfono')
+      showAlert('Error', 'El contacto no tiene números de teléfono')
       return
     }
 
     const primaryPhoneNumber = contact.phoneNumbers.find(phoneNumber => phoneNumber.isPrimary)
 
     if (!primaryPhoneNumber || !primaryPhoneNumber.number) {
-      Alert.alert('Error', 'El contacto no tiene un número de teléfono primario o tiene múltiples números de teléfono.')
+      showAlert('Error', 'El contacto no tiene un número de teléfono primario o tiene múltiples números de teléfono.')
       return
     }
 
@@ -46,7 +48,7 @@ export default function RechargeIndex() {
     const sanitizedNumber = sanitizePhoneNumber(phoneNumber)
 
     if (sanitizedNumber.length !== 10) {
-      Alert.alert('Error', 'El número de celular debe tener 10 dígitos')
+      showAlert('Error', 'El número de celular debe tener 10 dígitos')
       return
     }
 
@@ -92,6 +94,7 @@ export default function RechargeIndex() {
           />
         </View>
 
+        <AlertContainer />
       </View>
 
       <View style={styles.stepperActionsContainer}>

@@ -3,21 +3,24 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { getUsername, storeUsername } from "@/store/userStore";
 import { useEffect, useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Alert } from "react-native";
+import { StyleSheet, KeyboardAvoidingView } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
+import { useAlert } from "@/hooks/useAlert";
 
 export default function Settings() {
   const [username, setUsername] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { AlertContainer, showAlert } = useAlert()
+
   const handleUsernameChange = async () => {
     setLoading(true);
     try {
       await storeUsername(username)
-      Alert.alert("Éxito", "Nombre de usuario guardado")
+      showAlert("Éxito", "Nombre de usuario guardado")
     } catch (error) {
       console.error(error)
-      Alert.alert("Error", "No se pudo guardar el nombre de usuario")
+      showAlert("Error", "No se pudo guardar el nombre de usuario")
     } finally {
       setLoading(false);
     }
@@ -56,7 +59,8 @@ export default function Settings() {
 
         <ThemedView style={{ flex: 1 }} />
       </ThemedView>
-    </KeyboardAvoidingView>
+      <AlertContainer />
+    </KeyboardAvoidingView >
   );
 }
 

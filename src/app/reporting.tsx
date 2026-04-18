@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Spacing } from "@/constants/theme";
 import { Button } from "@/components/ui/Button";
 import { DatetimeInput } from "@/components/ui/DatetimeInput";
@@ -11,6 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { formatDate } from "@/utils";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedView } from "@/components/ThemedView";
+import { useAlert } from "@/hooks/useAlert";
 
 const columns: Column<Transaction>[] = [
   {
@@ -36,6 +37,8 @@ export default function ReportsScreen() {
   const [endDate, setEndDate] = useState<Date>(new Date(new Date().setHours(23, 59, 59, 999)));
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { AlertContainer, showAlert } = useAlert()
+
   useFocusEffect(
     useCallback(() => {
       setData([]);
@@ -60,12 +63,12 @@ export default function ReportsScreen() {
       setData(response);
     } catch (error) {
       if (error instanceof UsernameNotFoundError) {
-        Alert.alert("Error", "No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de inicio.");
+        showAlert("Error", "No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de ajustes.");
       } else if (error instanceof InvalidUsernameError) {
-        Alert.alert("Error", "Nombre de usuario inválido. Por favor, ingrese un nombre de usuario válido en la pantalla de inicio.");
+        showAlert("Error", "Nombre de usuario inválido. Por favor, ingrese un nombre de usuario válido en la pantalla de ajustes.");
       } else {
         console.error(error);
-        Alert.alert("Error", "Error al obtener el reporte");
+        showAlert("Error", "Error al obtener el reporte");
       }
     } finally {
       setLoading(false);
@@ -104,6 +107,7 @@ export default function ReportsScreen() {
           />
         </ThemedView>
       </SafeAreaView>
+      <AlertContainer />
     </ThemedView>
   );
 }

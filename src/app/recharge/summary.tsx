@@ -7,10 +7,11 @@ import { useRechargeStore } from "@/store/rechargeStore"
 import { InvalidUsernameError, UsernameNotFoundError } from "@/types/errors"
 import { useNavigation, useRouter } from "expo-router"
 import { useEffect, useState } from "react"
-import { Alert, Keyboard, StyleSheet, Text, View } from "react-native"
+import { Keyboard, StyleSheet, Text, View } from "react-native"
 import { RechargeRequest } from "@/types/Transaction"
 import { ScheduledTransactionType } from "@/types/ScheduledTransaction"
 import { useTheme } from "@/hooks/useTheme"
+import { useAlert } from "@/hooks/useAlert"
 
 export default function RechargeSummary() {
   const {
@@ -28,6 +29,7 @@ export default function RechargeSummary() {
   const [loading, setLoading] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const colors = useTheme()
+  const { AlertContainer, showAlert } = useAlert()
 
   useEffect(() => {
     return navigation.addListener('beforeRemove', (e) => {
@@ -61,18 +63,18 @@ export default function RechargeSummary() {
       if (response.code === 1) {
         setModalOpen(true)
       } else if (response.code === 2) {
-        Alert.alert('Error', 'Número de celular inválido')
+        showAlert('Error', 'Número de celular inválido')
       } else {
-        Alert.alert('Error', response.message)
+        showAlert('Error', response.message)
       }
     } catch (err) {
       if (err instanceof UsernameNotFoundError) {
-        Alert.alert('Error', 'No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de inicio.')
+        showAlert('Error', 'No se encontró el nombre de usuario. Por favor, ingrese su nombre de usuario en la pantalla de ajustes.')
       } else if (err instanceof InvalidUsernameError) {
-        Alert.alert('Error', 'Nombre de usuario inválido. Por favor, ingrese un nombre de usuario válido en la pantalla de inicio.')
+        showAlert('Error', 'Nombre de usuario inválido. Por favor, ingrese un nombre de usuario válido en la pantalla de ajustes.')
       } else {
         console.log(err)
-        Alert.alert('Error', 'Error al procesar la recarga')
+        showAlert('Error', 'Error al procesar la recarga')
       }
     } finally {
       setLoading(false)
@@ -109,6 +111,8 @@ export default function RechargeSummary() {
 
         <Text style={styles.subtitle}>Beneficios</Text>
         <Text style={[styles.value, { color: colors.baseContent, fontSize: 17, fontWeight: 'semibold' }]}>{benefits}</Text>
+
+        <AlertContainer />
       </View>
 
       <View style={styles.stepperActionsContainer}>

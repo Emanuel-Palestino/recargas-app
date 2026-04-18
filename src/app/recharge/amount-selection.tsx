@@ -1,11 +1,12 @@
 import { Picker } from "@react-native-picker/picker"
-import { Alert, StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { useRechargeStore } from "@/store/rechargeStore"
 import { PRODUCTS } from "@/constants/products"
 import { DISPLAYED_PRODUCT_TYPE } from "@/constants/displayedStrings"
 import { useRouter } from "expo-router"
 import { Button } from "@/components/ui/Button"
 import { useTheme } from "@/hooks/useTheme"
+import { useAlert } from "@/hooks/useAlert"
 
 
 export default function AmountSelection() {
@@ -20,6 +21,7 @@ export default function AmountSelection() {
   } = useRechargeStore()
   const router = useRouter()
   const colors = useTheme()
+  const { AlertContainer, showAlert } = useAlert()
 
   const handleAmountChange = (value: number) => {
     setAmount(Number(value))
@@ -28,7 +30,7 @@ export default function AmountSelection() {
 
   const handleNextStep = () => {
     if (amount === 0) {
-      Alert.alert('Error', 'Por favor, selecciona un monto de recarga')
+      showAlert('Error', 'Por favor, selecciona un monto de recarga')
       return
     }
     if (isScheduledRecharge) {
@@ -43,7 +45,7 @@ export default function AmountSelection() {
       <View style={styles.container}>
         {PRODUCTS[carrier].multiple && (
           <>
-            <Text style={{color: colors.baseContent}}>
+            <Text style={{ color: colors.baseContent }}>
               Tipo de recarga
             </Text>
 
@@ -61,7 +63,7 @@ export default function AmountSelection() {
           </>
         )}
 
-        <Text style={{color: colors.baseContent}}>
+        <Text style={{ color: colors.baseContent }}>
           Monto
         </Text>
 
@@ -78,7 +80,7 @@ export default function AmountSelection() {
           </Picker>
         </View>
 
-        <Text style={{color: colors.baseContent}}>
+        <Text style={{ color: colors.baseContent }}>
           Beneficios
         </Text>
 
@@ -86,6 +88,7 @@ export default function AmountSelection() {
           {PRODUCTS[carrier].products[recargaType].benefits[amount] || 'Beneficios no disponibles'}
         </Text>
 
+        <AlertContainer />
       </View>
 
       <View style={styles.stepperActionsContainer}>
