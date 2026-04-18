@@ -9,7 +9,6 @@ export function useAlert() {
 
   const show = (alertTitle: string, alertText: string) => {
     if (Platform.OS === "android") {
-      console.log("Showing alert:", alertTitle, alertText);
       setTitle(alertTitle);
       setText(alertText);
       setVisible(true);
@@ -20,7 +19,6 @@ export function useAlert() {
   const hide = () => setVisible(false);
 
   const AlertContainer = () => {
-    console.log("Rendering AlertContainer with visible:", visible, "title:", title, "text:", text);
     if (!visible) return null;
 
     return (

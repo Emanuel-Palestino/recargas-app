@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { requestPermissionsAsync } from 'expo-contacts';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from 'react-native';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
@@ -9,12 +7,6 @@ import { StatusBar } from 'expo-status-bar';
 
 
 export default function TabsLayout() {
-  useEffect(() => {
-    (async () => {
-      await requestPermissionsAsync();
-    })();
-  }, []);
-
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme === 'unspecified' ? 'light' : colorScheme];
 

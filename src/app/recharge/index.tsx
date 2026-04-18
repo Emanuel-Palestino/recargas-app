@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { useRechargeStore } from "@/store/rechargeStore";
-import { presentContactPickerAsync } from "expo-contacts";
+import { PermissionStatus, presentContactPickerAsync, requestPermissionsAsync } from "expo-contacts";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
@@ -22,6 +22,12 @@ export default function RechargeIndex() {
   )
 
   const handleContactSelection = async () => {
+    const response = await requestPermissionsAsync()
+
+    if (response.status !== PermissionStatus.GRANTED) {
+      showAlert('Permiso denegado', 'No se pudo acceder a los contactos. Para seleccionar un número de contacto, por favor otorgue permisos de acceso a contactos a la aplicación.')
+      return
+    }
     const contact = await presentContactPickerAsync()
 
     if (!contact) {
