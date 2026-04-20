@@ -48,3 +48,10 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+### Image credits
+- <a href="https://www.flaticon.com/free-icons/coin" title="coin icons">Coin icons created by vectorsmarket15 - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/financial-plan" title="financial plan icons">Financial plan icons created by nawicon - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/calendar" title="calendar icons">Calendar icons created by pojok d - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/schedule" title="schedule icons">Schedule icons created by Freepik - Flaticon</a>
